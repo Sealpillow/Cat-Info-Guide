@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Feline Index — A Catalog of Domestic Breeds &amp; Care</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#232520;
+    --ink-soft:#4a453c;
+    --paper:#e8e1cd;
+    --paper-dark:#d9d0b3;
+    --paper-shadow:#c7bc9c;
+    --wood:#5c4a3d;
+    --wood-dark:#3a2f27;
+    --wood-light:#7a6353;
+    --brass:#a9852e;
+    --brass-light:#c9a648;
+    --forest:#3f5443;
+    --rust:#a15a3a;
+    --teal:#3d6b6d;
+    --card-line:#b9ae8c;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--wood-dark);
+    background-image:
+      radial-gradient(ellipse at top, rgba(255,255,255,0.03), transparent 60%),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.06) 0px, rgba(0,0,0,0.06) 1px, transparent 1px, transparent 80px);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+
+  /* ---------- STICKY QUICK-JUMP ---------- */
+  .quickjump{
+    position:sticky;
+    top:0;
+    z-index:20;
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    padding:12px 16px;
+    background:rgba(58,47,39,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(169,133,46,0.35);
+  }
+  .quickjump a{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:#e9e1c9;
+    text-decoration:none;
+    padding:7px 14px;
+    border:1px solid rgba(233,225,201,0.3);
+    border-radius:999px;
+    transition:background 0.2s ease, border-color 0.2s ease;
+    background:none;
+    cursor:pointer;
+    font:inherit;
+  }
+  .quickjump a:hover, .quickjump a:focus-visible{
+    background:rgba(169,133,46,0.25);
+    border-color:var(--brass-light);
+    outline:none;
+  }
+  .quickjump a.active{
+    background:var(--brass-light);
+    border-color:var(--brass-light);
+    color:var(--wood-dark);
+    font-weight:700;
+  }
+
+  .view-section{display:none;}
+  .view-section.visible{display:block;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:56px 24px 40px;
+    text-align:center;
+    color:var(--paper);
+    position:relative;
+  }
+  .hero-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color:var(--brass-light);
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-family:'Spectral', serif;
+    font-weight:600;
+    font-size:clamp(2.2rem, 6vw, 4rem);
+    margin:0 0 14px;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--brass-light);
+  }
+  .hero p{
+    max-width:520px;
+    margin:0 auto;
+    color:#cfc6ac;
+    font-size:15px;
+    line-height:1.6;
+  }
+
+  .section-heading{
+    max-width:1000px;
+    margin:0 auto;
+    padding:0 24px;
+    color:var(--paper);
+  }
+  .section-heading .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--brass-light);
+    margin-bottom:8px;
+  }
+  .section-heading h2{
+    font-family:'Spectral', serif;
+    font-size:clamp(1.6rem, 4vw, 2.2rem);
+    font-weight:600;
+    margin:0 0 6px;
+  }
+  .section-heading p{
+    color:#cfc6ac;
+    font-size:14px;
+    max-width:520px;
+    margin:0;
+    line-height:1.6;
+  }
+
+  /* ---------- CABINET / DRAWER TABS ---------- */
+  .cabinet{
+    max-width:1000px;
+    margin:28px auto 0;
+    padding:0 20px;
+    scroll-margin-top:70px;
+  }
+  .drawer-rail{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    justify-content:center;
+    padding-bottom:0;
+  }
+  .drawer-tab{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.03em;
+    background:var(--wood-light);
+    color:#f1ead4;
+    border:1px solid var(--wood-dark);
+    border-bottom:none;
+    border-radius:6px 6px 0 0;
+    padding:10px 16px 12px;
+    cursor:pointer;
+    position:relative;
+    transform:translateY(6px);
+    transition:transform 0.25s ease, background 0.25s ease;
+  }
+  .drawer-tab .count{
+    display:block;
+    font-size:10px;
+    color:var(--brass-light);
+    margin-top:3px;
+  }
+  .drawer-tab:hover{transform:translateY(0px); background:var(--wood);}
+  .drawer-tab:focus-visible{outline:2px solid var(--brass-light); outline-offset:2px;}
+  .drawer-tab.active{
+    background:var(--paper);
+    color:var(--ink);
+    transform:translateY(0);
+    box-shadow:0 -2px 0 var(--brass) inset, 0 6px 14px rgba(0,0,0,0.35);
+  }
+  .drawer-tab.active .count{color:var(--rust);}
+
+  .drawer-body{
+    background:var(--paper);
+    border-radius:2px 10px 10px 10px;
+    padding:28px 26px 36px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.35);
+    position:relative;
+  }
+  .drawer-body::before{
+    content:"";
+    position:absolute;
+    top:0; left:0; right:0;
+    height:4px;
+    background:linear-gradient(90deg, var(--brass), var(--brass-light), var(--brass));
+    border-radius:2px 10px 0 0;
+  }
+
+  .drawer-label{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:22px;
+    border-bottom:2px solid var(--card-line);
+    padding-bottom:14px;
+  }
+  .drawer-label h3{
+    font-family:'Spectral', serif;
+    font-size:1.6rem;
+    font-weight:600;
+    margin:0;
+    color:var(--forest);
+  }
+  .drawer-label p{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0;
+    max-width:420px;
+  }
+
+  /* ---------- SEARCH ---------- */
+  .search-box{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--paper-dark);
+    border:1px solid var(--paper-shadow);
+    border-radius:999px;
+    padding:9px 18px;
+    margin-bottom:20px;
+  }
+  .search-box svg{flex-shrink:0; opacity:0.6;}
+  .search-box input{
+    border:none;
+    background:transparent;
+    outline:none;
+    font-family:'Inter', sans-serif;
+    font-size:14px;
+    color:var(--ink);
+    width:100%;
+  }
+  .search-box input::placeholder{color:#8a8067;}
+
+  /* ---------- CARD GRID ---------- */
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+    gap:18px;
+  }
+
+  .card{
+    background:#f4efe0;
+    border:1px solid var(--card-line);
+    border-radius:3px;
+    padding:18px 16px 16px;
+    position:relative;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+    animation:fadeUp 0.35s ease backwards;
+  }
+  .card:hover{
+    transform:translateY(-4px) rotate(-0.3deg);
+    box-shadow:0 10px 22px rgba(58,47,39,0.25);
+  }
+  @keyframes fadeUp{
+    from{opacity:0; transform:translateY(8px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .card::before{
+    content:"";
+    position:absolute;
+    top:10px; left:50%;
+    width:8px; height:8px;
+    background:var(--wood-dark);
+    border-radius:50%;
+    transform:translateX(-50%);
+    box-shadow:0 0 0 2px #f4efe0, 0 0 0 3px var(--card-line);
+  }
+
+  .card-image{
+    width:100%;
+    aspect-ratio:4/3;
+    border-radius:2px;
+    border:1px solid var(--card-line);
+    background:
+      repeating-linear-gradient(135deg, rgba(58,47,39,0.05) 0px, rgba(58,47,39,0.05) 2px, transparent 2px, transparent 10px),
+      #ece4cd;
+    margin:16px 0 14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .card-image svg{
+    width:56%;
+    height:56%;
+    opacity:0.88;
+  }
+  .card-image .corner-tag{
+    position:absolute;
+    bottom:5px; right:7px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:8px;
+    letter-spacing:0.05em;
+    color:var(--ink-soft);
+    opacity:0.55;
+    text-transform:uppercase;
+  }
+
+  .card-index{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.08em;
+    color:var(--rust);
+    margin-bottom:14px;
+    display:block;
+  }
+  .card h4{
+    font-family:'Spectral', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:1.15rem;
+    margin:0 0 8px;
+    color:var(--ink);
+  }
+  .card p{
+    font-size:13px;
+    line-height:1.55;
+    color:var(--ink-soft);
+    margin:0 0 12px;
+  }
+  .stamp{
+    display:inline-block;
+    font-family:'JetBrains Mono', monospace;
+    font-size:9.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--forest);
+    border:1px solid var(--forest);
+    border-radius:3px;
+    padding:3px 7px;
+    transform:rotate(-2deg);
+    opacity:0.85;
+  }
+
+  .card-actions{
+    margin-top:10px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .card-actions a{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--teal);
+    text-decoration:underline;
+    text-underline-offset:2px;
+  }
+  .card-actions a:hover, .card-actions a:focus-visible{color:var(--rust);}
+
+  .no-results{
+    grid-column:1/-1;
+    text-align:center;
+    padding:40px 0;
+    color:var(--ink-soft);
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+  }
+
+  .divider{
+    max-width:1000px;
+    margin:56px auto 0;
+    padding:0 24px;
+  }
+  .divider hr{
+    border:none;
+    border-top:1px dashed rgba(233,225,201,0.25);
+  }
+
+  footer{
+    text-align:center;
+    color:#9a9078;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    padding:44px 20px 50px;
+    letter-spacing:0.04em;
+  }
+
+  .disclaimer{
+    max-width:640px;
+    margin:0 auto 8px;
+    color:#cfc6ac;
+    font-size:11px;
+    line-height:1.6;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  @media (max-width:560px){
+    .hero{padding:40px 18px 26px;}
+    .drawer-body{padding:20px 16px 26px;}
+    .card-grid{grid-template-columns:1fr 1fr;}
+    .quickjump{gap:6px;}
+    .quickjump a{padding:6px 10px; font-size:10.5px;}
+  }
+  @media (max-width:400px){
+    .card-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+  <nav class="quickjump">
+    <a href="#" id="navBreeds" class="active">Breed Index</a>
+    <a href="#" id="navCare">Care Guide</a>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Felis catus &middot; one species, every drawer full</div>
+    <h1>The Feline <em>Index</em></h1>
+    <p>A card catalog of domestic cat breeds and the care that applies to all of them — sorted the way a reference librarian would sort it.</p>
+  </div>
+
+  <div id="breeds" class="view-section visible">
+  <div class="cabinet">
+    <div class="drawer-rail" id="drawerRail"></div>
+    <div class="drawer-body">
+      <div class="drawer-label">
+        <h3 id="drawerTitle">Natural Breeds</h3>
+        <p id="drawerDesc">Shaped by climate and geography before anyone bred them on purpose.</p>
+      </div>
+      <div class="search-box">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" placeholder="Search every drawer by name or trait…">
+      </div>
+      <div class="card-grid" id="cardGrid"></div>
+    </div>
+  </div>
+  </div>
+
+  <div id="care" class="view-section">
+  <div class="section-heading" style="margin-top:44px;">
+    <div class="eyebrow">Reference section</div>
+    <h2>The Care Guide</h2>
+    <p>Applies to any cat, any breed — organized by life stage and by topic, the way a vet's handout would be.</p>
+  </div>
+
+  <div class="cabinet" style="margin-top:20px;">
+    <div class="drawer-rail" id="careRail"></div>
+    <div class="drawer-body">
+      <div class="drawer-label">
+        <h3 id="careDrawerTitle">Life Stages</h3>
+        <p id="careDrawerDesc">What changes as a cat ages.</p>
+      </div>
+      <div class="search-box">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="careSearchInput" placeholder="Search the care guide…">
+      </div>
+      <div class="card-grid" id="careGrid"></div>
+    </div>
+  </div>
+  </div>
+
+  <footer>
+    <p class="disclaimer">General reference only — not veterinary advice. Any sudden change in eating, litter habits, or coat condition is worth a call to an actual vet, not a card catalog.</p>
+    41 wild species. 1 domestic species. Countless opinions about the Sphynx.
+  </footer>
+
+<script>
+/* ============ SHARED SKETCH ICON ============ */
+function catSketch(color){
+  return '<svg viewBox="0 0 100 100" fill="none" stroke="'+color+'" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M28 62 C24 40, 30 22, 38 18 L34 30 C44 24, 56 24, 66 30 L62 18 C70 22, 76 40, 72 62 C72 78, 60 86, 50 86 C40 86, 28 78, 28 62 Z"/>' +
+    '<circle cx="41" cy="56" r="2.6" fill="'+color+'" stroke="none"/>' +
+    '<circle cx="59" cy="56" r="2.6" fill="'+color+'" stroke="none"/>' +
+    '<path d="M47 64 L53 64 L50 68 Z" fill="'+color+'" stroke="none"/>' +
+    '<path d="M50 68 L50 71 M50 71 C46 74, 43 74, 40 72 M50 71 C54 74, 57 74, 60 72"/>' +
+    '<path d="M30 58 L14 54 M30 62 L13 63 M70 58 L86 54 M70 62 L87 63"/>' +
+    '</svg>';
+}
+
+/* ============ BREED CATALOG ============ */
+const categories = [
+  {
+    key:"natural", label:"Natural", title:"Natural Breeds",
+    desc:"Shaped by climate and geography before anyone bred them on purpose.",
+    breeds:[
+      {name:"Maine Coon", tag:"Gentle giant", note:"Tufted ears and a shaggy coat built for New England winters; one of the largest breeds."},
+      {name:"Siberian", tag:"Forest cat", note:"Triple-layered coat from the Russian taiga; often marketed as low-allergen."},
+      {name:"Norwegian Forest Cat", tag:"Climber", note:"Water-resistant double coat evolved for Scandinavian barns and forests."},
+      {name:"Turkish Van", tag:"The swimmer", note:"Chalk-white body with an auburn tail; famously unbothered by water."},
+      {name:"Turkish Angora", tag:"Original silk", note:"Ankara's native long-hair, slender build, frequently odd-eyed."},
+      {name:"Egyptian Mau", tag:"Fastest cat", note:"Naturally spotted coat; the quickest domestic breed on record."},
+      {name:"American Shorthair", tag:"Working mouser", note:"Descended from ships' cats brought to the colonies for pest control."}
+    ]
+  },
+  {
+    key:"hairless", label:"Hairless", title:"Hairless Breeds",
+    desc:"Coatless by mutation, not by grooming — bred deliberately from a single genetic accident.",
+    breeds:[
+      {name:"Sphynx", tag:"Warm to the touch", note:"Coatless from a 1966 Canadian mutation; skin feels like warm suede."},
+      {name:"Donskoy", tag:"Russian hairless", note:"Looser, wrinklier skin than the Sphynx; a separate, unrelated mutation."},
+      {name:"Peterbald", tag:"Elegant line", note:"Whippet-like silhouette bred from Donskoy stock in St. Petersburg."}
+    ]
+  },
+  {
+    key:"hybrid", label:"Hybrid", title:"Wild Hybrid Breeds",
+    desc:"A few generations removed from an actual wildcat ancestor.",
+    breeds:[
+      {name:"Bengal", tag:"Asian leopard cat", note:"Marbled or spotted coat from crossing with a small wild Asian cat."},
+      {name:"Savannah", tag:"Serval-descended", note:"Tall ears and a habit of clearing fences most cats wouldn't attempt."},
+      {name:"Chausie", tag:"Jungle cat line", note:"Long, lean build tracing back to the jungle cat of Asia and Africa."},
+      {name:"Toyger", tag:"Pocket tiger", note:"Bred stripe-by-stripe over decades to echo a tiger's markings."}
+    ]
+  },
+  {
+    key:"mutation", label:"Folded / Curled", title:"Ear & Tail Mutations",
+    desc:"One small cartilage or bone difference, standardized into a breed.",
+    breeds:[
+      {name:"Scottish Fold", tag:"Folded ears", note:"A cartilage mutation folds the ears forward for an owl-like face."},
+      {name:"American Curl", tag:"Curled ears", note:"Ears curl backward within the first week of a kitten's life."},
+      {name:"Kurilian Bobtail", tag:"Natural bobtail", note:"A short, pom-pom tail that occurs naturally in the Kuril Islands."},
+      {name:"Manx", tag:"Tailless", note:"Born with no tail at all, native to the Isle of Man."}
+    ]
+  },
+  {
+    key:"longhair", label:"Long-Haired", title:"Long-Haired Classics",
+    desc:"The show-ring aristocrats — bred for coat as much as conformation.",
+    breeds:[
+      {name:"Persian", tag:"Flat-faced", note:"A coat that needs daily grooming and a face bred flatter over generations."},
+      {name:"Himalayan", tag:"Persian × Siamese", note:"Persian body type with Siamese point coloring and blue eyes."},
+      {name:"Ragdoll", tag:"Goes limp", note:"Bred specifically for a placid temperament and a floppy 'flop' when held."},
+      {name:"Birman", tag:"Sacred cat of Burma", note:"Deep blue eyes and white 'gloved' paws on every foot."},
+      {name:"Somali", tag:"Fox-tailed", note:"Essentially a long-haired Abyssinian, with a bushy, fox-like tail."}
+    ]
+  },
+  {
+    key:"shorthair", label:"Short-Haired", title:"Short-Haired Classics",
+    desc:"The oldest formally recognized lines, sleek by design.",
+    breeds:[
+      {name:"British Shorthair", tag:"Round & dense", note:"The model for illustrations of the Cheshire Cat; plush, dense coat."},
+      {name:"Russian Blue", tag:"Silver-tipped", note:"A double coat with silvery guard hairs and striking emerald eyes."},
+      {name:"Abyssinian", tag:"Ticked coat", note:"Each hair banded with color, giving a tiny-cougar look."},
+      {name:"Burmese", tag:"Brick in silk", note:"Compact and surprisingly heavy for its size; famously affectionate."},
+      {name:"Siamese", tag:"Point-colored", note:"One of the oldest recognized breeds; vocal and strongly opinionated."},
+      {name:"Oriental Shorthair", tag:"300+ colors", note:"Siamese body type, bred out into hundreds of color combinations."},
+      {name:"Cornish Rex", tag:"Wavy coat", note:"Only the soft undercoat remains, giving a tight, marcel-wave texture."},
+      {name:"Devon Rex", tag:"Pixie face", note:"Large ears, elfin face, and a coat so fine it barely sheds."}
+    ]
+  },
+  {
+    key:"rare", label:"Rare", title:"Rare & Distinctive",
+    desc:"Small registries, small gene pools, or just a very specific look.",
+    breeds:[
+      {name:"Munchkin", tag:"Short legs", note:"A dwarfism mutation keeps the legs short; still argued over by breed councils."},
+      {name:"LaPerm", tag:"Curly coat", note:"A spontaneous curl mutation found on an Oregon farm in the 1980s."},
+      {name:"Khao Manee", tag:"All-white", note:"An ancient Thai breed, often odd-eyed, once reserved for royalty."},
+      {name:"Lykoi", tag:"Werewolf cat", note:"A patchy, sparse coat mutation that gives an unmistakably lupine look."}
+    ]
+  }
+];
+
+const rail = document.getElementById('drawerRail');
+const grid = document.getElementById('cardGrid');
+const title = document.getElementById('drawerTitle');
+const desc = document.getElementById('drawerDesc');
+const searchInput = document.getElementById('searchInput');
+
+const catColors = {
+  natural:"#3f5443", hairless:"#a15a3a", hybrid:"#8a6b1f",
+  mutation:"#3d6b6d", longhair:"#6b4a7a", shorthair:"#3f5443", rare:"#a15a3a"
+};
+
+let activeKey = categories[0].key;
+let searchTerm = "";
+
+function buildTabs(){
+  rail.innerHTML = "";
+  categories.forEach(cat=>{
+    const btn = document.createElement('button');
+    btn.className = 'drawer-tab' + (cat.key===activeKey ? ' active' : '');
+    btn.innerHTML = cat.label + '<span class="count">' + cat.breeds.length + ' filed</span>';
+    btn.addEventListener('click', ()=>{
+      activeKey = cat.key;
+      searchTerm = "";
+      searchInput.value = "";
+      buildTabs();
+      renderGrid();
+    });
+    rail.appendChild(btn);
+  });
+}
+
+function renderGrid(){
+  grid.innerHTML = "";
+  const cat = categories.find(c=>c.key===activeKey);
+  title.textContent = cat.title;
+  desc.textContent = cat.desc;
+
+  const term = searchTerm.trim().toLowerCase();
+  const pool = term
+    ? categories.flatMap(c=>c.breeds.map(b=>({...b, cat:c.label, catKey:c.key})))
+    : cat.breeds.map(b=>({...b, cat:cat.label, catKey:cat.key}));
+
+  const filtered = term
+    ? pool.filter(b => (b.name+" "+b.tag+" "+b.note).toLowerCase().includes(term))
+    : pool;
+
+  if(term){
+    title.textContent = "Search results";
+    desc.textContent = filtered.length + " match" + (filtered.length===1?"":"es") + " across every drawer";
+  }
+
+  if(filtered.length === 0){
+    const empty = document.createElement('div');
+    empty.className = 'no-results';
+    empty.textContent = "No breed on file matches that search.";
+    grid.appendChild(empty);
+    return;
+  }
+
+  filtered.forEach((b, i)=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.animationDelay = (i*0.03)+'s';
+    const color = catColors[b.catKey] || '#3f5443';
+    card.innerHTML =
+      '<span class="card-index">FILE ' + String(i+1).padStart(3,'0') + (term ? ' · ' + b.cat.toUpperCase() : '') + '</span>' +
+      '<div class="card-image">' + catSketch(color) + '<span class="corner-tag">Photo on file</span></div>' +
+      '<h4>' + b.name + '</h4>' +
+      '<p>' + b.note + '</p>' +
+      '<span class="stamp">' + b.tag + '</span>';
+    grid.appendChild(card);
+  });
+}
+
+searchInput.addEventListener('input', (e)=>{
+  searchTerm = e.target.value;
+  renderGrid();
+});
+
+buildTabs();
+renderGrid();
+
+/* ============ CARE GUIDE ============ */
+const careCategories = [
+  {
+    key:"stages", label:"Life Stages", title:"Life Stages",
+    desc:"What changes as a cat ages — feeding, vet visits, and vulnerabilities shift by decade, not by breed.",
+    items:[
+      {name:"Kitten (0–12 months)", tag:"Growth phase", color:"#8a6b1f",
+       note:"Feed a kitten-formula food 3–4 times a day for the extra protein and calories growth demands. Core vaccines run in a series from about 6 to 16 weeks, and most vets schedule spay/neuter around 5–6 months. This is also the main socialization window — new sounds, people, and handling are best introduced now."},
+      {name:"Adult (1–10 years)", tag:"Maintenance", color:"#3f5443",
+       note:"Two measured meals a day is standard, with an annual vet visit for vaccines, dental checks, and weight tracking. This is the stage most general feeding and grooming advice is written for, since metabolism and risk factors are at their most stable."},
+      {name:"Senior (10+ years)", tag:"Extra watch", color:"#a15a3a",
+       note:"Many vets shift to twice-yearly visits starting around age 7–10. Watch for the big four: kidney disease, hyperthyroidism, arthritis, and dental disease. Senior diets tend to be softer and lower in phosphorus, and a low-sided litter box helps cats with stiff joints get in and out comfortably."}
+    ]
+  },
+  {
+    key:"diet", label:"Diet & Nutrition", title:"Diet & Nutrition",
+    desc:"Cats are obligate carnivores — what they eat, and never eat, matters more than most other care decisions.",
+    items:[
+      {name:"Obligate Carnivore", tag:"Biology", color:"#3d6b6d",
+       note:"Cats need meat-based protein and can't thrive on a plant-based diet the way dogs or humans can. Taurine, an amino acid found only in animal tissue, is essential for heart and eye health, and a deficiency can cause serious long-term damage."},
+      {name:"Wet vs. Dry Food", tag:"Format", color:"#6b4a7a",
+       note:"Wet food adds hydration and tends to be gentler on aging kidneys; dry food is convenient, shelf-stable, and helps with dental wear. Many owners mix both, adjusting the ratio as a cat ages or develops health issues."},
+      {name:"Foods to Avoid", tag:"Toxic list", color:"#a15a3a",
+       note:"Onion, garlic, chocolate, grapes and raisins, and xylitol (a sugar substitute in gum and baked goods) are all toxic to cats. Even small amounts of onion or garlic, cooked or raw, can damage red blood cells over time."},
+      {name:"Where to Buy", tag:"Local options", color:"#3f5443",
+       note:"Specialty pet stores generally stock a wider range of vet-recommended formulas than supermarkets, and can advise on switching foods gradually. See the Resources tab for stores in Singapore that deliver, including Polypet and aPetMart."}
+    ]
+  },
+  {
+    key:"allergies", label:"Allergies", title:"Allergies & Sensitivities",
+    desc:"The three usual suspects behind unexplained itching, hair loss, or a sudden change in coat.",
+    items:[
+      {name:"Flea Allergy Dermatitis", tag:"Most common", color:"#a15a3a",
+       note:"The single most common allergy in cats. A cat sensitive to flea saliva can react intensely to just one bite, with itching and hair loss concentrated around the tail base, lower back, and neck."},
+      {name:"Food Allergies", tag:"Protein source", color:"#8a6b1f",
+       note:"Usually a reaction to a specific protein rather than a brand — beef, dairy, fish, and chicken are the most frequently reported culprits. Signs tend to be itching, vomiting, or soft stool rather than sneezing, and diagnosis requires a strict elimination diet."},
+      {name:"Environmental Allergies", tag:"Atopic", color:"#3d6b6d",
+       note:"Pollen, dust mites, and mold can trigger atopic dermatitis in cats. Unlike in humans, it rarely shows up as sneezing — look for face-rubbing, recurring ear infections, or excessive grooming in one spot instead."}
+    ]
+  },
+  {
+    key:"daily", label:"Daily Care", title:"Daily Care",
+    desc:"The routine tasks that keep a cat comfortable day to day, regardless of age or breed.",
+    items:[
+      {name:"Feeding & Water", tag:"Daily", color:"#a15a3a",
+       note:"Measured meals on a schedule beat free-feeding for most adult cats. Keep water available at all times, and placed away from the food bowl — cats instinctively avoid drinking near where they eat."},
+      {name:"Grooming", tag:"Weekly+", color:"#6b4a7a",
+       note:"Short-haired cats mostly self-groom, but a weekly brush cuts down on shedding and hairballs. Long-haired breeds need brushing every day or two to prevent painful mats from forming."},
+      {name:"Litter Box", tag:"Daily scoop", color:"#3f5443",
+       note:"Scoop at least once a day, and keep one box per cat plus one extra, placed in quiet, easy-to-reach spots. Box avoidance is one of the most common early signs that something — behavioral or medical — is wrong."},
+      {name:"Enrichment & Play", tag:"Daily", color:"#8a6b1f",
+       note:"Cats stay natural hunters even indoors. Short daily play sessions with a wand toy, along with scratching posts and window perches, help prevent the boredom that often shows up as stress or destructive behavior."}
+    ]
+  },
+  {
+    key:"health", label:"Health & Safety", title:"Health & Safety",
+    desc:"Regular checkups and a home free of the hazards cats are most likely to get into.",
+    items:[
+      {name:"Vet Visits", tag:"Annual→biannual", color:"#3d6b6d",
+       note:"Healthy adults generally need a check-up once a year, covering vaccination boosters, dental checks, and parasite prevention. Kittens need a tighter early schedule, and seniors typically move to every six months."},
+      {name:"Home-Proofing", tag:"Ongoing", color:"#a15a3a",
+       note:"Lilies are highly toxic to cats even in small amounts, and string, thread, and hair elastics pose a serious swallowing risk. Secure open windows and balconies — 'high-rise syndrome' is a real and common injury in cats that fall while chasing something outside."}
+    ]
+  },
+  {
+    key:"resources", label:"Resources", title:"Places & Services in Singapore",
+    desc:"A starting point, not an endorsement — always check current hours and reviews before booking.",
+    items:[
+      {name:"Atlas Veterinary Clinic & Surgery", tag:"4.9★ · Bukit Merah", color:"#3d6b6d",
+       note:"163 Bukit Merah Central, #03-3573 · +65 6980 8038 — General practice with WhatsApp follow-ups between visits.",
+       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJv0OglfMb2jERZOIDRlip4Qc"},
+      {name:"Advanced VetCare (Bedok)", tag:"24hrs · Emergency", color:"#3d6b6d",
+       note:"26 Jln Pari Burong · +65 6636 1788 — Open 24 hours, useful to have on hand for after-midnight emergencies.",
+       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJkS4WOzA92jERQ5_fAGVwalg"},
+      {name:"Dr Paws Vet Care", tag:"4.8★ · Same-day slots", color:"#3d6b6d",
+       note:"77 Lucky Heights, off Upper E Coast Rd · +65 6243 4668 — Known for fitting in same-day appointments and gentle handling of senior pets.",
+       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJfRaURk8j2jERcWYJ859at3k"},
+      {name:"Likeable Pets", tag:"5.0★ · Mobile grooming", color:"#6b4a7a",
+       note:"18 Howard Rd · +65 8685 2360 — Mobile cat and dog grooming, often booked for anxious or older cats.",
+       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJK8_-sPgP2jERbUHRjc67iZM"},
+      {name:"The Pets Workshop (Telepark)", tag:"4.8★ · Cat specialist", color:"#6b4a7a",
+       note:"5 Tampines Central 6, #01-12 Telepark · +65 8499 5160 — Grooming studio with a dedicated cat-handling focus.",
+       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJzy-K38M92jERh78glk3GhdU"},
+      {name:"Pawpy Kisses Pet Shop & Grooming", tag:"4.9★ · Shop + groom", color:"#6b4a7a",
+       note:"232 Balestier Rd · +65 9060 6501 — Grooming plus an in-house shop for food and accessories.",
+       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJPz582lYW2jERhWT6a8loUkI"},
+      {name:"Polypet", tag:"4.7★ · Online + store", color:"#8a6b1f",
+       note:"109 Clementi Street 11 · +65 6779 5309 — Wide range of food and supplements, reliable delivery islandwide.",
+       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJs1eHtIYa2jERR6jOXK674Ns"},
+      {name:"Pet Master Mega Store by CatSmart", tag:"4.8★ · Large store", color:"#8a6b1f",
+       note:"920 East Coast Park, Parkland Green · +65 6908 9777 — Big-box physical store, good for browsing carriers, condos, and litter setups in person.",
+       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJnxU0wwkZ2jERYn6FCbMY0xU"},
+      {name:"aPetMart", tag:"4.8★ · Online store", color:"#8a6b1f",
+       note:"1014 Geylang East Ave 3 · online-first — Specialty online store, convenient for bulk or recurring food orders.",
+       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJQTfrXC8Z2jERuAqe276CURY"}
+    ]
+  }
+];
+
+const careRail = document.getElementById('careRail');
+const careGrid = document.getElementById('careGrid');
+const careTitle = document.getElementById('careDrawerTitle');
+const careDesc = document.getElementById('careDrawerDesc');
+const careSearchInput = document.getElementById('careSearchInput');
+
+let careActiveKey = careCategories[0].key;
+let careSearchTerm = "";
+
+function careBuildTabs(){
+  careRail.innerHTML = "";
+  careCategories.forEach(cat=>{
+    const btn = document.createElement('button');
+    btn.className = 'drawer-tab' + (cat.key===careActiveKey ? ' active' : '');
+    btn.innerHTML = cat.label + '<span class="count">' + cat.items.length + ' filed</span>';
+    btn.addEventListener('click', ()=>{
+      careActiveKey = cat.key;
+      careSearchTerm = "";
+      careSearchInput.value = "";
+      careBuildTabs();
+      careRenderGrid();
+    });
+    careRail.appendChild(btn);
+  });
+}
+
+function careRenderGrid(){
+  careGrid.innerHTML = "";
+  const cat = careCategories.find(c=>c.key===careActiveKey);
+  careTitle.textContent = cat.title;
+  careDesc.textContent = cat.desc;
+
+  const term = careSearchTerm.trim().toLowerCase();
+  const pool = term
+    ? careCategories.flatMap(c=>c.items.map(b=>({...b, cat:c.label})))
+    : cat.items.map(b=>({...b, cat:cat.label}));
+
+  const filtered = term
+    ? pool.filter(b => (b.name+" "+b.tag+" "+b.note).toLowerCase().includes(term))
+    : pool;
+
+  if(term){
+    careTitle.textContent = "Search results";
+    careDesc.textContent = filtered.length + " match" + (filtered.length===1?"":"es") + " across the care guide";
+  }
+
+  if(filtered.length === 0){
+    const empty = document.createElement('div');
+    empty.className = 'no-results';
+    empty.textContent = "No entry matches that search.";
+    careGrid.appendChild(empty);
+    return;
+  }
+
+  filtered.forEach((b, i)=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.animationDelay = (i*0.03)+'s';
+    const actions = b.mapsUrl
+      ? '<div class="card-actions"><a href="'+b.mapsUrl+'" target="_blank" rel="noopener">Get directions ↗</a></div>'
+      : '';
+    card.innerHTML =
+      '<span class="card-index">CARE ' + String(i+1).padStart(3,'0') + (term ? ' · ' + b.cat.toUpperCase() : '') + '</span>' +
+      '<div class="card-image">' + catSketch(b.color) + '<span class="corner-tag">Reference</span></div>' +
+      '<h4>' + b.name + '</h4>' +
+      '<p>' + b.note + '</p>' +
+      '<span class="stamp">' + b.tag + '</span>' +
+      actions;
+    careGrid.appendChild(card);
+  });
+}
+
+careSearchInput.addEventListener('input', (e)=>{
+  careSearchTerm = e.target.value;
+  careRenderGrid();
+});
+
+careBuildTabs();
+careRenderGrid();
+
+/* ============ SECTION TOGGLE ============ */
+const navBreeds = document.getElementById('navBreeds');
+const navCare = document.getElementById('navCare');
+const breedsSection = document.getElementById('breeds');
+const careSection = document.getElementById('care');
+
+function showSection(which){
+  const showBreeds = which === 'breeds';
+  breedsSection.classList.toggle('visible', showBreeds);
+  careSection.classList.toggle('visible', !showBreeds);
+  navBreeds.classList.toggle('active', showBreeds);
+  navCare.classList.toggle('active', !showBreeds);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+navBreeds.addEventListener('click', (e)=>{ e.preventDefault(); showSection('breeds'); });
+navCare.addEventListener('click', (e)=>{ e.preventDefault(); showSection('care'); });
+</script>
+
+</body>
+</html>
