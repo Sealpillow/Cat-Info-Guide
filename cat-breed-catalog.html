@@ -6,23 +6,25 @@
 <title>The Feline Index — A Catalog of Domestic Breeds &amp; Care</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#232520;
-    --ink-soft:#4a453c;
-    --paper:#e8e1cd;
-    --paper-dark:#d9d0b3;
-    --paper-shadow:#c7bc9c;
-    --wood:#5c4a3d;
-    --wood-dark:#3a2f27;
-    --wood-light:#7a6353;
-    --brass:#a9852e;
-    --brass-light:#c9a648;
-    --forest:#3f5443;
-    --rust:#a15a3a;
-    --teal:#3d6b6d;
-    --card-line:#b9ae8c;
+    --ink:#1B241E;
+    --ink-soft:#4E584F;
+    --ink-faint:#7C8377;
+    --canvas:#F7F4EC;
+    --canvas-dim:#EFEAD9;
+    --panel:#FFFFFF;
+    --line:#DBD4C0;
+    --line-strong:#C7BEA3;
+    --forest:#1F4534;
+    --forest-deep:#152D22;
+    --brass:#A6842B;
+    --brass-light:#C9A648;
+    --clay:#8A3B2B;
+    --teal:#2C5D5A;
+    --plum:#5B3A5C;
+    --olive:#8A6A2E;
   }
 
   *{box-sizing:border-box;}
@@ -30,12 +32,9 @@
 
   body{
     margin:0;
-    background:var(--wood-dark);
-    background-image:
-      radial-gradient(ellipse at top, rgba(255,255,255,0.03), transparent 60%),
-      repeating-linear-gradient(90deg, rgba(0,0,0,0.06) 0px, rgba(0,0,0,0.06) 1px, transparent 1px, transparent 80px);
+    background:var(--canvas);
     color:var(--ink);
-    font-family:'Inter', sans-serif;
+    font-family:'Archivo', sans-serif;
     -webkit-font-smoothing:antialiased;
   }
 
@@ -49,35 +48,35 @@
     display:flex;
     justify-content:center;
     gap:8px;
-    padding:12px 16px;
-    background:rgba(58,47,39,0.92);
-    backdrop-filter:blur(6px);
-    border-bottom:1px solid rgba(169,133,46,0.35);
+    padding:14px 16px;
+    background:var(--forest-deep);
+    border-bottom:1px solid rgba(201,166,72,0.25);
   }
   .quickjump a{
     font-family:'JetBrains Mono', monospace;
     font-size:11.5px;
-    letter-spacing:0.05em;
+    letter-spacing:0.08em;
     text-transform:uppercase;
-    color:#e9e1c9;
+    color:#DCE5DC;
     text-decoration:none;
-    padding:7px 14px;
-    border:1px solid rgba(233,225,201,0.3);
+    padding:7px 16px;
+    border:1px solid rgba(220,229,220,0.28);
     border-radius:999px;
-    transition:background 0.2s ease, border-color 0.2s ease;
+    transition:background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
     background:none;
     cursor:pointer;
     font:inherit;
+    letter-spacing:0.08em;
   }
   .quickjump a:hover, .quickjump a:focus-visible{
-    background:rgba(169,133,46,0.25);
     border-color:var(--brass-light);
+    color:#fff;
     outline:none;
   }
   .quickjump a.active{
     background:var(--brass-light);
     border-color:var(--brass-light);
-    color:var(--wood-dark);
+    color:var(--forest-deep);
     font-weight:700;
   }
 
@@ -86,125 +85,123 @@
 
   /* ---------- HERO ---------- */
   .hero{
-    padding:56px 24px 40px;
+    padding:72px 24px 56px;
     text-align:center;
-    color:var(--paper);
+    color:#F2EFE3;
+    background:var(--forest-deep);
     position:relative;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:3px;
+    background:var(--brass);
   }
   .hero-eyebrow{
     font-family:'JetBrains Mono', monospace;
-    font-size:12px;
-    letter-spacing:0.25em;
+    font-size:11.5px;
+    letter-spacing:0.28em;
     text-transform:uppercase;
     color:var(--brass-light);
-    margin-bottom:18px;
+    margin-bottom:20px;
   }
   .hero h1{
-    font-family:'Spectral', serif;
-    font-weight:600;
-    font-size:clamp(2.2rem, 6vw, 4rem);
-    margin:0 0 14px;
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-optical-sizing:auto;
+    font-size:clamp(1.9rem, 4.2vw, 3rem);
+    margin:0 0 16px;
     letter-spacing:-0.01em;
   }
   .hero h1 em{
     font-style:italic;
+    font-weight:500;
     color:var(--brass-light);
   }
   .hero p{
     max-width:520px;
     margin:0 auto;
-    color:#cfc6ac;
+    color:#C7CCC0;
     font-size:15px;
-    line-height:1.6;
+    line-height:1.65;
   }
 
   .section-heading{
     max-width:1000px;
-    margin:0 auto;
+    margin:48px auto 0;
     padding:0 24px;
-    color:var(--paper);
+    color:var(--ink);
   }
   .section-heading .eyebrow{
     font-family:'JetBrains Mono', monospace;
     font-size:11px;
     letter-spacing:0.2em;
     text-transform:uppercase;
-    color:var(--brass-light);
+    color:var(--brass);
     margin-bottom:8px;
   }
   .section-heading h2{
-    font-family:'Spectral', serif;
-    font-size:clamp(1.6rem, 4vw, 2.2rem);
-    font-weight:600;
-    margin:0 0 6px;
+    font-family:'Fraunces', serif;
+    font-size:clamp(1.6rem, 4vw, 2.1rem);
+    font-weight:500;
+    margin:0 0 8px;
+    color:var(--ink);
   }
   .section-heading p{
-    color:#cfc6ac;
+    color:var(--ink-soft);
     font-size:14px;
-    max-width:520px;
+    max-width:540px;
     margin:0;
-    line-height:1.6;
+    line-height:1.65;
   }
 
-  /* ---------- CABINET / DRAWER TABS ---------- */
+  /* ---------- GALLERY NAV / TABS ---------- */
   .cabinet{
     max-width:1000px;
-    margin:28px auto 0;
+    margin:32px auto 0;
     padding:0 20px;
     scroll-margin-top:70px;
   }
   .drawer-rail{
     display:flex;
     flex-wrap:wrap;
-    gap:6px;
-    justify-content:center;
-    padding-bottom:0;
+    gap:8px;
+    margin-bottom:14px;
   }
   .drawer-tab{
     font-family:'JetBrains Mono', monospace;
-    font-size:12px;
-    letter-spacing:0.03em;
-    background:var(--wood-light);
-    color:#f1ead4;
-    border:1px solid var(--wood-dark);
-    border-bottom:none;
-    border-radius:6px 6px 0 0;
-    padding:10px 16px 12px;
+    font-size:11.5px;
+    letter-spacing:0.04em;
+    background:var(--panel);
+    color:var(--ink-soft);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:9px 16px;
     cursor:pointer;
-    position:relative;
-    transform:translateY(6px);
-    transition:transform 0.25s ease, background 0.25s ease;
+    transition:border-color 0.18s ease, color 0.18s ease, background 0.18s ease, transform 0.15s ease;
   }
   .drawer-tab .count{
-    display:block;
-    font-size:10px;
-    color:var(--brass-light);
-    margin-top:3px;
+    display:inline;
+    font-size:10.5px;
+    color:var(--ink-faint);
+    margin-left:6px;
   }
-  .drawer-tab:hover{transform:translateY(0px); background:var(--wood);}
-  .drawer-tab:focus-visible{outline:2px solid var(--brass-light); outline-offset:2px;}
+  .drawer-tab:hover{border-color:var(--brass); color:var(--ink); transform:translateY(-1px);}
+  .drawer-tab:focus-visible{outline:2px solid var(--brass); outline-offset:2px;}
   .drawer-tab.active{
-    background:var(--paper);
-    color:var(--ink);
-    transform:translateY(0);
-    box-shadow:0 -2px 0 var(--brass) inset, 0 6px 14px rgba(0,0,0,0.35);
+    background:var(--forest);
+    color:#F2EFE3;
+    border-color:var(--forest);
   }
-  .drawer-tab.active .count{color:var(--rust);}
+  .drawer-tab.active .count{color:var(--brass-light);}
 
   .drawer-body{
-    background:var(--paper);
-    border-radius:2px 10px 10px 10px;
-    padding:28px 26px 36px;
-    box-shadow:0 20px 40px rgba(0,0,0,0.35);
-    position:relative;
-  }
-  .drawer-body::before{
-    content:"";
-    position:absolute;
-    top:0; left:0; right:0;
-    height:4px;
-    background:linear-gradient(90deg, var(--brass), var(--brass-light), var(--brass));
-    border-radius:2px 10px 0 0;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-top:3px solid var(--brass);
+    border-radius:4px 4px 12px 12px;
+    padding:30px 28px 34px;
   }
 
   .drawer-label{
@@ -214,13 +211,13 @@
     flex-wrap:wrap;
     gap:10px;
     margin-bottom:22px;
-    border-bottom:2px solid var(--card-line);
-    padding-bottom:14px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:16px;
   }
   .drawer-label h3{
-    font-family:'Spectral', serif;
-    font-size:1.6rem;
-    font-weight:600;
+    font-family:'Fraunces', serif;
+    font-size:1.5rem;
+    font-weight:500;
     margin:0;
     color:var(--forest);
   }
@@ -236,101 +233,77 @@
     display:flex;
     align-items:center;
     gap:10px;
-    background:var(--paper-dark);
-    border:1px solid var(--paper-shadow);
+    background:var(--canvas);
+    border:1px solid var(--line);
     border-radius:999px;
     padding:9px 18px;
-    margin-bottom:20px;
+    margin-bottom:22px;
   }
-  .search-box svg{flex-shrink:0; opacity:0.6;}
+  .search-box svg{flex-shrink:0; opacity:0.55; color:var(--ink-soft);}
   .search-box input{
     border:none;
     background:transparent;
     outline:none;
-    font-family:'Inter', sans-serif;
+    font-family:'Archivo', sans-serif;
     font-size:14px;
     color:var(--ink);
     width:100%;
   }
-  .search-box input::placeholder{color:#8a8067;}
+  .search-box input::placeholder{color:var(--ink-faint);}
 
   /* ---------- CARD GRID ---------- */
   .card-grid{
     display:grid;
     grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
-    gap:18px;
+    gap:16px;
   }
 
   .card{
-    background:#f4efe0;
-    border:1px solid var(--card-line);
-    border-radius:3px;
-    padding:18px 16px 16px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 18px 16px;
     position:relative;
-    transition:transform 0.2s ease, box-shadow 0.2s ease;
-    animation:fadeUp 0.35s ease backwards;
+    transition:transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    animation:fadeUp 0.3s ease backwards;
   }
   .card:hover{
-    transform:translateY(-4px) rotate(-0.3deg);
-    box-shadow:0 10px 22px rgba(58,47,39,0.25);
+    transform:translateY(-3px);
+    border-color:var(--line-strong);
+    box-shadow:0 10px 24px rgba(27,36,30,0.08);
   }
   @keyframes fadeUp{
-    from{opacity:0; transform:translateY(8px);}
+    from{opacity:0; transform:translateY(6px);}
     to{opacity:1; transform:translateY(0);}
-  }
-
-  .card::before{
-    content:"";
-    position:absolute;
-    top:10px; left:50%;
-    width:8px; height:8px;
-    background:var(--wood-dark);
-    border-radius:50%;
-    transform:translateX(-50%);
-    box-shadow:0 0 0 2px #f4efe0, 0 0 0 3px var(--card-line);
   }
 
   .card-image{
     width:100%;
     aspect-ratio:4/3;
-    border-radius:2px;
-    border:1px solid var(--card-line);
-    background:
-      repeating-linear-gradient(135deg, rgba(58,47,39,0.05) 0px, rgba(58,47,39,0.05) 2px, transparent 2px, transparent 10px),
-      #ece4cd;
-    margin:16px 0 14px;
+    border-radius:6px;
+    background:var(--canvas-dim);
+    margin:0 0 14px;
     display:flex;
     align-items:center;
     justify-content:center;
-    position:relative;
     overflow:hidden;
   }
   .card-image svg{
-    width:56%;
-    height:56%;
-    opacity:0.88;
-  }
-  .card-image .corner-tag{
-    position:absolute;
-    bottom:5px; right:7px;
-    font-family:'JetBrains Mono', monospace;
-    font-size:8px;
-    letter-spacing:0.05em;
-    color:var(--ink-soft);
-    opacity:0.55;
-    text-transform:uppercase;
+    width:44%;
+    height:44%;
+    opacity:0.85;
   }
 
   .card-index{
     font-family:'JetBrains Mono', monospace;
     font-size:10px;
-    letter-spacing:0.08em;
-    color:var(--rust);
-    margin-bottom:14px;
+    letter-spacing:0.1em;
+    color:var(--brass);
+    margin-bottom:10px;
     display:block;
   }
   .card h4{
-    font-family:'Spectral', serif;
+    font-family:'Fraunces', serif;
     font-style:italic;
     font-weight:500;
     font-size:1.15rem;
@@ -341,20 +314,22 @@
     font-size:13px;
     line-height:1.55;
     color:var(--ink-soft);
-    margin:0 0 12px;
+    margin:0 0 14px;
+  }
+  .card p strong{
+    color:var(--clay);
+    font-weight:700;
   }
   .stamp{
     display:inline-block;
     font-family:'JetBrains Mono', monospace;
     font-size:9.5px;
-    letter-spacing:0.06em;
+    letter-spacing:0.05em;
     text-transform:uppercase;
     color:var(--forest);
-    border:1px solid var(--forest);
-    border-radius:3px;
-    padding:3px 7px;
-    transform:rotate(-2deg);
-    opacity:0.85;
+    border:1px solid var(--line-strong);
+    border-radius:999px;
+    padding:3px 10px;
   }
 
   .card-actions{
@@ -370,7 +345,7 @@
     text-decoration:underline;
     text-underline-offset:2px;
   }
-  .card-actions a:hover, .card-actions a:focus-visible{color:var(--rust);}
+  .card-actions a:hover, .card-actions a:focus-visible{color:var(--clay);}
 
   .no-results{
     grid-column:1/-1;
@@ -381,31 +356,21 @@
     font-size:13px;
   }
 
-  .divider{
-    max-width:1000px;
-    margin:56px auto 0;
-    padding:0 24px;
-  }
-  .divider hr{
-    border:none;
-    border-top:1px dashed rgba(233,225,201,0.25);
-  }
-
   footer{
     text-align:center;
-    color:#9a9078;
+    color:var(--ink-faint);
     font-family:'JetBrains Mono', monospace;
     font-size:11px;
-    padding:44px 20px 50px;
-    letter-spacing:0.04em;
+    padding:48px 20px 56px;
+    letter-spacing:0.03em;
   }
 
   .disclaimer{
     max-width:640px;
-    margin:0 auto 8px;
-    color:#cfc6ac;
+    margin:0 auto 10px;
+    color:var(--ink-soft);
     font-size:11px;
-    line-height:1.6;
+    line-height:1.65;
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -413,14 +378,224 @@
   }
 
   @media (max-width:560px){
-    .hero{padding:40px 18px 26px;}
-    .drawer-body{padding:20px 16px 26px;}
+    .hero{padding:52px 18px 40px;}
+    .drawer-body{padding:22px 16px 28px;}
     .card-grid{grid-template-columns:1fr 1fr;}
     .quickjump{gap:6px;}
-    .quickjump a{padding:6px 10px; font-size:10.5px;}
+    .quickjump a{padding:6px 12px; font-size:10.5px;}
   }
   @media (max-width:400px){
     .card-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- CARE CARD DRILL-HINT ---------- */
+  .card{cursor:pointer;}
+  .drill-hint{
+    display:block;
+    margin-top:2px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px;
+    color:var(--teal);
+    letter-spacing:0.02em;
+  }
+
+  /* ---------- DETAIL MODAL ---------- */
+  .modal-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(21,45,34,0.55);
+    z-index:50;
+    align-items:flex-start;
+    justify-content:center;
+    padding:60px 20px;
+    overflow-y:auto;
+  }
+  .modal-overlay.visible{display:flex;}
+  .modal-box{
+    background:var(--panel);
+    max-width:640px;
+    width:100%;
+    max-height:82vh;
+    overflow-y:auto;
+    border:1px solid var(--line);
+    border-top:3px solid var(--brass);
+    border-radius:4px 4px 14px 14px;
+    box-shadow:0 30px 60px rgba(21,45,34,0.35);
+    position:relative;
+    padding:30px 28px 28px;
+  }
+  .modal-close{
+    position:absolute;
+    top:14px; right:14px;
+    width:28px; height:28px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:var(--canvas);
+    color:var(--ink);
+    font-size:15px;
+    line-height:1;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .modal-close:hover, .modal-close:focus-visible{background:var(--clay); border-color:var(--clay); color:#fff; outline:none;}
+  .modal-index{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.1em;
+    color:var(--brass);
+    display:block;
+    margin-bottom:10px;
+  }
+  .modal-box h4{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.4rem;
+    font-weight:500;
+    margin:0 0 12px;
+    padding-right:30px;
+    color:var(--ink);
+  }
+  .modal-facts{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(130px, 1fr));
+    gap:8px;
+    margin:0 0 18px;
+    padding:14px;
+    background:var(--canvas);
+    border:1px solid var(--line);
+    border-radius:8px;
+  }
+  .fact-chip{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .fact-chip .fact-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:9.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--brass);
+  }
+  .fact-chip .fact-value{
+    font-size:12.5px;
+    color:var(--ink);
+    font-weight:500;
+    line-height:1.35;
+  }
+  #modalNote{
+    font-size:14px;
+    line-height:1.7;
+    color:var(--ink-soft);
+    margin:0 0 4px;
+  }
+  #modalNote p{
+    margin:0 0 14px;
+  }
+  #modalNote p:last-child{
+    margin-bottom:0;
+  }
+  #modalNote ul, #modalNote ol{
+    margin:0 0 16px;
+    padding-left:20px;
+  }
+  #modalNote li{
+    margin-bottom:7px;
+    line-height:1.55;
+  }
+  #modalNote li:last-child{
+    margin-bottom:0;
+  }
+  #modalNote strong{
+    color:var(--clay);
+    font-weight:700;
+  }
+  #modalNote b{
+    color:var(--ink);
+    font-weight:700;
+  }
+  .modal-links{
+    border-top:1px solid var(--line);
+    padding-top:18px;
+    margin-top:6px;
+  }
+  .link-group{
+    margin-bottom:20px;
+  }
+  .link-group:last-child{
+    margin-bottom:0;
+  }
+  .modal-links-heading{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--forest);
+    margin-bottom:10px;
+  }
+  .link-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(170px, 1fr));
+    gap:10px;
+  }
+  .link-list.list-mode{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .modal-link-item{
+    background:var(--canvas);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:10px 12px;
+  }
+  .link-thumb{
+    width:100%;
+    aspect-ratio:4/3;
+    border-radius:5px;
+    background:var(--canvas-dim);
+    margin-bottom:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .link-thumb img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .link-thumb svg{
+    width:38%;
+    height:38%;
+    opacity:0.5;
+  }
+  .modal-link-item a{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--teal);
+    text-decoration:underline;
+    text-underline-offset:2px;
+    line-height:1.4;
+  }
+  .modal-link-item a:hover, .modal-link-item a:focus-visible{color:var(--clay);}
+  .modal-link-item .link-meta{
+    display:block;
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:6px;
+    line-height:1.5;
+  }
+  .modal-link-item.no-thumb{
+    background:transparent;
+    border:none;
+    border-left:2px solid var(--line-strong);
+    border-radius:0;
+    padding:2px 0 10px 12px;
   }
 </style>
 </head>
@@ -432,9 +607,9 @@
   </nav>
 
   <div class="hero">
-    <div class="hero-eyebrow">Felis catus &middot; one species, every drawer full</div>
+    <div class="hero-eyebrow">Felis catus &middot; domestic breeds &amp; care</div>
     <h1>The Feline <em>Index</em></h1>
-    <p>A card catalog of domestic cat breeds and the care that applies to all of them — sorted the way a reference librarian would sort it.</p>
+    <p>An index of domestic cat breeds and everyday care, arranged the way a natural history collection catalogs its specimens.</p>
   </div>
 
   <div id="breeds" class="view-section visible">
@@ -447,7 +622,7 @@
       </div>
       <div class="search-box">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="searchInput" placeholder="Search every drawer by name or trait…">
+        <input type="text" id="searchInput" placeholder="Search every breed by name or trait…">
       </div>
       <div class="card-grid" id="cardGrid"></div>
     </div>
@@ -455,7 +630,7 @@
   </div>
 
   <div id="care" class="view-section">
-  <div class="section-heading" style="margin-top:44px;">
+  <div class="section-heading">
     <div class="eyebrow">Reference section</div>
     <h2>The Care Guide</h2>
     <p>Applies to any cat, any breed — organized by life stage and by topic, the way a vet's handout would be.</p>
@@ -465,8 +640,8 @@
     <div class="drawer-rail" id="careRail"></div>
     <div class="drawer-body">
       <div class="drawer-label">
-        <h3 id="careDrawerTitle">Life Stages</h3>
-        <p id="careDrawerDesc">What changes as a cat ages.</p>
+        <h3 id="careDrawerTitle">Emergencies</h3>
+        <p id="careDrawerDesc">If your cat is acting off, start here.</p>
       </div>
       <div class="search-box">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -482,6 +657,19 @@
     41 wild species. 1 domestic species. Countless opinions about the Sphynx.
   </footer>
 
+  <div class="modal-overlay" id="careModalOverlay">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <span class="modal-index" id="modalIndex"></span>
+      <h4 id="modalTitle"></h4>
+      <div class="modal-facts" id="modalFacts" style="display:none;"></div>
+      <div id="modalNote"></div>
+      <div class="modal-links" id="modalLinks" style="display:none;">
+        <div id="modalLinksGroups"></div>
+      </div>
+    </div>
+  </div>
+
 <script>
 /* ============ SHARED SKETCH ICON ============ */
 function catSketch(color){
@@ -495,83 +683,231 @@ function catSketch(color){
     '</svg>';
 }
 
+function productPlaceholder(){
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="'+'#5c4a3d'+'" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>' +
+    '<path d="M5 7h14l-1 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1L5 7Z"/>' +
+    '<line x1="9" y1="11" x2="15" y2="11"/>' +
+    '</svg>';
+}
+
 /* ============ BREED CATALOG ============ */
 const categories = [
   {
-    key:"natural", label:"Natural", title:"Natural Breeds",
+    key:"natural", label:"Natural", code:"NATURAL", title:"Natural Breeds",
     desc:"Shaped by climate and geography before anyone bred them on purpose.",
     breeds:[
-      {name:"Maine Coon", tag:"Gentle giant", note:"Tufted ears and a shaggy coat built for New England winters; one of the largest breeds."},
-      {name:"Siberian", tag:"Forest cat", note:"Triple-layered coat from the Russian taiga; often marketed as low-allergen."},
-      {name:"Norwegian Forest Cat", tag:"Climber", note:"Water-resistant double coat evolved for Scandinavian barns and forests."},
-      {name:"Turkish Van", tag:"The swimmer", note:"Chalk-white body with an auburn tail; famously unbothered by water."},
-      {name:"Turkish Angora", tag:"Original silk", note:"Ankara's native long-hair, slender build, frequently odd-eyed."},
-      {name:"Egyptian Mau", tag:"Fastest cat", note:"Naturally spotted coat; the quickest domestic breed on record."},
-      {name:"American Shorthair", tag:"Working mouser", note:"Descended from ships' cats brought to the colonies for pest control."}
+      {name:"Maine Coon", tag:"Gentle giant", note:"Tufted ears and a shaggy coat built for New England winters; one of the largest breeds.",
+       origin:"United States (Maine), 19th c.", weight:"4–10kg", lifespan:"12–15 yrs",
+       coat:"Long, shaggy, water-resistant", energy:"Medium", bestFor:"Families, cold climates",
+       detail:"One of the oldest natural breeds in North America, likely descended from long-haired cats brought by European sailors and settlers, crossing with local shorthairs in New England. A popular but false folk tale claims part-raccoon ancestry — genetically impossible, but the bushy ringed tail didn't help dispel it. Maine became the first US state to have an official state cat when it named the Maine Coon in 1985.\n\nOne of the largest domestic breeds, with males regularly exceeding 8kg. Despite the size, the temperament is famously easygoing and sociable — often called 'gentle giants' — and many chirp or trill rather than meow. The dense, water-resistant coat and tufted paws evolved for genuine New England winters, not just show-ring looks.",
+       link:{label:"TICA: Maine Coon ↗", url:"https://tica.org/breed/maine-coon/", meta:"Official TICA breed profile"}},
+      {name:"Siberian", tag:"Forest cat", note:"Triple-layered coat from the Russian taiga; often marketed as low-allergen.",
+       origin:"Russia, ancient natural breed", weight:"3.6–9kg", lifespan:"11–18 yrs",
+       coat:"Long, triple-layered, water-resistant", energy:"Medium-High", bestFor:"Active families",
+       detail:"A landrace breed that developed naturally across Russia over centuries before being formally standardized and exported internationally in the 1990s. The name comes from its association with the harsh Siberian climate, though the breed is found across Russia more broadly.\n\nThe triple-layered coat is built for genuinely cold winters, yet the cat itself is notably agile and athletic for its size, capable of impressive jumps. Siberians are often marketed as producing less of the Fel d 1 protein that triggers cat allergies — some studies support lower average levels, but this varies by individual and isn't a guarantee for allergy sufferers.",
+       link:{label:"TICA: Siberian ↗", url:"https://tica.org/breed/siberian/", meta:"Official TICA breed profile"}},
+      {name:"Norwegian Forest Cat", tag:"Climber", note:"Water-resistant double coat evolved for Scandinavian barns and forests.",
+       origin:"Norway, ancient natural breed", weight:"3.6–9kg", lifespan:"14–16 yrs",
+       coat:"Long, dense, water-resistant double coat", energy:"Medium", bestFor:"Climbers, cold climates",
+       detail:"Referenced in Norse mythology and folklore as the 'skogkatt' (forest cat), this is a natural landrace shaped by Scandinavian winters over centuries rather than a deliberately engineered breed. Formal breeding programs and international recognition began in the 1930s–70s, after a period where the breed nearly disappeared through crossbreeding with shorthairs.\n\nBuilt for climbing — strong claws and hind legs let it descend trees head-first, unlike most cats. The double coat sheds its dense undercoat seasonally in large clumps. Temperament is calm and independent, but genuinely affectionate once bonded, and generally tolerant of the cold in a way few other breeds are.",
+       link:{label:"TICA: Norwegian Forest Cat ↗", url:"https://tica.org/breed/norwegian-forest/", meta:"Official TICA breed profile"}},
+      {name:"Turkish Van", tag:"The swimmer", note:"Chalk-white body with an auburn tail; famously unbothered by water.",
+       origin:"Lake Van region, Turkey, ancient breed", weight:"3.5–9kg", lifespan:"12–17 yrs",
+       coat:"Semi-long, water-resistant, no undercoat", energy:"High", bestFor:"Active, playful households",
+       detail:"Named for the Lake Van region of eastern Turkey, where the breed developed naturally over a very long history, largely isolated from other cat populations. The distinctive 'Van pattern' — a chalk-white body with color confined to the head and tail — became so associated with the breed that it's sometimes used as shorthand for the pattern itself, even in other breeds.\n\nFamous as 'the swimming cat' — the semi-long coat lacks a dense undercoat and has a texture closer to cashmere, drying quickly and repelling water well enough that many individuals genuinely enjoy paddling. Athletic, intelligent, and often quite vocal, this isn't a lap cat so much as an active companion.",
+       link:{label:"TICA: Turkish Van ↗", url:"https://tica.org/breed/turkish-van/", meta:"Official TICA breed profile"}},
+      {name:"Turkish Angora", tag:"Original silk", note:"Ankara's native long-hair, slender build, frequently odd-eyed.",
+       origin:"Ankara, Turkey, ancient breed", weight:"2.5–5kg", lifespan:"12–18 yrs",
+       coat:"Long, fine, silky single coat", energy:"High", bestFor:"Attentive, engaged owners",
+       detail:"One of the oldest identifiable natural cat breeds, developed around Ankara and prized for centuries — often in solid white with odd or blue eyes. The population dwindled through crossbreeding until the Ankara Zoo began a dedicated conservation breeding program in the mid-20th century specifically to preserve the original white, odd-eyed line.\n\nSlender and athletic compared to the heavier-boned Van, with a fine single coat (no dense undercoat) that's lower-maintenance than it looks. Highly intelligent and demanding of attention, sometimes described as more dog-like in loyalty. As with several other white, blue-eyed cat lines, the pigment gene involved carries an elevated risk of congenital deafness in some individuals.",
+       link:{label:"TICA: Turkish Angora ↗", url:"https://tica.org/breed/turkish-angora/", meta:"Official TICA breed profile"}},
+      {name:"Egyptian Mau", tag:"Fastest cat", note:"Naturally spotted coat; the quickest domestic breed on record.",
+       origin:"Egypt (ancient); modern line via Italy/US, 1950s", weight:"2.5–5kg", lifespan:"12–15 yrs",
+       coat:"Short, fine, naturally spotted", energy:"High", bestFor:"Active owners, breed enthusiasts",
+       detail:"Spotted cats appear in ancient Egyptian art, and the breed's name comes directly from the Egyptian Arabic word for cat. The modern breed traces to a small number of cats exported from Cairo to Italy and then the US in the 1950s by exiled Russian princess Nathalie Troubetzkoy — nearly the entire modern gene pool descends from that handful of founding cats.\n\nThe spotted pattern here is naturally occurring, not selectively bred in the way it is in hybrid breeds like the Bengal. Widely cited as the fastest domestic cat breed, with a distinctive 'worry wrinkle' across the forehead and loose skin flap on the belly that aids its stride. Loyal and bonded to family, but frequently shy or reserved around strangers.",
+       link:{label:"TICA: Egyptian Mau ↗", url:"https://tica.org/breed/egyptian-mau/", meta:"Official TICA breed profile"}},
+      {name:"American Shorthair", tag:"Working mouser", note:"Descended from ships' cats brought to the colonies for pest control.",
+       origin:"United States, colonial-era working cats", weight:"3–7kg", lifespan:"15–20 yrs",
+       coat:"Short, dense", energy:"Medium", bestFor:"Families, first-time owners",
+       detail:"Descended from European domestic cats brought over by early settlers, valued for keeping ship holds and grain stores free of rodents — the popular claim that some arrived on the Mayflower itself is folklore rather than documented fact, though the general colonial-era origin is well established. These cats were shown under the name 'Domestic Shorthair' from around 1900, and weren't renamed and recognized as the American Shorthair until the early 1960s.\n\nBuilt for function rather than extremes: a sturdy, medium build, dense weather-resistant coat, and a famously even, low-maintenance temperament. One of the longer-lived common breeds, and a frequent 'blank slate' starting point used in the development of several other American breeds.",
+       link:{label:"TICA: American Shorthair ↗", url:"https://tica.org/breed/american-shorthair/", meta:"Official TICA breed profile"}}
     ]
   },
   {
-    key:"hairless", label:"Hairless", title:"Hairless Breeds",
+    key:"hairless", label:"Hairless", code:"HAIRLESS", title:"Hairless Breeds",
     desc:"Coatless by mutation, not by grooming — bred deliberately from a single genetic accident.",
     breeds:[
-      {name:"Sphynx", tag:"Warm to the touch", note:"Coatless from a 1966 Canadian mutation; skin feels like warm suede."},
-      {name:"Donskoy", tag:"Russian hairless", note:"Looser, wrinklier skin than the Sphynx; a separate, unrelated mutation."},
-      {name:"Peterbald", tag:"Elegant line", note:"Whippet-like silhouette bred from Donskoy stock in St. Petersburg."}
+      {name:"Sphynx", tag:"Warm to the touch", note:"Coatless from a 1966 Canadian mutation; skin feels like warm suede.",
+       origin:"Canada (Ontario), 1966 mutation", weight:"2.7–5.5kg", lifespan:"7–15 yrs",
+       coat:"Hairless, fine peach-fuzz", energy:"High", bestFor:"Attentive, social owners",
+       detail:"Traces to a single hairless kitten, Prune, born to an ordinary domestic cat in Toronto in 1966; the recessive gene was then developed through a dedicated breeding program (with some later outcrossing to Devon Rex lines to widen the gene pool). Despite the name, it has no connection to ancient Egypt beyond aesthetics.\n\nWithout fur to absorb skin oils, Sphynxes need regular bathing to avoid buildup, and sun or cold exposure affects them more directly than a coated cat. In exchange, owners get one of the most overtly affectionate and attention-seeking breeds around — frequently described as 'velcro cats' for how closely they follow their people.",
+       link:{label:"TICA: Sphynx ↗", url:"https://tica.org/breed/sphynx/", meta:"Official TICA breed profile"}},
+      {name:"Donskoy", tag:"Russian hairless", note:"Looser, wrinklier skin than the Sphynx; a separate, unrelated mutation.",
+       origin:"Russia (Rostov-on-Don), 1987", weight:"3.5–6.5kg", lifespan:"12–15 yrs",
+       coat:"Hairless, or one of 4 partial-coat types", energy:"High", bestFor:"Social households",
+       detail:"Traces to a single rescued kitten, Varvara, found being mistreated in Rostov-on-Don in 1987; when she later lost her fur and had kittens that did the same, breeder Irina Nemikina used the line to found the breed. Unlike the Sphynx's recessive gene, the Donskoy's hairlessness gene is dominant, so it's inherited differently and the two are genetically distinct despite the similar look.\n\nA single litter can include four different coat outcomes — fully bald, 'flocked' (a thin coat that may vanish over time), 'velour' (a wavy coat lost within the first year), or a near-normal brush coat. Highly social and dog-like in devotion, and genuinely unhappy left alone for long stretches.",
+       link:{label:"TICA: Donskoy ↗", url:"https://tica.org/breed/donskoy/", meta:"Official TICA breed profile"}},
+      {name:"Peterbald", tag:"Elegant line", note:"Whippet-like silhouette bred from Donskoy stock in St. Petersburg.",
+       origin:"Russia (St. Petersburg), 1994", weight:"2.3–5kg", lifespan:"12–15 yrs",
+       coat:"Variable — hairless to full brush coat", energy:"High", bestFor:"Social, athletic households",
+       detail:"Created in St. Petersburg in 1994 by breeder Olga Mironova, crossing a Donskoy male with an Oriental Shorthair female — deliberately combining the Donskoy's dominant hair-loss gene with the Oriental's elegant, slender build. The breed reaches full size unusually slowly, often not maturing until age 3–4.\n\nCoat type is genuinely unpredictable even within one litter, ranging from fully bald to a normal-looking brush coat, and some individuals change coat over their lifetime. Temperament leans heavily on the vocal, people-oriented Oriental side of the pedigree — highly social, talkative, and not suited to being left alone often.",
+       link:{label:"TICA: Peterbald ↗", url:"https://tica.org/breed/peterbald/", meta:"Official TICA breed profile"}}
     ]
   },
   {
-    key:"hybrid", label:"Hybrid", title:"Wild Hybrid Breeds",
+    key:"hybrid", label:"Hybrid", code:"HYBRID", title:"Wild Hybrid Breeds",
     desc:"A few generations removed from an actual wildcat ancestor.",
     breeds:[
-      {name:"Bengal", tag:"Asian leopard cat", note:"Marbled or spotted coat from crossing with a small wild Asian cat."},
-      {name:"Savannah", tag:"Serval-descended", note:"Tall ears and a habit of clearing fences most cats wouldn't attempt."},
-      {name:"Chausie", tag:"Jungle cat line", note:"Long, lean build tracing back to the jungle cat of Asia and Africa."},
-      {name:"Toyger", tag:"Pocket tiger", note:"Bred stripe-by-stripe over decades to echo a tiger's markings."}
+      {name:"Bengal", tag:"Asian leopard cat", note:"Marbled or spotted coat from crossing with a small wild Asian cat.",
+       origin:"United States; 1963 first cross, modern breed from early 1980s", weight:"2.7–6.8kg", lifespan:"12–20 yrs",
+       coat:"Short, dense, marbled or spotted", energy:"High", bestFor:"Active, experienced owners",
+       detail:"Jean Mill made the first leopard cat × domestic cross in California in 1963, though the modern breeding program that actually established the breed began with her own cats in the early 1980s. Later generations are bred back toward a stable, people-friendly temperament, several steps removed from the wild ancestor. Cats close to the wild parent (early filial generations, often labeled F1–F3) can be significantly less predictable, which is why reputable breeders sell later-generation cats as pets.\n\nThe coat's glittered, marbled, or rosetted spotting is the main draw, echoing its wild ancestor far more than any other domestic breed. Highly athletic, frequently vocal, and often genuinely fond of water — but also prone to destructive behavior if under-stimulated, so it needs serious daily enrichment.",
+       link:{label:"TICA: Bengal ↗", url:"https://tica.org/breed/bengal/", meta:"Official TICA breed profile"}},
+      {name:"Savannah", tag:"Serval-descended", note:"Tall ears and a habit of clearing fences most cats wouldn't attempt.",
+       origin:"United States, first litter 1986", weight:"5.9–11kg (F1 largest)", lifespan:"12–15+ yrs",
+       coat:"Short, spotted", energy:"Very High", bestFor:"Experienced owners with space",
+       detail:"The first Savannah was born in 1986 from a serval crossed with a domestic cat; the breed was developed further through the 1990s and gained TICA recognition in 2001. As with the Bengal, cats are labeled by filial generation (F1 = roughly half serval ancestry), with each generation diluting the wild traits and generally reducing size — some jurisdictions legally restrict ownership of early generations specifically because of this.\n\nKnown for genuinely dog-like behavior: many Savannahs can be leash-trained, learn fetch, and are famous for jump height that can clear well over two meters from a standing start. This is a serious commitment breed — high energy, high intelligence, and a real need for space and stimulation.",
+       link:{label:"TICA: Savannah ↗", url:"https://tica.org/breed/savannah/", meta:"Official TICA breed profile"}},
+      {name:"Chausie", tag:"Jungle cat line", note:"Long, lean build tracing back to the jungle cat of Asia and Africa.",
+       origin:"United States, developed 1990s", weight:"4.5–7kg", lifespan:"12–18+ yrs",
+       coat:"Short, ticked or solid", energy:"High", bestFor:"Active, experienced owners",
+       detail:"Named after Felis chaus, the jungle cat, from which it's descended via crosses with domestic cats developed mainly through the 1990s. Like other wild hybrids, generational distance from the jungle cat ancestor matters for temperament predictability, and the breed uses a similar filial-generation labeling system.\n\nBuilt long and lean with notably long legs for a domestic cat, reflecting its wild ancestry. Athletic and intelligent, it needs the kind of daily physical and mental engagement more demanding than most purely domestic breeds — a poor fit for a low-activity household.",
+       link:{label:"TICA: Chausie ↗", url:"https://tica.org/breed/chausie/", meta:"Official TICA breed profile"}},
+      {name:"Toyger", tag:"Pocket tiger", note:"Bred stripe-by-stripe over decades to echo a tiger's markings.",
+       origin:"United States, developed 1980s–90s", weight:"3.2–6.8kg", lifespan:"13+ yrs",
+       coat:"Short, tiger-striped pattern", energy:"Medium-High", bestFor:"Families wanting an exotic look",
+       detail:"Developed by breeder Judy Sugden starting in the 1980s, selectively breeding ordinary domestic shorthairs purely for a striped coat pattern resembling a tiger's — explicitly conceived, in part, to raise public interest in tiger conservation. Unlike the Bengal, Savannah, or Chausie, there is no wild cat in the Toyger's ancestry at all; it's a fully domestic breed styled to look wild.\n\nBecause there's no wild parentage, temperament is much closer to an ordinary domestic shorthair — generally affectionate, adaptable, and good with families — while still delivering the striking striped look that draws people to hybrid breeds.",
+       link:{label:"TICA: Toyger ↗", url:"https://tica.org/breed/toyger/", meta:"Official TICA breed profile"}}
     ]
   },
   {
-    key:"mutation", label:"Folded / Curled", title:"Ear & Tail Mutations",
+    key:"mutation", label:"Folded / Curled", code:"MUTATION", title:"Ear & Tail Mutations",
     desc:"One small cartilage or bone difference, standardized into a breed.",
     breeds:[
-      {name:"Scottish Fold", tag:"Folded ears", note:"A cartilage mutation folds the ears forward for an owl-like face."},
-      {name:"American Curl", tag:"Curled ears", note:"Ears curl backward within the first week of a kitten's life."},
-      {name:"Kurilian Bobtail", tag:"Natural bobtail", note:"A short, pom-pom tail that occurs naturally in the Kuril Islands."},
-      {name:"Manx", tag:"Tailless", note:"Born with no tail at all, native to the Isle of Man."}
+      {name:"Scottish Fold", tag:"Folded ears", note:"A cartilage mutation folds the ears forward for an owl-like face.",
+       origin:"Scotland, 1961 mutation", weight:"3.2–4.5kg", lifespan:"11–14 yrs",
+       coat:"Short or long (Highland Fold)", energy:"Medium", bestFor:"Calm households",
+       detail:"Traces to a single farm cat named Susie, found in Scotland in 1961, whose folded ears were caused by a spontaneous cartilage mutation. The same gene that folds the ears also affects cartilage elsewhere in the body, which can cause a painful joint and skeletal condition (osteochondrodysplasia) — this is a genuine welfare concern, and it's why the UK's GCCF and some other bodies refuse to register the breed at all.\n\nResponsible breeders only pair a fold-eared cat with a straight-eared one, never two folds together, to reduce (though not eliminate) the risk. Temperament is calm and adaptable, and the folded-ear, round-faced look is instantly recognizable — but this is a breed worth researching the ethics of before committing to.",
+       link:{label:"TICA: Scottish Fold ↗", url:"https://tica.org/breed/scottish-fold/", meta:"Official TICA breed profile"}},
+      {name:"American Curl", tag:"Curled ears", note:"Ears curl backward within the first week of a kitten's life.",
+       origin:"United States (California), 1981 mutation", weight:"3–5kg", lifespan:"10–20 yrs",
+       coat:"Short or long", energy:"Medium", bestFor:"Families",
+       detail:"Traces to a single stray kitten, Shulamith, found in California in 1981, whose ears curled backward within her first weeks of life. Unlike the Scottish Fold, this mutation affects only the ear cartilage — it is not linked to the joint and skeletal problems that make the Fold controversial, which is one of the main things that distinguishes the two curled/folded breeds.\n\nKittens are born with straight ears that begin curling within 2–10 days and set into their final shape by around four months, with the degree of curl varying cat to cat. Playful and often described as retaining kitten-like energy and curiosity well into adulthood.",
+       link:{label:"TICA: American Curl ↗", url:"https://tica.org/breed/american-curl/", meta:"Official TICA breed profile"}},
+      {name:"Kurilian Bobtail", tag:"Natural bobtail", note:"A short, pom-pom tail that occurs naturally in the Kuril Islands.",
+       origin:"Kuril Islands, Russia", weight:"3.2–7.3kg", lifespan:"15–20 yrs",
+       coat:"Short or semi-long, weatherproof", energy:"Medium-High", bestFor:"Families, water-tolerant fun",
+       detail:"A natural breed documented in Russia's Kuril Islands, Sakhalin Island, and the Kamchatka Peninsula for at least 200 years, likely related to (but distinct from) the Japanese Bobtail. It remained largely unknown outside Russia and Japan until recently — fewer than 100 are estimated to exist in the US even today.\n\nEach cat's pom-pom-shaped bobtail is unique, falling into 'whisk,' 'spiral,' or 'snag' types. Known as skilled, enthusiastic fishers and genuinely strong swimmers. Reputed for excellent overall health and one of the longest average lifespans of any breed, alongside an easygoing, dog-like temperament that adapts well to families with other pets.",
+       link:{label:"TICA: Kurilian Bobtail ↗", url:"https://tica.org/breed/kurilian-bobtail/", meta:"Official TICA breed profile"}},
+      {name:"Manx", tag:"Tailless", note:"Born with no tail at all, native to the Isle of Man.",
+       origin:"Isle of Man, ancient mutation", weight:"3.6–5.4kg", lifespan:"16+ yrs",
+       coat:"Short (Cymric variant is long-haired)", energy:"Medium", bestFor:"Families",
+       detail:"A natural mutation isolated on the Isle of Man for centuries, producing tail lengths ranging from a completely absent tail ('rumpy') to a short stump ('stumpy') or a nearly normal tail ('longy'). Folklore explanations (the tail caught in Noah's Ark door being the most repeated) are charming but not remotely how the trait actually arose.\n\nThe taillessness gene carries a real health risk: when a cat inherits two copies (from two tailless parents), it can cause serious spinal cord defects, sometimes fatal in utero. Responsible breeding always pairs a tailless cat with a tailed one to avoid this. Strong, rabbit-like hind legs give the Manx a distinctive hopping gait and make it a capable hunter.",
+       link:{label:"TICA: Manx ↗", url:"https://tica.org/breed/manx/", meta:"Official TICA breed profile"}}
     ]
   },
   {
-    key:"longhair", label:"Long-Haired", title:"Long-Haired Classics",
+    key:"longhair", label:"Long-Haired", code:"LONGHAIR", title:"Long-Haired Classics",
     desc:"The show-ring aristocrats — bred for coat as much as conformation.",
     breeds:[
-      {name:"Persian", tag:"Flat-faced", note:"A coat that needs daily grooming and a face bred flatter over generations."},
-      {name:"Himalayan", tag:"Persian × Siamese", note:"Persian body type with Siamese point coloring and blue eyes."},
-      {name:"Ragdoll", tag:"Goes limp", note:"Bred specifically for a placid temperament and a floppy 'flop' when held."},
-      {name:"Birman", tag:"Sacred cat of Burma", note:"Deep blue eyes and white 'gloved' paws on every foot."},
-      {name:"Somali", tag:"Fox-tailed", note:"Essentially a long-haired Abyssinian, with a bushy, fox-like tail."}
+      {name:"Persian", tag:"Flat-faced", note:"A coat that needs daily grooming and a face bred flatter over generations.",
+       origin:"Iran (Persia), ancient; modern type via Britain, 19th c.", weight:"3–5.5kg", lifespan:"8–11 yrs",
+       coat:"Very long, dense — daily grooming", energy:"Low", bestFor:"Calm households, committed groomers",
+       detail:"Among the oldest recognized breeds, imported into Europe from the Persia region as early as the 17th century and refined into today's show standard mainly in Britain through the 19th and 20th centuries. The modern 'peke-faced' extreme-flat type is a much more recent development than the breed itself, and a more moderate-faced 'traditional' or 'doll-face' Persian still exists as a less exaggerated alternative.\n\nThe extreme flat face carries real health trade-offs — breathing difficulty, tear-duct overflow, and dental crowding are all common in the modern show type. The coat mats seriously without daily brushing. In return, the temperament is famously placid and undemanding, suiting a quiet lap-cat lifestyle.",
+       link:{label:"TICA: Persian ↗", url:"https://tica.org/breed/persian/", meta:"Official TICA breed profile"}},
+      {name:"Himalayan", tag:"Persian × Siamese", note:"Persian body type with Siamese point coloring and blue eyes.",
+       origin:"United States/Britain; program began 1931", weight:"3–5.5kg", lifespan:"8–11 yrs",
+       coat:"Long, Persian-type", energy:"Low-Medium", bestFor:"Calm households",
+       detail:"Virginia Cobb and Dr. Clyde Keeler began the founding breeding program in 1931, crossing Persians with Siamese to combine the Persian's long coat and body type with the Siamese's color-point pattern and blue eyes; the first kitten was named Newton's Debutante. Work continued in Canada in the 1950s, and US associations recognized the breed as the Himalayan in 1957. Some registries (CFA among them) treat it as its own breed; others (like the CFA's rival body FIFe, and many UK associations) classify it simply as a color division of the Persian rather than a separate breed — so its official status genuinely depends on which organization you ask.\n\nIn every other respect it behaves like a Persian: the same daily grooming demands, the same calm and gentle temperament, and often the same flat-faced conformation trade-offs depending on breeding line.",
+       link:{label:"TICA: Himalayan ↗", url:"https://tica.org/breed/himalayan/", meta:"Official TICA breed profile"}},
+      {name:"Ragdoll", tag:"Goes limp", note:"Bred specifically for a placid temperament and a floppy 'flop' when held.",
+       origin:"United States (California), 1960s", weight:"4.5–9kg", lifespan:"12–17 yrs",
+       coat:"Semi-long, silky, low-mat", energy:"Low-Medium", bestFor:"Families, calm households",
+       detail:"Developed in California in the 1960s by breeder Ann Baker, who gave the breed its name for its tendency to go limp and relaxed when picked up. Baker also made a number of unusual and since-debunked marketing claims about the breed — including that it felt no pain and was resistant to injury — claims no serious breeder or vet organization supports today; the actual temperament is simply unusually placid, not medically different.\n\nOne of the larger domestic breeds, with a silky semi-long coat that mats less than a Persian's thanks to a lighter undercoat. Widely described as a 'puppy cat' for its tendency to follow owners from room to room and its generally easygoing, affectionate nature.",
+       link:{label:"TICA: Ragdoll ↗", url:"https://tica.org/breed/ragdoll/", meta:"Official TICA breed profile"}},
+      {name:"Birman", tag:"Sacred cat of Burma", note:"Deep blue eyes and white 'gloved' paws on every foot.",
+       origin:"Legendary origin in Myanmar; developed in France, early 20th c.", weight:"~5.4kg (both sexes)", lifespan:"9–15+ yrs",
+       coat:"Semi-long, silky, single coat", energy:"Medium", bestFor:"Families, gentle temperaments",
+       detail:"Wrapped in a temple-guardian legend tying it to sacred cats of Myanmar (Burma), though the documented breed history really begins in France in the early 20th century. The breed came close to disappearing in Europe after the Second World War, and today's population was rebuilt from just a couple of surviving cats.\n\nThe signature look is white 'gloved' paws on all four feet against a color-point coat, with vivid sapphire-blue eyes. The single coat (no heavy undercoat) resists matting better than a Persian's, and the temperament is gentle and affectionate without being especially demanding.",
+       link:{label:"TICA: Birman ↗", url:"https://tica.org/breed/birman/", meta:"Official TICA breed profile"}},
+      {name:"Somali", tag:"Fox-tailed", note:"Essentially a long-haired Abyssinian, with a bushy, fox-like tail.",
+       origin:"United States/Canada, recognized as a breed 1970s", weight:"2.7–4.5kg", lifespan:"10–19+ yrs",
+       coat:"Semi-long, ticked, fox-like tail", energy:"High", bestFor:"Active, engaged owners",
+       detail:"Emerged from long-haired kittens occasionally born to otherwise short-haired Abyssinian litters, carrying a recessive long-hair gene — for years these kittens were simply not shown, until breeders recognized them as worth developing in their own right and gained formal recognition as a separate breed through the 1970s and 80s.\n\nEssentially a long-haired Abyssinian in every meaningful sense: the same ticked (agouti) coat, where each hair carries several bands of color, now on a fuller fox-like coat and brush tail. Highly active, curious, and a capable climber — this is not a low-maintenance lap cat, though the single coat needs less grooming than most other long-haired breeds.",
+       link:{label:"TICA: Somali ↗", url:"https://tica.org/breed/somali/", meta:"Official TICA breed profile"}}
     ]
   },
   {
-    key:"shorthair", label:"Short-Haired", title:"Short-Haired Classics",
+    key:"shorthair", label:"Short-Haired", code:"SHORTHAIR", title:"Short-Haired Classics",
     desc:"The oldest formally recognized lines, sleek by design.",
     breeds:[
-      {name:"British Shorthair", tag:"Round & dense", note:"The model for illustrations of the Cheshire Cat; plush, dense coat."},
-      {name:"Russian Blue", tag:"Silver-tipped", note:"A double coat with silvery guard hairs and striking emerald eyes."},
-      {name:"Abyssinian", tag:"Ticked coat", note:"Each hair banded with color, giving a tiny-cougar look."},
-      {name:"Burmese", tag:"Brick in silk", note:"Compact and surprisingly heavy for its size; famously affectionate."},
-      {name:"Siamese", tag:"Point-colored", note:"One of the oldest recognized breeds; vocal and strongly opinionated."},
-      {name:"Oriental Shorthair", tag:"300+ colors", note:"Siamese body type, bred out into hundreds of color combinations."},
-      {name:"Cornish Rex", tag:"Wavy coat", note:"Only the soft undercoat remains, giving a tight, marcel-wave texture."},
-      {name:"Devon Rex", tag:"Pixie face", note:"Large ears, elfin face, and a coat so fine it barely sheds."}
+      {name:"British Shorthair", tag:"Round & dense", note:"The model for illustrations of the Cheshire Cat; plush, dense coat.",
+       origin:"Britain, ancient roots; standardized late 19th c.", weight:"3.6–7.3kg", lifespan:"12–20 yrs",
+       coat:"Short, dense, plush", energy:"Low-Medium", bestFor:"Calm households, families",
+       detail:"Descended from cats that arrived in Britain with Roman traders roughly two thousand years ago, though the breed as formally standardized dates to Victorian-era cat fancy in the late 19th century — among the very first breeds to be exhibited and standardized at all. The dense blue-grey coloring, once called 'British Blue,' is the most iconic variant, though the breed comes in many colors.\n\nOften credited as the visual model for Tenniel's illustrations of the Cheshire Cat. The build is famously 'cobby' — round face, round body, sturdy legs — paired with an undemanding, easygoing temperament that tolerates a fairly independent lifestyle well.",
+       link:{label:"TICA: British Shorthair ↗", url:"https://tica.org/breed/british-shorthair/", meta:"Official TICA breed profile"}},
+      {name:"Russian Blue", tag:"Silver-tipped", note:"A double coat with silvery guard hairs and striking emerald eyes.",
+       origin:"Russia (Archangel), natural breed", weight:"3–5.5kg", lifespan:"10–20 yrs",
+       coat:"Short, dense double coat, silvery-blue", energy:"Medium", bestFor:"Quiet households",
+       detail:"Believed to originate around the northern Russian port of Arkhangelsk (hence an old alternate name, the 'Archangel Blue'), and brought to Britain by sailors in the 1860s, from where formal breeding and showing developed.\n\nThe dense double coat has silver-tipped guard hairs that give it a distinctive shimmer, set off by vivid emerald-green eyes. Reserved and cautious around strangers, but deeply loyal and often quite trainable once bonded to its household — combined with low shedding, this is a breed that rewards patience rather than instant affection.",
+       link:{label:"TICA: Russian Blue ↗", url:"https://tica.org/breed/russian-blue/", meta:"Official TICA breed profile"}},
+      {name:"Abyssinian", tag:"Ticked coat", note:"Each hair banded with color, giving a tiny-cougar look.",
+       origin:"Uncertain — likely Indian Ocean coastal region; developed in Britain, 19th c.", weight:"2.7–5.4kg", lifespan:"14–17+ yrs",
+       coat:"Short, ticked (agouti)", energy:"High", bestFor:"Active, engaged owners",
+       detail:"The name suggests Ethiopian (Abyssinian) origins, but genetic studies point instead to ancestors from coastal regions around the Indian Ocean and South Asia; the breed itself was developed and standardized in Britain in the 19th century regardless of where its ancestors actually came from.\n\nThe ticked coat, where each hair has several bands of alternating color, gives a subtle resemblance to a wild cougar in miniature. Extremely active, athletic, and curious — often more interested in exploring than being held — which makes it a poor match for anyone wanting a purely cuddly lap cat.",
+       link:{label:"TICA: Abyssinian ↗", url:"https://tica.org/breed/abyssinian/", meta:"Official TICA breed profile"}},
+      {name:"Burmese", tag:"Brick in silk", note:"Compact and surprisingly heavy for its size; famously affectionate.",
+       origin:"Myanmar (legendary); developed in the US, 1930s", weight:"3.5–5.5kg", lifespan:"10–17 yrs",
+       coat:"Short, fine, satin-like", energy:"Medium-High", bestFor:"Social, affectionate households",
+       detail:"Nearly every modern Burmese traces back to a single cat, Wong Mau, a brown female imported from Burma (Myanmar) to the United States in 1930 by Dr. Joseph Thompson, who then crossed her with Siamese to develop the breed. \n\nOften described as 'a brick wrapped in silk' — a compact, surprisingly heavy, muscular body under a sleek, fine coat. Extremely people-oriented, sometimes described as dog-like in how closely it follows and engages with its household, with a softer, less piercing voice than its Siamese relatives.",
+       link:{label:"TICA: Burmese ↗", url:"https://tica.org/breed/burmese/", meta:"Official TICA breed profile"}},
+      {name:"Siamese", tag:"Point-colored", note:"One of the oldest recognized breeds; vocal and strongly opinionated.",
+       origin:"Thailand (Siam), ancient breed", weight:"2.5–5.5kg", lifespan:"12–20 yrs",
+       coat:"Short, fine, color-point", energy:"High", bestFor:"Attentive owners",
+       detail:"One of the oldest documented cat breeds, appearing in Thailand's Tamra Maew ('Cat Book Poems') manuscript centuries ago, and among the first Asian breeds exhibited in the West — shown at London's Crystal Palace show in 1871. The distinctive color-point pattern comes from a temperature-sensitive form of partial albinism: pigment develops more strongly on the cooler extremities (face, ears, paws, tail).\n\nModern show-type Siamese have trended toward an increasingly extreme wedge-shaped head, prompting some breeders to maintain a separate, rounder-headed 'traditional' or 'applehead' line closer to the original look. Famously vocal and opinionated — genuinely one of the chattiest common breeds — and strongly attached to its people, disliking long stretches alone.",
+       link:{label:"TICA: Siamese ↗", url:"https://tica.org/breed/siamese/", meta:"Official TICA breed profile"}},
+      {name:"Oriental Shorthair", tag:"300+ colors", note:"Siamese body type, bred out into hundreds of color combinations.",
+       origin:"Britain/United States, developed 1950s–70s", weight:"2.3–5.4kg", lifespan:"10+ yrs (often 20+)",
+       coat:"Short, fine, same body as Siamese", energy:"High", bestFor:"Attentive owners",
+       detail:"Developed from Siamese breeding lines through the 1950s–70s specifically to preserve the Siamese body type in solid colors and patterns other than the classic point pattern, after some breeders wanted the look without the coloring restriction.\n\nRecognized in over 300 color and pattern combinations, more than almost any other breed. Temperament closely mirrors the Siamese — vocal, socially demanding, intelligent, and often easy to leash- or trick-train — since the two share most of their recent ancestry.",
+       link:{label:"TICA: Oriental Shorthair ↗", url:"https://tica.org/breed/oriental-shorthair/", meta:"Official TICA breed profile"}},
+      {name:"Cornish Rex", tag:"Wavy coat", note:"Only the soft undercoat remains, giving a tight, marcel-wave texture.",
+       origin:"Britain (Cornwall), 1950 mutation", weight:"2.3–4.5kg", lifespan:"9–13+ yrs",
+       coat:"Very short, wavy — no guard hairs", energy:"High", bestFor:"Active households",
+       detail:"Traces to a single kitten, Kallibunker, born on a Cornwall farm in 1950 with an unusual curly coat; the mutation was then developed into a stable breed through selective breeding, sometimes with limited outcrossing to keep the gene pool viable.\n\nUnusually, the coat has only the soft, downy undercoat layer — the coarser guard hairs and awn hairs typical of most cats are absent — which gives it a texture like tight, marcel-waved velvet. It runs warmer to the touch than a normal cat and can feel cold in cool rooms as a result. Extremely energetic, often staying playful and kitten-like well into adulthood.",
+       link:{label:"TICA: Cornish Rex ↗", url:"https://tica.org/breed/cornish-rex/", meta:"Official TICA breed profile"}},
+      {name:"Devon Rex", tag:"Pixie face", note:"Large ears, elfin face, and a coat so fine it barely sheds.",
+       origin:"Britain (Devon), 1960 mutation", weight:"2.3–4kg", lifespan:"14–17+ yrs",
+       coat:"Very short, wavy, fine", energy:"High", bestFor:"Active, social households",
+       detail:"Discovered in Devon, England in 1960, initially assumed to be the same mutation as the nearby Cornish Rex — genetic testing later showed it's actually a separate, unrelated gene producing a similar wavy coat, despite the geographic and visual overlap.\n\nKnown for a distinctive elfin, 'pixie' face with unusually large ears and eyes. The fine coat sheds very little but can require occasional bathing since it doesn't wick away skin oils as effectively as a full coat would. Personality is famously mischievous and highly social — nicknamed 'alien cats' or 'pixie cats' as much for temperament as looks.",
+       link:{label:"TICA: Devon Rex ↗", url:"https://tica.org/breed/devon-rex/", meta:"Official TICA breed profile"}}
     ]
   },
   {
-    key:"rare", label:"Rare", title:"Rare & Distinctive",
+    key:"rare", label:"Rare", code:"RARE", title:"Rare & Distinctive",
     desc:"Small registries, small gene pools, or just a very specific look.",
     breeds:[
-      {name:"Munchkin", tag:"Short legs", note:"A dwarfism mutation keeps the legs short; still argued over by breed councils."},
-      {name:"LaPerm", tag:"Curly coat", note:"A spontaneous curl mutation found on an Oregon farm in the 1980s."},
-      {name:"Khao Manee", tag:"All-white", note:"An ancient Thai breed, often odd-eyed, once reserved for royalty."},
-      {name:"Lykoi", tag:"Werewolf cat", note:"A patchy, sparse coat mutation that gives an unmistakably lupine look."}
+      {name:"Munchkin", tag:"Short legs", note:"A dwarfism mutation keeps the legs short; still argued over by breed councils.",
+       origin:"United States, formally developed 1990s", weight:"2.3–4.5kg", lifespan:"15–18+ yrs",
+       coat:"Short or long variants", energy:"Medium-High", bestFor:"Households wanting a small, short-legged cat",
+       detail:"The short-leg trait had reportedly appeared spontaneously in cat populations for decades before being deliberately developed into a breed in the US in the 1990s, gaining (controversial) recognition from TICA in 1995. CFA still does not recognize it, largely over the same category of welfare concerns raised about other 'dwarfism' pet breeds.\n\nThe shortened legs come from a form of dwarfism, but — contrary to what the look suggests — most Munchkins retain full mobility, can still jump and climb, and move with a distinctive low, fast 'ferret-like' gait rather than being restricted. TICA's own breed page describes them as not prone to arthritis and free of the debilitating genes sometimes associated with dwarfism in other animals. Breeders typically pair a short-legged cat with a standard-legged one rather than breeding two short-legged cats together, as an added precaution.",
+       link:{label:"TICA: Munchkin ↗", url:"https://tica.org/breed/munchkin/", meta:"Official TICA breed profile"}},
+      {name:"LaPerm", tag:"Curly coat", note:"A spontaneous curl mutation found on an Oregon farm in the 1980s.",
+       origin:"United States (Oregon), 1982 mutation", weight:"2.7–4.5kg", lifespan:"12–15 yrs (some to 20)",
+       coat:"Curly/wavy, short or long", energy:"Medium", bestFor:"Affectionate, allergy-conscious households",
+       detail:"Traces to a single kitten, born hairless on an Oregon farm in 1982, who then grew in a soft curly coat as she matured — the breed name is a nod to the 'perm' hairstyle the coat resembles. It was developed from that single farm-cat line rather than from an established breed.\n\nThe curl can range from tight ringlets to loose waves, and coat length varies within the breed. The curly coat sheds less visible hair than a straight one, which some owners find helps with allergy symptoms, though it's not a guaranteed hypoallergenic breed. Temperament is affectionate and people-oriented.",
+       link:{label:"TICA: LaPerm ↗", url:"https://tica.org/breed/laperm/", meta:"Official TICA breed profile"}},
+      {name:"Khao Manee", tag:"All-white", note:"An ancient Thai breed, often odd-eyed, once reserved for royalty.",
+       origin:"Thailand, ancient breed", weight:"3.5–4.5kg", lifespan:"10–12 yrs",
+       coat:"Short, pure white", energy:"Medium-High", bestFor:"Warm climates, families",
+       detail:"Documented in Thailand's Tamra Maew ('Cat Book Poems') manuscript, dated to around 1350 AD, alongside descriptions of more than twenty historical cat breeds. The name means 'white gem,' and in Thai tradition the breed was long considered a good-luck cat, historically kept by royalty. It wasn't brought to the West until 1999.\n\nAlmost always pure white, frequently with striking odd-colored eyes (one blue, one green or gold) — though matching-eyed individuals occur too. As with several other white, blue-eyed cat lines, the underlying gene carries an elevated risk of congenital deafness in some cats. Needs relatively little grooming despite its dramatic look, and the short coat suits Singapore's climate well.",
+       link:{label:"TICA: Khao Manee ↗", url:"https://tica.org/breed/khaomanee/", meta:"Official TICA breed profile"}},
+      {name:"Lykoi", tag:"Werewolf cat", note:"A patchy, sparse coat mutation that gives an unmistakably lupine look.",
+       origin:"United States, natural mutation, 2011", weight:"2.7–5.4kg", lifespan:"12–17 yrs",
+       coat:"Sparse, patchy, molts in cycles", energy:"High", bestFor:"Households wanting a striking, low-shedding look",
+       detail:"A very recent breed: the founding cats were identified as a natural mutation in ordinary domestic cat litters around 2010–2011 in the southeastern US, and developed into a breed shortly after. The name comes from the Greek word for wolf, referencing the patchy, sparse coat's resemblance to old werewolf imagery.\n\nThe mutation is genetically distinct from the Sphynx's hairlessness gene, and the coat itself isn't fixed — some individuals shift between more and less hair coverage across shedding cycles, occasionally looking nearly bald and at other times more visibly coated. As one of the newest and rarest breeds, the gene pool is still small. Temperament tends to be active and strongly hunting-driven despite the unusual look.",
+       link:{label:"TICA: Lykoi ↗", url:"https://tica.org/breed/lykoi/", meta:"Official TICA breed profile"}}
     ]
   }
 ];
@@ -595,7 +931,7 @@ function buildTabs(){
   categories.forEach(cat=>{
     const btn = document.createElement('button');
     btn.className = 'drawer-tab' + (cat.key===activeKey ? ' active' : '');
-    btn.innerHTML = cat.label + '<span class="count">' + cat.breeds.length + ' filed</span>';
+    btn.innerHTML = cat.label + '<span class="count">(' + cat.breeds.length + ')</span>';
     btn.addEventListener('click', ()=>{
       activeKey = cat.key;
       searchTerm = "";
@@ -615,11 +951,11 @@ function renderGrid(){
 
   const term = searchTerm.trim().toLowerCase();
   const pool = term
-    ? categories.flatMap(c=>c.breeds.map(b=>({...b, cat:c.label, catKey:c.key})))
-    : cat.breeds.map(b=>({...b, cat:cat.label, catKey:cat.key}));
+    ? categories.flatMap(c=>c.breeds.map(b=>({...b, cat:c.label, catKey:c.key, catCode:c.code})))
+    : cat.breeds.map(b=>({...b, cat:cat.label, catKey:cat.key, catCode:cat.code}));
 
   const filtered = term
-    ? pool.filter(b => (b.name+" "+b.tag+" "+b.note).toLowerCase().includes(term))
+    ? pool.filter(b => (b.name+" "+b.tag+" "+b.note+" "+(b.detail||"")).toLowerCase().includes(term))
     : pool;
 
   if(term){
@@ -640,12 +976,15 @@ function renderGrid(){
     card.className = 'card';
     card.style.animationDelay = (i*0.03)+'s';
     const color = catColors[b.catKey] || '#3f5443';
+    const fileLabel = b.catCode + ' ' + String(i+1).padStart(3,'0');
     card.innerHTML =
-      '<span class="card-index">FILE ' + String(i+1).padStart(3,'0') + (term ? ' · ' + b.cat.toUpperCase() : '') + '</span>' +
-      '<div class="card-image">' + catSketch(color) + '<span class="corner-tag">Photo on file</span></div>' +
+      '<span class="card-index">' + fileLabel + '</span>' +
+      '<div class="card-image">' + catSketch(color) + '</div>' +
       '<h4>' + b.name + '</h4>' +
       '<p>' + b.note + '</p>' +
-      '<span class="stamp">' + b.tag + '</span>';
+      '<span class="stamp" style="border-color:' + color + '55; color:' + color + '">' + b.tag + '</span>' +
+      '<span class="drill-hint">Tap for details ↗</span>';
+    card.addEventListener('click', ()=> openBreedModal(b, fileLabel));
     grid.appendChild(card);
   });
 }
@@ -659,100 +998,316 @@ buildTabs();
 renderGrid();
 
 /* ============ CARE GUIDE ============ */
+/* Shared 24hr emergency vet contacts — reused across every emergency card so the numbers are always one tap away */
+const emergencyContactLinks = [
+  {label:"Advanced VetCare (Bedok) ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJkS4WOzA92jERQ5_fAGVwalg", meta:"26 Jln Pari Burong · +65 6636 1788 · 24hrs · East"},
+  {label:"Westside Vet Emergency & Referral ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJResu3XgR2jERS0q4o65mCHM", meta:"86 Serangoon Garden Wy · +65 6931 0095 · 24hrs · North/Central"},
+  {label:"VES Hospital @ Whitley ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJSVzs_iUZ2jERZGrhI_Lqd3k", meta:"232 Whitley Rd · +65 6266 0232 · 24hrs · Central"},
+  {label:"Beecroft Animal Specialist & Emergency ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJH_J3lxkb2jER55nivLabKZo", meta:"991E Alexandra Rd, #01-27 · +65 6996 1812 · 24hrs · South/West"}
+];
+
 const careCategories = [
   {
-    key:"stages", label:"Life Stages", title:"Life Stages",
+    key:"emergencies", label:"Emergencies", code:"URGENT", title:"Emergencies",
+    desc:"If your cat is acting off, start here — what needs a vet right now, and what to do in the meantime.",
+    items:[
+      {name:"Is This an Emergency?", tag:"Start here", color:"#8A3B2B",
+       note:"A quick checklist of signs that mean go now — not tomorrow, not after monitoring overnight.",
+       detail:"Cats are good at hiding illness, which makes it hard to know when 'acting weird' is actually urgent. Get to a vet immediately — don't wait to see if it passes — if you notice any of the following:\n\n• Difficulty breathing, open-mouth breathing, or panting (never normal in a cat)\n• Straining to urinate with little or no output, or crying in the litter box\n• A seizure lasting more than 2–3 minutes, or more than one in a day\n• Collapse, unresponsiveness, or inability to stand or walk normally\n• Uncontrolled bleeding, or pale, white, or blue-tinged gums\n• A hard, swollen, or painful abdomen\n• Known or suspected ingestion of something toxic\n• Any trauma — hit by a car, a fall from height, or an animal attack — even if the cat seems fine afterward\n\nWhen in doubt, call a clinic and describe what you're seeing — a quick phone triage is free and can tell you whether to come in immediately.",
+       linkGroups:[
+         {mode:"entities", heading:"24hr Emergency Vets (Singapore)", links: emergencyContactLinks},
+         {mode:"references", links:[
+            {label:"VCA: Emergencies in Cats ↗", url:"https://vcahospitals.com/know-your-pet/emergencies-in-cats", meta:"Overview of the most common feline emergencies"},
+            {label:"AVMA: First Aid Tips for Pet Owners ↗", url:"https://www.avma.org/resources-tools/pet-owners/emergencycare/first-aid-tips-pet-owners", meta:"American Veterinary Medical Association"},
+            {label:"Jump to Health & Safety tab ↓", url:"internal:health", meta:"How to actually check gum color and hydration at home"}
+         ]}
+       ]},
+      {name:"Can't Urinate (Urinary Blockage)", tag:"No home fix", color:"#8A3B2B",
+       note:"Straining in the litter box with little or no urine — especially in male cats — can be fatal within 24–48 hours.",
+       detail:"A urinary blockage happens when the urethra gets obstructed, most often in male cats because their urethra is longer and narrower. It stops urine flow entirely, and toxins build up in the bloodstream fast.\n\n<b>Watch for:</b>\n\n• Frequent trips to the litter box with little or no urine\n• Crying or straining while trying to go\n• Excessive licking of the genital area\n• A hard or painful lower abdomen\n• Vomiting, or sudden lethargy and hiding\n\nThere is no safe home first-aid step for this one — no bandaid, no waiting it out. A complete blockage can cause kidney failure or death within 24–48 hours, so the only correct action is to get to a vet immediately, even in the middle of the night.",
+       linkGroups:[
+         {mode:"entities", heading:"24hr Emergency Vets (Singapore)", links: emergencyContactLinks},
+         {mode:"references", links:[
+            {label:"MSPCA-Angell: Urethral Obstruction in Cats ↗", url:"https://www.mspca.org/clinical/urethral-obstruction-in-cats/", meta:"Why male cats are especially at risk"}
+         ]}
+       ]},
+      {name:"Difficulty Breathing", tag:"Never normal", color:"#8A3B2B",
+       note:"Open-mouth breathing or panting in a cat is always serious — there's no 'wait and see' with this one.",
+       detail:"Unlike dogs, cats don't pant from heat or exercise — open-mouth breathing, rapid breathing, or visible effort to breathe is always abnormal and always urgent, whatever the cause turns out to be (asthma, fluid in the chest, heart disease, or trauma).\n\n<b>While getting to a vet:</b>\n\n• Keep the cat as calm and still as possible — stress and struggling increase oxygen demand and can make breathing worse\n• Don't restrain or hold the cat tightly against its chest\n• Transport in a well-ventilated carrier, ideally propped slightly upright rather than flat\n• Don't attempt to give food or water\n\nThis is one of the clearest 'go now' signs in this whole guide — by the time breathing looks distressed, the underlying problem is usually already serious.",
+       linkGroups:[
+         {mode:"entities", heading:"24hr Emergency Vets (Singapore)", links: emergencyContactLinks},
+         {mode:"references", links:[
+            {label:"VCA: Emergencies in Cats ↗", url:"https://vcahospitals.com/know-your-pet/emergencies-in-cats", meta:"Breathing, burns, poisoning, and collapse covered together"}
+         ]}
+       ]},
+      {name:"Seizures", tag:"Time it, don't touch", color:"#5B3A5C",
+       note:"Clear the area, don't touch the mouth, and time how long it lasts — that detail matters most to the vet.",
+       detail:"During a seizure a cat may fall over, twitch or paddle, drool, and lose control of bladder or bowel. It looks alarming, but the most useful thing you can do is stay calm and observe.\n\n<b>Do:</b>\n\n• Move nearby objects out of the way so the cat doesn't injure itself\n• Time the seizure on your phone\n• Dim harsh lights and reduce noise\n• Stay nearby speaking softly once it ends\n\n<b>Don't:</b>\n\n• Put your hands near the mouth (cats don't swallow their tongues, and you risk being bitten)\n• Try to restrain the movements\n\nA single seizure under 2–3 minutes that resolves on its own still needs a follow-up vet visit, but isn't necessarily a mid-seizure emergency drive. It becomes an immediate emergency if it lasts more than 5 minutes, if there's more than one in a 24-hour period (cluster seizures), or if breathing looks labored afterward.",
+       linkGroups:[
+         {mode:"entities", heading:"24hr Emergency Vets (Singapore)", links: emergencyContactLinks},
+         {mode:"references", links:[
+            {label:"Red Cross: Seizures in Cats ↗", url:"https://www.redcross.org/take-a-class/resources/learn-pet-first-aid/cat/seizures", meta:"Pet first-aid guidance, American Red Cross"},
+            {label:"VCA: Seizures & Epilepsy in Cats ↗", url:"https://vcahospitals.com/know-your-pet/seizures-and-epilepsy-in-cats", meta:"What causes recurring seizures"}
+         ]}
+       ]},
+      {name:"Suspected Poisoning", tag:"Don't induce vomiting", color:"#8A3B2B",
+       note:"Call a vet immediately — and don't try to make the cat vomit unless you're specifically told to.",
+       detail:"Common culprits include lilies and other toxic plants, human medication, rodent or slug bait, and household chemicals (see the Home-Proofing card in Health & Safety for a fuller list). Signs of poisoning include vomiting, diarrhea, drooling, seizures, collapse, or skin irritation from a caustic substance.\n\n<b>The single most important rule:</b> do not induce vomiting unless a vet or poison control specifically tells you to. Some substances cause more damage coming back up than staying down, especially anything corrosive.\n\n• If you know what was ingested, bring the packaging, plant, or a sample with you — it changes what the vet can do\n• If the substance touched the skin or fur, rinse the area with water for about 15 minutes before you leave\n• Call your regular vet first if they're reachable; otherwise go straight to a 24hr clinic",
+       linkGroups:[
+         {mode:"entities", heading:"24hr Emergency Vets (Singapore)", links: emergencyContactLinks},
+         {mode:"references", links:[
+            {label:"Cornell: Common Cat Hazards ↗", url:"https://vet.cornell.edu/node/4043", meta:"Cornell Feline Health Center — what to do if you suspect poisoning"},
+            {label:"ASPCA Animal Poison Control ↗", url:"https://www.aspca.org/pet-care/animal-poison-control", meta:"US-based; in Singapore, call your vet or an emergency clinic first"},
+            {label:"Pet Poison Helpline ↗", url:"https://www.petpoisonhelpline.com/", meta:"24/7 line, US-based, consultation fee applies"}
+         ]}
+       ]},
+      {name:"Heatstroke", tag:"Cool first, transport second", color:"#8A6A2E",
+       note:"Move to a cool space and start gentle cooling immediately — then get to a vet regardless of how quickly they recover.",
+       detail:"Cats can't cool themselves the way humans do — they rely mainly on finding shade and grooming, which makes them vulnerable if trapped somewhere hot (a car, an unventilated room, direct sun with no shade).\n\n<b>Early signs:</b> panting, drooling, restlessness, seeking cool surfaces.\n\n<b>Severe signs:</b> collapse, vomiting, staggering, seizures, gums turning dark red, white, or bluish.\n\n<b>First aid, in order:</b>\n\n1. Move the cat to a cool, shaded, or air-conditioned space immediately\n2. Apply cool — not ice-cold — damp towels to the belly, paws, and ears; ice water can cause blood vessels to constrict and is counterproductive\n3. Offer small sips of water only if the cat is alert enough to drink on its own, never force it\n4. Stop active cooling once things seem to improve, to avoid overshooting into hypothermia\n\nEven if your cat seems to recover in the car, organ damage from heatstroke can develop hours later — treat every case as one that needs a same-day vet visit, not just home cooling.",
+       linkGroups:[
+         {mode:"entities", heading:"24hr Emergency Vets (Singapore)", links: emergencyContactLinks},
+         {mode:"references", links:[
+            {label:"RVC: Heatstroke in Dogs and Cats ↗", url:"https://www.rvc.ac.uk/small-animal-vet/teaching-and-research/fact-files/heatstroke-in-dogs-and-cats", meta:"Royal Veterinary College fact file"},
+            {label:"AVMA: First Aid Tips for Pet Owners ↗", url:"https://www.avma.org/resources-tools/pet-owners/emergencycare/first-aid-tips-pet-owners", meta:"Includes heatstroke signs and cooling steps"}
+         ]}
+       ]},
+      {name:"Trauma, Falls & Bleeding", tag:"Move as little as possible", color:"#8A3B2B",
+       note:"Hit by a car, a fall from height, or an animal attack — minimize movement and go, even if the cat looks okay.",
+       detail:"This covers the sudden, physical emergencies: being hit by a vehicle, a fall from a window or balcony ('high-rise syndrome' — see the Adoption and Home-Proofing cards on why meshing matters), or an attack by another animal.\n\n<b>First aid:</b>\n\n• Minimize how much the cat moves — use a towel or a flat, firm surface like a board or box lid as an improvised stretcher rather than letting the cat walk\n• Keep the cat warm (this is the one exception where you don't want cooling)\n• For visible bleeding, apply gentle, direct pressure with a clean cloth — don't use a tourniquet, and don't apply human antiseptics or peroxide, which can damage tissue further\n• Don't offer food or water in case sedation or surgery is needed shortly after\n\nThe hardest part of this one: a cat can look normal minutes after real trauma and still have internal bleeding or organ damage that takes hours to become obvious. Any cat involved in a fall, a collision, or a serious animal attack needs to be examined the same day, even with no visible injury.",
+       linkGroups:[
+         {mode:"entities", heading:"24hr Emergency Vets (Singapore)", links: emergencyContactLinks},
+         {mode:"references", links:[
+            {label:"VCA: Emergencies in Cats ↗", url:"https://vcahospitals.com/know-your-pet/emergencies-in-cats", meta:"How to safely move an injured cat"}
+         ]}
+       ]},
+      {name:"Emergency Contacts (Singapore)", tag:"Save these numbers", color:"#2C5D5A",
+       note:"Four 24-hour clinics spread across Singapore — worth saving in your phone before you ever need them.",
+       linkGroups:[
+         {mode:"entities", heading:"24hr Emergency Vets (Singapore)", links: emergencyContactLinks}
+       ]}
+    ]
+  },
+  {
+    key:"adoption", label:"Adoption", code:"ADOPT", title:"Adoption",
+    desc:"Where to start, before anything else — organizations, process, and what Singapore now requires by law.",
+    items:[
+      {name:"Adoption vs. Breeder", tag:"Consider first", color:"#8a6b1f",
+       note:"Adoption fees are far lower than breeder prices and usually bundle in the vet costs a breeder cat needs arranged separately.",
+       detail:"Shelters and rescues in Singapore are typically full of mixed-breed 'Singapore Special' cats and the occasional purebred surrendered by a previous owner — so choosing to adopt doesn't always mean giving up on a specific look.\n\n<b>Adoption:</b> roughly $25–$200 depending on the org and cat, usually bundling in sterilisation, vaccination, and microchipping — work that would otherwise cost several hundred dollars separately.\n\n<b>Buying from a breeder:</b> typically $1,000–$5,000+ depending on the breed. A reputable breeder should provide health screening records, a vaccination history, and be willing to show you the kitten's parents.\n\n<b>Red flags for backyard breeders or kitten mills:</b>\n\n• Never allowing a home or facility visit\n• Multiple litters or breeds available year-round\n• Refusing to provide any paperwork\n\nThe trade-off worth knowing: a breeder can usually tell you a kitten's full lineage and expected traits, while a shelter cat's early history is often unknown — though many shelters and especially foster-based orgs can tell you a lot about a cat's day-to-day personality since it's been living in a real home, not a breeding facility.",
+       linksMode:"references",
+       links:[{label:"Compare adoption orgs & fees ↗", url:"https://www.pawrenthood.sg/adopt-cat-singapore/", meta:"Side-by-side look at SPCA, CWS, KiSS — fees, process, and what's included"}]},
+      {name:"The Adoption Process", tag:"Step by step", color:"#3d6b6d",
+       note:"Browse → apply → viewing appointment → screening/home check → sign & pay → bring your cat home.",
+       detail:"Steps vary slightly by organization, but most follow the same shape:\n\n1. Browse available cats online — most orgs post photos, age, and personality notes.\n2. Submit an application covering your household situation, past pet experience, work schedule, and who the primary caregiver will be.\n3. Book a viewing appointment to meet the cat in person — some orgs require more than one visit before approving a match.\n4. Pass a screening interview and a home check, which for cats usually means proving your windows and gates are fully meshed (photo or video evidence is often accepted in lieu of an in-person visit).\n5. Sign an adoption agreement — typically including clauses like keeping the cat indoors, not declawing, and contacting the org first if you can no longer keep the cat rather than rehoming it yourself.\n6. Pay the adoption fee and bring your cat home. Some orgs follow up with a post-adoption check-in.\n\nExpect the whole process to take anywhere from a few days to a few weeks — faster for older or special-needs cats that are harder to place, slower for popular kittens with several interested applicants.",
+       linksMode:"references",
+       links:[{label:"Compare adoption orgs & fees ↗", url:"https://www.pawrenthood.sg/adopt-cat-singapore/", meta:"Walks through SPCA's process step by step as a worked example"},
+              {label:"SPCA: Rehoming & Screening Questions ↗", url:"https://spca.org.sg/services/rehoming/", meta:"The actual questions applicants are asked"}]},
+      {name:"Know Before You Adopt (Singapore)", tag:"Legal requirement", color:"#a15a3a",
+       note:"Cat licensing via PALS is now mandatory, and full window meshing is required before handover.",
+       detail:"<b>Cat licensing (PALS):</b> since 1 September 2024, as part of Singapore's National Cat Management Framework, every pet cat must be licensed through AVS's Pet Animal Licensing System — the same portal already used for dog licensing. This is a legal requirement, not optional paperwork, and covers microchip ownership transfer into your name at the same time.\n\n<b>Window meshing:</b> most shelters enforce their own physical safety requirement before they'll hand over a cat — every window and gate, including bathroom ventilation windows and top-hung push-out windows, needs to be fully meshed with a strong, cat-proof mesh. Partial meshing isn't accepted, and flimsy options like velcro mesh, standard mosquito mesh, or magnetic mesh are usually rejected as not strong enough to hold a cat's weight or claws. Approved mesh types are listed on Cat Welfare Society's site.\n\n<b>Why both rules exist:</b> Singapore records roughly 250 cases a year of cats falling from height, largely because so much of the population lives in high-rise HDB flats and condos. Shelters treat this as seriously as the legal licensing requirement, and will typically ask for photo or video proof of meshing at your adoption appointment.",
+       linksMode:"references",
+       links:[{label:"AVS Pet Animal Licensing System (PALS) ↗", url:"https://pals.avs.gov.sg", meta:"Where cat licensing and microchip registration are done"},
+              {label:"SPCA: Adoption Requirements ↗", url:"https://spca.org.sg/services/adoption/", meta:"Meshing, indoor-only, and post-adoption checks explained"}]},
+      {name:"Adoption Centres", tag:"4 options", color:"#3d6b6d",
+       note:"Four established routes to adopt a cat in Singapore — tap through for site, address, and fees.",
+       detail:"The four differ more than they might look at a glance:\n\n<b>SPCA Singapore</b> is the most structured route — a traditional shelter with an appointment-based viewing process, and the adoption fee covers sterilisation, vaccination, and microchipping in one go. Good if you want a single, comprehensive transaction.\n\n<b>Cat Welfare Society</b> isn't a shelter at all — it's a public adoption board where independent fosterers list cats they're already caring for in their own homes. The upside is you get a fosterer who can tell you the cat's real personality firsthand, rather than its behavior in a cage.\n\n<b>Animal Lovers League</b> is a large no-kill shelter housing several hundred cats and dogs, many rescued as strays. It's appointment-based, and WhatsApp is genuinely the fastest way to reach them for cat-specific questions.\n\n<b>Kitten Sanctuary Singapore</b> is the option if you specifically want a kitten — it's Singapore's only dedicated neonatal kitten nursery, entirely volunteer-run, and visits are bookable so you can interact with kittens directly rather than choosing from photos alone.",
+       linksMode:"entities",
+       links:[{label:"SPCA Singapore ↗", url:"https://spca.org.sg/services/adoption/", meta:"50 Sungei Tengah Rd · +65 6287 5355 · $80–$200 fee incl. sterilisation, vaccination & microchip · by appointment"},
+              {label:"Cat Welfare Society (CWS) ↗", url:"https://www.catwelfare.org/adoptions/", meta:"Foster-based adoption board, not a shelter you visit — cats live in homes, not cages"},
+              {label:"Animal Lovers League (ALL) ↗", url:"https://animalloversleague.com/", meta:"59 Sungei Tengah Rd, Block Q #01-29 · +65 9670 8052 · no-kill shelter, WhatsApp for cat matters"},
+              {label:"Kitten Sanctuary Singapore (KiSS) ↗", url:"https://www.kittensanctuarysg.org/adopt", meta:"576A Geylang Rd, #02-01 · +65 9126 7379 · Singapore's only neonatal kitten nursery, bookable visits"}]}
+    ]
+  },
+  {
+    key:"stages", label:"Life Stages", code:"STAGES", title:"Life Stages",
     desc:"What changes as a cat ages — feeding, vet visits, and vulnerabilities shift by decade, not by breed.",
     items:[
       {name:"Kitten (0–12 months)", tag:"Growth phase", color:"#8a6b1f",
-       note:"Feed a kitten-formula food 3–4 times a day for the extra protein and calories growth demands. Core vaccines run in a series from about 6 to 16 weeks, and most vets schedule spay/neuter around 5–6 months. This is also the main socialization window — new sounds, people, and handling are best introduced now."},
+       note:"Kitten-formula food, a core vaccine series, and the main socialization window all happen in this first year.",
+       detail:"<b>Feeding:</b> a kitten-formula food 3–4 times a day — kittens need roughly twice the calories per kilogram of an adult cat to fuel rapid growth, plus more protein and fat than an adult diet provides.\n\n<b>Vaccines:</b> core vaccines (typically covering feline viral rhinotracheitis, calicivirus, and panleukopenia — often shortened to FVRCP) run as a series of shots from about 6 to 16 weeks, since a kitten's immunity from its mother fades unpredictably during that window and a single shot can't be timed to catch it reliably. Deworming usually happens alongside these visits.\n\n<b>Socialization:</b> 2 to 9 weeks is considered the critical window — positive, low-stress exposure to new people, sounds, handling, and (carefully) other vaccinated animals shapes how confident and adaptable the cat is for life.\n\nMost vets schedule spay/neuter around 5–6 months, and kittens are typically transitioned to adult food somewhere between 10 and 12 months, once growth has largely leveled off.",
+       linksMode:"references",
+       links:[{label:"Cornell: Choosing & Caring for Your New Cat ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/choosing-and-caring-your-new-cat", meta:"Cornell Feline Health Center — setup, first vet visit, testing"},
+              {label:"AAHA/AAFP Feline Life Stage Guidelines ↗", url:"https://www.aaha.org/resources/2021-aaha-aafp-feline-life-stage-guidelines/", meta:"Vaccination and wellness schedule by age, kitten section"}]},
       {name:"Adult (1–10 years)", tag:"Maintenance", color:"#3f5443",
-       note:"Two measured meals a day is standard, with an annual vet visit for vaccines, dental checks, and weight tracking. This is the stage most general feeding and grooming advice is written for, since metabolism and risk factors are at their most stable."},
+       note:"Two measured meals a day plus an annual vet visit is the steady baseline most general advice assumes.",
+       detail:"Two measured meals a day is standard for a healthy adult cat, with portion size guided less by the bag's suggested amount and more by regularly checking body condition — being able to feel (but not see prominently) the ribs, with a visible waist from above, is a more reliable gauge than weight alone since it accounts for frame size.\n\nAn annual vet visit covers vaccine boosters, a dental check, and weight tracking — dental disease in particular is easy to miss day to day but extremely common by middle age, since cats are good at hiding the discomfort of a sore mouth.\n\nThis is the life stage most general feeding, grooming, and enrichment advice is written for by default, since metabolism, activity level, and disease risk are at their most stable and predictable here compared to the kitten and senior years on either side.\n\n<b>How to actually check body condition at home</b> (the WSAVA 'look-feel-look' method, takes under a minute):\n\n1. Stand the cat up rather than checking while it's hunched in a lap, since a curled-up cat always looks heavier\n2. Feel — place a flat hand on each side of the ribcage; in an ideal-weight cat you should feel each rib easily, like running a finger over the back of your other hand, without pressing hard\n3. Look from above — there should be a visible inward waist behind the ribs\n4. Look from the side — a slight upward tuck from ribs to hind legs\n\nIf you have to press firmly to find the ribs at all, or there's no waist visible, that's worth mentioning at the next vet visit rather than adjusting food on your own.",
+       linksMode:"references",
+       links:[{label:"Cornell: Feeding Your Cat ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/feeding-your-cat", meta:"Cornell Feline Health Center — nutrition basics for adult cats"},
+              {label:"AAHA/AAFP Feline Life Stage Guidelines ↗", url:"https://www.aaha.org/resources/2021-aaha-aafp-feline-life-stage-guidelines/", meta:"Same guidelines, young/mature adult sections"},
+              {label:"VCA: Body Condition Score in Cats ↗", url:"https://vcahospitals.com/know-your-pet/body-condition-score-in-cats", meta:"Full 1–9 visual and hands-on scoring chart"}]},
       {name:"Senior (10+ years)", tag:"Extra watch", color:"#a15a3a",
-       note:"Many vets shift to twice-yearly visits starting around age 7–10. Watch for the big four: kidney disease, hyperthyroidism, arthritis, and dental disease. Senior diets tend to be softer and lower in phosphorus, and a low-sided litter box helps cats with stiff joints get in and out comfortably."}
+       note:"Twice-yearly vet visits and watching for kidney, thyroid, joint, and dental issues become the priority.",
+       detail:"Many vets shift to twice-yearly visits starting around age 7–10, since conditions in older cats tend to progress faster between checkups than they do in younger adults. Four conditions account for most senior cat health issues:\n\n• Kidney disease — often first noticeable as increased thirst and urination, sometimes before a cat looks unwell in any other way.\n• Hyperthyroidism — weight loss despite a normal or increased appetite is the classic tell.\n• Arthritis — look for reluctance to jump onto furniture, stiffness after resting, or skipping the litter box if it has high sides.\n• Dental disease — bad breath, drooling, or dropping food while eating.\n\nSenior diets tend to be softer and lower in phosphorus (easier on aging kidneys), and practical home changes help too: a low-sided litter box for stiff joints, extra litter boxes on the same floor so a cat doesn't have to climb stairs, and a warm, easily-accessible bed. Twice-yearly bloodwork can catch several of the above conditions before symptoms are obvious.",
+       linksMode:"references",
+       links:[{label:"Cornell: The Special Needs of the Senior Cat ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/special-needs-senior-cat", meta:"Cornell Feline Health Center — aging changes to watch for"},
+              {label:"Cornell: Loving Care for Older Cats ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/loving-care-older-cats", meta:"Practical day-to-day adjustments for senior cats"}]}
     ]
   },
   {
-    key:"diet", label:"Diet & Nutrition", title:"Diet & Nutrition",
+    key:"diet", label:"Diet & Nutrition", code:"DIET", title:"Diet & Nutrition",
     desc:"Cats are obligate carnivores — what they eat, and never eat, matters more than most other care decisions.",
     items:[
       {name:"Obligate Carnivore", tag:"Biology", color:"#3d6b6d",
-       note:"Cats need meat-based protein and can't thrive on a plant-based diet the way dogs or humans can. Taurine, an amino acid found only in animal tissue, is essential for heart and eye health, and a deficiency can cause serious long-term damage."},
+       note:"Cats need meat-based protein and can't thrive on a plant-based diet the way dogs or humans can.",
+       detail:"Cats are obligate carnivores — their bodies are built to run on animal-derived nutrients specifically, not just protein in general. Taurine, an amino acid found only in animal tissue, is the clearest example: cats can't synthesize enough of it themselves, and a deficiency can cause dilated cardiomyopathy (a serious, sometimes fatal, weakening of the heart muscle) and irreversible retinal degeneration leading to blindness. This is also why dog food isn't a safe substitute for cats even short-term — it isn't fortified with the taurine or arachidonic acid levels a cat's metabolism requires.\n\nCommercial cat foods are formulated to meet these needs, which is why homemade or plant-based diets require careful veterinary supervision if attempted at all — it's very easy to under-supply what looks like a perfectly balanced meal by human standards.",
+       linksMode:"references",
+       links:[{label:"Cornell: Feeding Your Cat ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/feeding-your-cat", meta:"Cornell Feline Health Center — why cats need animal protein"}]},
       {name:"Wet vs. Dry Food", tag:"Format", color:"#6b4a7a",
-       note:"Wet food adds hydration and tends to be gentler on aging kidneys; dry food is convenient, shelf-stable, and helps with dental wear. Many owners mix both, adjusting the ratio as a cat ages or develops health issues."},
+       note:"Wet food adds hydration and is gentler on kidneys; dry food is convenient and helps a little with dental wear.",
+       detail:"<b>Wet food</b> is typically 70–80% moisture, versus roughly 10% for dry kibble — a meaningful difference, since cats evolved from desert-dwelling ancestors and instinctively drink less water than they probably should, even when it's freely available. That makes wet food a genuine tool for supporting kidney health, especially as cats age.\n\n<b>Dry food</b> is more convenient, shelf-stable after opening, and its crunch does provide some mechanical scraping of plaque — though this effect is modest and shouldn't be relied on as a substitute for actual dental care or brushing. Once opened, canned wet food should generally be refrigerated and used within a few days.\n\nMany owners mix both: dry food available for grazing, wet food for at least one measured meal a day to boost hydration. The ratio often shifts toward more wet food as a cat ages or develops kidney or urinary issues.",
+       linksMode:"entities",
+       links:[{label:"Polypet — Cat Food Range ↗", url:"https://polypet.com.sg/collections/cat", meta:"Singapore retailer stocking Royal Canin, Orijen, Hill's Science Diet, Purina Pro Plan & more, both wet and dry"},
+              {label:"aPetMart — Cat Supplies ↗", url:"https://apetmart.com/", meta:"Online-first Singapore store, 180+ brands, islandwide delivery"}]},
       {name:"Foods to Avoid", tag:"Toxic list", color:"#a15a3a",
-       note:"Onion, garlic, chocolate, grapes and raisins, and xylitol (a sugar substitute in gum and baked goods) are all toxic to cats. Even small amounts of onion or garlic, cooked or raw, can damage red blood cells over time."},
+       note:"<strong>Onion</strong>, <strong>garlic</strong>, <strong>chocolate</strong>, <strong>grapes/raisins</strong>, and <strong>xylitol</strong> are all toxic to cats, even in small amounts.",
+       detail:"• <strong>Onion & garlic</strong> (cooked, raw, or powdered) — contain compounds that damage red blood cells, leading to hemolytic anemia. The damage is cumulative, so repeated small exposures can be just as harmful as one large one.\n• <strong>Chocolate</strong> — contains theobromine, a stimulant cats metabolize far more slowly than humans; darker chocolate has more of it and is more dangerous.\n• <strong>Grapes & raisins</strong> — linked to sudden kidney failure in some pets even in small quantities, and the exact toxic mechanism still isn't fully understood, which is part of why vets treat any amount as a concern.\n• <strong>Xylitol</strong> (a sugar substitute in sugar-free gum and baked goods) — well documented as dangerous in dogs and treated with the same caution in cats.\n• <strong>Raw bread dough</strong> — can continue to rise in a warm stomach and expand dangerously, alongside producing alcohol as it ferments.\n• <strong>Lilies</strong> — severely toxic to cats specifically; even pollen brushed onto fur and later licked off during grooming can cause kidney failure.\n\nIf you suspect your cat has eaten any of these, contact a vet or emergency clinic immediately rather than waiting for symptoms.",
+       linksMode:"references",
+       links:[{label:"ASPCA: People Foods to Avoid Feeding Your Pets ↗", url:"https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets", meta:"Full list with the reason each food is dangerous"},
+              {label:"ASPCA Animal Poison Control ↗", url:"https://www.aspca.org/pet-care/animal-poison-control", meta:"US-based hotline — in Singapore, call your vet or an emergency clinic first"}]},
       {name:"Where to Buy", tag:"Local options", color:"#3f5443",
-       note:"Specialty pet stores generally stock a wider range of vet-recommended formulas than supermarkets, and can advise on switching foods gradually. See the Resources tab for stores in Singapore that deliver, including Polypet and aPetMart."}
+       note:"Specialty pet stores stock a wider range of vet-recommended formulas than supermarkets, and deliver islandwide.",
+       detail:"Specialty pet stores generally stock a wider range of vet-recommended formulas than supermarkets do, and staff can usually advise on which brands suit specific issues (sensitive stomachs, weight management, kidney support) better than general signage can.\n\nIf you're switching a cat's food for any reason, doing it gradually over 7–10 days — mixing increasing proportions of the new food into the old — helps avoid the vomiting or loose stool a sudden switch can trigger. Specialty stores can usually advise on a transition schedule specific to the brands they carry.\n\nBelow are two Singapore options that deliver islandwide — more choices, including physical stores you can browse in person, are in the Products & Services tab.",
+       linksMode:"entities",
+       links:[{label:"Polypet ↗", url:"https://polypet.com.sg/", meta:"Clementi storefront + online, trading since 2004"},
+              {label:"aPetMart ↗", url:"https://apetmart.com/", meta:"Online-first, Paya Lebar warehouse, islandwide delivery"}]}
     ]
   },
   {
-    key:"allergies", label:"Allergies", title:"Allergies & Sensitivities",
+    key:"allergies", label:"Allergies", code:"ALLERGY", title:"Allergies & Sensitivities",
     desc:"The three usual suspects behind unexplained itching, hair loss, or a sudden change in coat.",
     items:[
       {name:"Flea Allergy Dermatitis", tag:"Most common", color:"#a15a3a",
-       note:"The single most common allergy in cats. A cat sensitive to flea saliva can react intensely to just one bite, with itching and hair loss concentrated around the tail base, lower back, and neck."},
+       note:"The single most common cat allergy — one bite can trigger intense itching around the tail base and neck.",
+       detail:"This is the single most common allergy in cats. A cat sensitive to flea saliva can react intensely to just one bite, rather than needing an ongoing infestation to react — so owners are often surprised their indoor cat has it at all, not realizing a flea can hitch a ride in on another pet, on clothing, or through a window screen.\n\nThe classic pattern is intense itching and hair loss concentrated around the tail base, lower back, and neck, sometimes with small crusty bumps (miliary dermatitis) rather than visible fleas themselves, since affected cats often groom the evidence away. In tropical, humid climates like Singapore, fleas breed year-round rather than seasonally, so vets generally recommend consistent monthly prevention rather than only treating during a visible outbreak.\n\n<b>How to actually check, rather than guess:</b>\n\n1. Run a fine-toothed flea comb through the fur close to the skin, focusing on the tail base, armpits, and groin — the spots fleas favor\n2. After each pass, tap whatever comes off onto a damp white paper towel\n3. Live fleas will visibly move; small black specks are 'flea dirt' (digested blood) — confirm by adding a drop of water, since genuine flea dirt dissolves into a reddish-brown smear within about a minute, while ordinary debris won't\n\nFinding nothing doesn't fully rule it out (a cat can groom away most of the evidence), but finding either fleas or that red smear confirms it, and it's worth doing this check before starting any treatment rather than assuming.",
+       linksMode:"references",
+       links:[{label:"Cornell: Flea Allergy ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/flea-allergy", meta:"Cornell Feline Health Center"},
+              {label:"PetMD: What Do Fleas Look Like on Cats? ↗", url:"https://www.petmd.com/cat/general-health/what-do-fleas-look-cats", meta:"The flea comb + wet paper towel technique"}]},
       {name:"Food Allergies", tag:"Protein source", color:"#8a6b1f",
-       note:"Usually a reaction to a specific protein rather than a brand — beef, dairy, fish, and chicken are the most frequently reported culprits. Signs tend to be itching, vomiting, or soft stool rather than sneezing, and diagnosis requires a strict elimination diet."},
+       note:"Usually a reaction to a specific protein — beef, dairy, fish, and chicken are the most common culprits.",
+       detail:"Food allergies are usually a reaction to a specific protein rather than a brand or ingredient category — beef, dairy, fish, and chicken are the most frequently reported culprits, somewhat counterintuitively since these are also the most common proteins in cat food generally (more exposure means more opportunity to react).\n\nSigns tend to be itching, vomiting, or soft stool rather than sneezing or respiratory symptoms, which makes food allergies easy to mistake for a sensitive stomach or a different skin condition. A true food allergy can also develop at any age, even to a protein a cat has eaten without issue for years — it isn't only a kitten or new-food problem.\n\n<b>Diagnosis</b> requires a strict elimination diet, typically a novel or hydrolyzed protein the cat has never eaten before, fed exclusively (no treats, no flavored medication) for 8–12 weeks before reintroducing the suspected trigger to confirm it.",
+       linksMode:"references",
+       links:[{label:"Cornell: Food Allergies ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/food-allergies", meta:"Cornell Feline Health Center — signs and elimination-diet process"}]},
       {name:"Environmental Allergies", tag:"Atopic", color:"#3d6b6d",
-       note:"Pollen, dust mites, and mold can trigger atopic dermatitis in cats. Unlike in humans, it rarely shows up as sneezing — look for face-rubbing, recurring ear infections, or excessive grooming in one spot instead."}
+       note:"Pollen, dust mites, and mold can trigger atopic dermatitis — usually shown through skin, not sneezing.",
+       detail:"Pollen, dust mites, and mold can all trigger atopic dermatitis in cats. Unlike in humans, it rarely shows up as sneezing or watery eyes — look instead for face-rubbing, recurring ear infections, or excessive grooming concentrated in one spot, which can eventually create a bald patch even without fleas or a food trigger present.\n\nPollen-driven reactions tend to be seasonal, while dust mite or mold sensitivity tends to be fairly constant year-round, which is one way vets start narrowing down the cause. Treatment options are more limited in cats than in dogs or humans — antihistamines have inconsistent efficacy, so vets often move toward allergy testing, prescription diets or supplements, or short courses of steroids to control bad flare-ups, and sometimes immunotherapy for a confirmed, specific trigger.",
+       linksMode:"references",
+       links:[{label:"Cornell: The Challenge of Skin Disorders ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/challenge-skin-disorders", meta:"Cornell Feline Health Center — how the three allergy types are told apart"}]}
     ]
   },
   {
-    key:"daily", label:"Daily Care", title:"Daily Care",
+    key:"daily", label:"Daily Care", code:"DAILY", title:"Daily Care",
     desc:"The routine tasks that keep a cat comfortable day to day, regardless of age or breed.",
     items:[
       {name:"Feeding & Water", tag:"Daily", color:"#a15a3a",
-       note:"Measured meals on a schedule beat free-feeding for most adult cats. Keep water available at all times, and placed away from the food bowl — cats instinctively avoid drinking near where they eat."},
+       note:"Measured meals on a schedule beat free-feeding, and water should sit away from the food bowl.",
+       detail:"<b>Meals:</b> measured meals on a schedule beat free-feeding for most adult cats — it's the single easiest way to notice a change in appetite early, which is often the first sign something's wrong long before other symptoms appear. Two meals a day is standard; some owners split into three or four smaller ones for cats prone to vomiting from eating too fast.\n\n<b>How much food, roughly:</b> WSAVA's own guideline puts a healthy 4kg adult cat at around 225–250 kcal a day, rising to roughly 250–290 kcal for a 5kg cat — as a rough rule of thumb, that works out to about 50–60 kcal per kg of body weight for a typical indoor cat, more for an active or outdoor one. Check the calories-per-serving figure on your specific food's packaging (this varies a lot between brands) and divide by that number to get an actual measured portion — a bag's own 'feeding guide' table is usually a reasonable starting point too. Use this as a first guess, not a fixed target: the body condition check in the Adult card under Life Stages is what tells you whether to adjust it up or down.\n\n<b>Water:</b> keep it available at all times, placed away from the food bowl — cats instinctively avoid drinking near where they eat, a leftover survival instinct from the wild where food scraps near water could attract predators or contamination. As a rough benchmark, cats need about 50ml of water per kg of body weight a day (from all sources combined) — so a 4kg cat needs roughly 200ml a day in total. A cat eating mostly wet food will visibly drink less from the bowl, since a lot of that water comes from the food itself. Ceramic, glass, or steel bowls are generally preferred over plastic, which can harbor bacteria and, for some cats, trigger chin acne from repeated contact. A water fountain (moving water) encourages some cats to drink more than a still bowl does, which matters more as a cat ages and kidney health becomes a bigger factor.",
+       linksMode:"references",
+       links:[{label:"International Cat Care: Everyday Care for Your Cat ↗", url:"https://icatcare.org/articles/everyday-care-for-your-cat", meta:"Feline welfare charity — daily routine basics"},
+              {label:"WSAVA: Calorie Needs for Healthy Adult Cats ↗", url:"https://wsava.org/wp-content/uploads/2020/07/Calorie-Needs-for-Healthy-Adult-Cats-updated-July-2020.pdf", meta:"Official kcal/day chart by body weight"},
+              {label:"Cornell: Hydration ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/hydration", meta:"Cornell Feline Health Center — source for the water-per-kg guideline"}]},
       {name:"Grooming", tag:"Weekly+", color:"#6b4a7a",
-       note:"Short-haired cats mostly self-groom, but a weekly brush cuts down on shedding and hairballs. Long-haired breeds need brushing every day or two to prevent painful mats from forming."},
+       note:"Short-haired cats mostly self-groom; long-haired breeds need brushing every day or two to prevent mats.",
+       detail:"Short-haired cats mostly self-groom, but a weekly brush still cuts down on shedding and the hairballs that come with a cat swallowing loose fur. Long-haired breeds need brushing every day or two — mats aren't just cosmetic, they pull painfully at the skin and, left long enough, can restrict movement or trap moisture against the skin.\n\nDouble-coated breeds (Maine Coon, Siberian, Norwegian Forest Cat) benefit from an undercoat rake during seasonal shedding, and most cats need nail trims roughly every 2–3 weeks.\n\n<b>Turn one grooming session a month into a full nose-to-tail scan</b> — it takes a few extra minutes and catches most early problems before they become vet visits:\n\n• Ears — look inside for redness, dark buildup, or odor\n• Eyes — should be clear, no discharge or squinting\n• Gums and teeth — lift the lip; pink and moist gums, no redness at the gumline or visible tartar\n• Whole body — run flat hands over it feeling for new lumps, bumps, or tender spots the cat pulls away from\n• Tail base and groin — check for fleas or flea dirt (see the Flea Allergy card in Allergies for the exact test)\n• Nails — check for overgrowth or splitting\n• Ribs and waist — the body-condition check described in the Adult card under Life Stages\n\nNothing here needs special tools — just doing it on the same schedule every month is what makes it useful, since you're comparing against last month's cat, not a stranger's.",
+       linksMode:"references",
+       links:[{label:"International Cat Care: Grooming Your Cat ↗", url:"https://icatcare.org/articles/grooming-your-cat", meta:"Technique by coat type, plus flea-checking while you brush"}]},
       {name:"Litter Box", tag:"Daily scoop", color:"#3f5443",
-       note:"Scoop at least once a day, and keep one box per cat plus one extra, placed in quiet, easy-to-reach spots. Box avoidance is one of the most common early signs that something — behavioral or medical — is wrong."},
+       note:"Scoop daily, and keep one box per cat plus one extra — box avoidance is often an early warning sign.",
+       detail:"<b>Setup:</b> scoop at least once a day, and keep one box per cat plus one extra (the standard rule of thumb is n+1), placed in quiet, easy-to-reach spots away from loud appliances that might startle a cat mid-use. A box should be roughly 1.5 times the cat's body length — many commercial boxes are actually too small for adult cats, which can itself cause avoidance.\n\n<b>Litter type:</b> most cats prefer unscented litter; fragranced litter is more for the owner's benefit than the cat's, and a strong scent can actually discourage use. Clumping litter is easier to spot-clean daily, while non-clumping needs a full change more frequently to stay hygienic. Box avoidance — going near the box but not in it, or avoiding it entirely — is one of the most common early signs that something, behavioral or medical (like a urinary tract issue), is wrong, and is worth investigating rather than just correcting as a habit problem.\n\n<b>Monitoring:</b> the daily scoop is also your best early-warning system, since you're already looking in the box anyway.\n\n• Frequency — more trips than usual, or noticeably fewer\n• Clump size — shrinking output over a few days is worth watching\n• Color — pink-tinged or reddish is never normal\n• Sound — straining or crying while in the box\n\nThis matters most for male cats — frequent trips producing little or no urine, or crying while trying to go, is the single most time-critical sign in this whole guide (see the Can't Urinate card in Emergencies) — it's not something to monitor overnight and see how it goes.",
+       linksMode:"references",
+       links:[{label:"Ohio State: Litter Boxes ↗", url:"https://indoorpet.osu.edu/cats/basic-indoor-cat-needs/litter-boxes", meta:"Indoor Pet Initiative — size, placement, and covered vs. uncovered"},
+              {label:"Jump to Emergencies tab ↓", url:"internal:emergencies", meta:"Can't Urinate (Urinary Blockage) — signs and why there's no home fix"}]},
       {name:"Enrichment & Play", tag:"Daily", color:"#8a6b1f",
-       note:"Cats stay natural hunters even indoors. Short daily play sessions with a wand toy, along with scratching posts and window perches, help prevent the boredom that often shows up as stress or destructive behavior."}
+       note:"Short daily play sessions plus vertical space help prevent the boredom that shows up as stress or destruction.",
+       detail:"Cats stay natural hunters even indoors, and short daily play sessions with a wand toy — mimicking the stalk-chase-catch sequence of real hunting — satisfy that instinct in a way that batting at a stationary toy doesn't. Ending a play session by letting the cat 'catch' the toy, followed by a small snack, mimics the natural hunt-eat-groom-sleep cycle and tends to settle a cat down afterward rather than leaving it wound up.\n\nVertical space matters as much as floor space — cat trees, wall shelves, or a window perch give a cat territory to survey from, which is a real behavioral need, not just a nice-to-have. Puzzle feeders slow down cats that eat too fast and add mental stimulation to a meal that would otherwise take thirty seconds. Rotating toys every week or two (rather than leaving everything out permanently) helps prevent a cat from simply habituating to all of it. This matters most in single-cat, fully indoor households, where the cat has no other outlet for these instincts at all.\n\nOne related quirk worth knowing: cats can genuinely learn that a limp or a dramatic meow gets extra attention, and repeat it — not out of deception, but ordinary reinforcement learning (an injury once got a big sympathetic reaction, so the behavior resurfaces later when the cat wants that same attention). This is real, but it's also narrow: it applies to mild, inconsistent limping or attention-seeking vocalizing, never to vomiting, bleeding, lethargy, or difficulty breathing. The safe default is the same either way — rule out a genuine injury with a vet first, and only chalk it up to attention-seeking once that's been ruled out.\n\n<b>A few things you can check yourself before that vet visit</b>, none of which require touching anything painful:\n\n• Watch unobserved — record on your phone from another room; a limp disappearing the moment the cat is distracted, playing, or doesn't know you're watching is a tell, since genuine injuries don't clock an audience\n• Check consistency — always the same leg or spot points toward something real; switching between episodes points the other way\n• Look for visible signs — swelling, heat, a wound, a thorn, or matted fur hiding something underneath\n• Gentle touch test — very gently pressing around the area usually gets a clear reaction from a real injury (pulling away, hissing), while no reaction at all favors learned behavior\n• Check the rest of the picture — appetite, energy, and litter box habits staying completely normal makes attention-seeking more plausible; any of them slipping points back toward a real problem\n\nNone of this replaces a vet exam; it just helps you describe what you're seeing more precisely if you call one.",
+       linksMode:"references",
+       links:[{label:"Ohio State: Indoor Pet Initiative — For Cat Owners ↗", url:"https://indoorpet.osu.edu/cats", meta:"Toys, perches, scratching, and territory needs for indoor cats"},
+              {label:"Catster: Will a Cat Fake a Limp for Sympathy? ↗", url:"https://www.catster.com/cat-behavior/will-cat-fake-a-limp-for-sympathy/", meta:"Vet-reviewed — what's learned behavior vs. a real injury"}]}
     ]
   },
   {
-    key:"health", label:"Health & Safety", title:"Health & Safety",
+    key:"health", label:"Health & Safety", code:"HEALTH", title:"Health & Safety",
     desc:"Regular checkups and a home free of the hazards cats are most likely to get into.",
     items:[
       {name:"Vet Visits", tag:"Annual→biannual", color:"#3d6b6d",
-       note:"Healthy adults generally need a check-up once a year, covering vaccination boosters, dental checks, and parasite prevention. Kittens need a tighter early schedule, and seniors typically move to every six months."},
+       note:"Healthy adults need a yearly check-up; kittens need a tighter schedule, seniors move to every six months.",
+       detail:"A standard wellness exam covers more than it might seem from the outside: weight and body condition, temperature, listening to heart and lungs, palpating the abdomen for anything unusual, a dental check, and a conversation about any behavior changes you've noticed — often the most useful part, since owners catch subtle shifts a single exam can't.\n\nVaccination boosters follow a core vs. non-core split — core vaccines (like FVRCP) are recommended for essentially all cats, while non-core ones (like feline leukemia) depend on lifestyle, such as any outdoor access or contact with other cats. Parasite prevention is typically a monthly topical or oral treatment covering fleas, and often heartworm or intestinal parasites depending on the product.\n\nKittens need a tighter early schedule tied to their vaccine series (roughly every 3–4 weeks from 6 to 16 weeks), healthy adults generally need a check-up once a year, and seniors typically move to every six months once age-related conditions become more likely to progress quickly between visits.\n\n<b>Gum color</b> is one quick check you can do yourself between visits, borrowed from what a vet does in an exam: gently lift the upper lip; healthy gum tissue is a consistent bubblegum pink and moist to the touch. Press a fingertip against it for a second, then release — the color should return within 1–2 seconds (capillary refill time). Pale, white, or bluish gums, or a refill that takes noticeably longer, is a reason to call a vet, not just note and monitor.\n\n<b>The skin-tent test</b> is the other: gently lift a fold of skin between the shoulder blades and let go; in a well-hydrated cat it snaps back almost immediately. Skin that sinks back slowly, or stays 'tented,' suggests dehydration. Neither test is perfect on its own (senior cats naturally have less skin elasticity, and gum pigment varies by cat), so use them as one more data point, not a standalone diagnosis.",
+       linksMode:"references",
+       links:[{label:"AAHA/AAFP Feline Life Stage Guidelines ↗", url:"https://www.aaha.org/resources/2021-aaha-aafp-feline-life-stage-guidelines/", meta:"Full checkup and vaccination schedule by life stage"},
+              {label:"Cornell: Hydration ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/hydration", meta:"Cornell Feline Health Center — why hydration matters and signs to watch for"},
+              {label:"Jump to Products & Services tab ↓", url:"internal:resources", meta:"Atlas, Advanced VetCare, Dr Paws — vet clinics in Singapore"}]},
       {name:"Home-Proofing", tag:"Ongoing", color:"#a15a3a",
-       note:"Lilies are highly toxic to cats even in small amounts, and string, thread, and hair elastics pose a serious swallowing risk. Secure open windows and balconies — 'high-rise syndrome' is a real and common injury in cats that fall while chasing something outside."}
+       note:"Lilies, string, meds, and unsecured windows are the hazards cats most often get into.",
+       detail:"• <strong>Lilies</strong> — highly toxic even in small amounts; even pollen brushed onto fur and licked off later during grooming can cause kidney failure, making them one of the few houseplants worth banning outright rather than just keeping out of reach.\n• <strong>String, thread, ribbon, hair elastics</strong> — a serious swallowing risk. If part of a string gets caught under the tongue while the rest is swallowed, it can saw through the intestine as it tries to pass — a genuine surgical emergency.\n• <strong>Human medication</strong> — over-the-counter painkillers like ibuprofen are highly toxic to cats even in small doses; keep pill bottles and blister packs somewhere a cat can't knock them onto the floor.\n• <strong>Essential oil diffusers</strong> — some oils (tea tree is a frequently cited one) can be absorbed through the skin or inhaled and cause toxicity.\n• <strong>Electrical cords</strong> — a chewing risk, especially for kittens.\n• <strong>Unsecured windows and balconies</strong> — 'high-rise syndrome,' where a cat falls while chasing a bird or insect outside a window, is a real and common injury in cats living in high-rise buildings, which is most homes in Singapore.\n\nThis last one is exactly why shelters and now Singapore law require meshing (see the Adoption tab for details). Wire mesh and invisible grilles are the two most common ways owners secure windows — a few Singapore installers who specifically offer cat-safe options are below.",
+       linkGroups:[
+         {mode:"entities", heading:"Window Mesh & Grille Options", links:[
+            {label:"BLINDNET Cat Mesh & Mosquito Net ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJTU9mnLcX2jERd_KskXOxbgM", meta:"5.0★ · 33 Ubi Ave 3 · +65 9222 4949 · cat mesh specialist"},
+            {label:"Mozziefy Insect Screens & Cat Mesh ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJV1ijK2AR2jER6ji91ev6ybY", meta:"5.0★ · by appointment · +65 8814 5147 · magnetic cat mesh screens"},
+            {label:"SkyGrilles Pte Ltd ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJS1RjmT492jERrd6QG6M746I", meta:"4.7★ · Ang Mo Kio · +65 6659 5838 · invisible grilles, cat-safe option"},
+            {label:"Magicseal S'pore Pte Ltd ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJRWljPMgZ2jERxkO83GKeqDo", meta:"4.9★ · New Industrial Rd · +65 6245 2292 · pet-safe click-on mesh"}
+         ]},
+         {mode:"references", links:[
+            {label:"ASPCA Animal Poison Control ↗", url:"https://www.aspca.org/pet-care/animal-poison-control", meta:"US-based; in Singapore, call your vet or an emergency clinic first"},
+            {label:"Pet Poison Helpline ↗", url:"https://www.petpoisonhelpline.com/", meta:"24/7 line, US-based, consultation fee applies"}
+         ]}
+       ]}
     ]
   },
   {
-    key:"resources", label:"Resources", title:"Places & Services in Singapore",
+    key:"resources", label:"Products & Services", code:"SERVICE", title:"Products & Services in Singapore",
     desc:"A starting point, not an endorsement — always check current hours and reviews before booking.",
     items:[
       {name:"Atlas Veterinary Clinic & Surgery", tag:"4.9★ · Bukit Merah", color:"#3d6b6d",
        note:"163 Bukit Merah Central, #03-3573 · +65 6980 8038 — General practice with WhatsApp follow-ups between visits.",
-       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJv0OglfMb2jERZOIDRlip4Qc"},
+       linksMode:"actions",
+       links:[{label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJv0OglfMb2jERZOIDRlip4Qc"},
+              {label:"Call +65 6980 8038 ↗", url:"tel:+6569808038"}]},
       {name:"Advanced VetCare (Bedok)", tag:"24hrs · Emergency", color:"#3d6b6d",
        note:"26 Jln Pari Burong · +65 6636 1788 — Open 24 hours, useful to have on hand for after-midnight emergencies.",
-       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJkS4WOzA92jERQ5_fAGVwalg"},
+       linksMode:"actions",
+       links:[{label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJkS4WOzA92jERQ5_fAGVwalg"},
+              {label:"Call +65 6636 1788 ↗", url:"tel:+6566361788"}]},
       {name:"Dr Paws Vet Care", tag:"4.8★ · Same-day slots", color:"#3d6b6d",
        note:"77 Lucky Heights, off Upper E Coast Rd · +65 6243 4668 — Known for fitting in same-day appointments and gentle handling of senior pets.",
-       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJfRaURk8j2jERcWYJ859at3k"},
+       linksMode:"actions",
+       links:[{label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJfRaURk8j2jERcWYJ859at3k"},
+              {label:"Call +65 6243 4668 ↗", url:"tel:+6562434668"}]},
       {name:"Likeable Pets", tag:"5.0★ · Mobile grooming", color:"#6b4a7a",
        note:"18 Howard Rd · +65 8685 2360 — Mobile cat and dog grooming, often booked for anxious or older cats.",
-       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJK8_-sPgP2jERbUHRjc67iZM"},
+       linksMode:"actions",
+       links:[{label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJK8_-sPgP2jERbUHRjc67iZM"},
+              {label:"Call +65 8685 2360 ↗", url:"tel:+6586852360"}]},
       {name:"The Pets Workshop (Telepark)", tag:"4.8★ · Cat specialist", color:"#6b4a7a",
        note:"5 Tampines Central 6, #01-12 Telepark · +65 8499 5160 — Grooming studio with a dedicated cat-handling focus.",
-       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJzy-K38M92jERh78glk3GhdU"},
+       linksMode:"actions",
+       links:[{label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJzy-K38M92jERh78glk3GhdU"},
+              {label:"Call +65 8499 5160 ↗", url:"tel:+6584995160"}]},
       {name:"Pawpy Kisses Pet Shop & Grooming", tag:"4.9★ · Shop + groom", color:"#6b4a7a",
        note:"232 Balestier Rd · +65 9060 6501 — Grooming plus an in-house shop for food and accessories.",
-       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJPz582lYW2jERhWT6a8loUkI"},
+       linksMode:"actions",
+       links:[{label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJPz582lYW2jERhWT6a8loUkI"},
+              {label:"Call +65 9060 6501 ↗", url:"tel:+6590606501"}]},
       {name:"Polypet", tag:"4.7★ · Online + store", color:"#8a6b1f",
-       note:"109 Clementi Street 11 · +65 6779 5309 — Wide range of food and supplements, reliable delivery islandwide.",
-       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJs1eHtIYa2jERR6jOXK674Ns"},
+       note:"109 Clementi Street 11 · +65 6779 5309 — Sells cat food (Royal Canin, Orijen, Hill's Science Diet, Purina Pro Plan and more), litter, and supplements, with reliable islandwide delivery.",
+       linksMode:"actions",
+       links:[{label:"Visit website ↗", url:"https://polypet.com.sg/", meta:"Online store + Clementi storefront"},
+              {label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJs1eHtIYa2jERR6jOXK674Ns"},
+              {label:"Call +65 6779 5309 ↗", url:"tel:+6567795309"}]},
       {name:"Pet Master Mega Store by CatSmart", tag:"4.8★ · Large store", color:"#8a6b1f",
-       note:"920 East Coast Park, Parkland Green · +65 6908 9777 — Big-box physical store, good for browsing carriers, condos, and litter setups in person.",
-       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJnxU0wwkZ2jERYn6FCbMY0xU"},
+       note:"920 East Coast Park, Parkland Green · +65 6908 9777 — Large physical store selling cat food, litter, carriers, and condos, good for browsing and comparing brands in person.",
+       linksMode:"actions",
+       links:[{label:"Visit website ↗", url:"https://petmaster.com.sg/megastore-ecp", meta:"Store info, hours, and services"},
+              {label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJnxU0wwkZ2jERYn6FCbMY0xU"},
+              {label:"Call +65 6908 9777 ↗", url:"tel:+6569089777"}]},
+      {name:"The Pet Safari (VivoCity)", tag:"4.3★ · Central location", color:"#8a6b1f",
+       note:"1 HarbourFront Walk, #03-03 VivoCity · +65 6376 9508 — Part of the long-running Pet Lovers Centre chain; sells cat food, litter, and accessories at a central, easy-to-reach mall location.",
+       linksMode:"actions",
+       links:[{label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJpUW1vFgZ2jERK1JWTopXcho"},
+              {label:"Call +65 6376 9508 ↗", url:"tel:+6563769508"}]},
       {name:"aPetMart", tag:"4.8★ · Online store", color:"#8a6b1f",
-       note:"1014 Geylang East Ave 3 · online-first — Specialty online store, convenient for bulk or recurring food orders.",
-       mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJQTfrXC8Z2jERuAqe276CURY"}
+       note:"1014 Geylang East Ave 3 · online-first — Sells cat food across 180+ brands, plus litter and accessories; convenient for bulk or recurring orders.",
+       linksMode:"actions",
+       links:[{label:"Visit website ↗", url:"https://apetmart.com/", meta:"180+ brands, islandwide delivery"},
+              {label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJQTfrXC8Z2jERuAqe276CURY"}]}
     ]
   }
 ];
@@ -771,7 +1326,7 @@ function careBuildTabs(){
   careCategories.forEach(cat=>{
     const btn = document.createElement('button');
     btn.className = 'drawer-tab' + (cat.key===careActiveKey ? ' active' : '');
-    btn.innerHTML = cat.label + '<span class="count">' + cat.items.length + ' filed</span>';
+    btn.innerHTML = cat.label + '<span class="count">(' + cat.items.length + ')</span>';
     btn.addEventListener('click', ()=>{
       careActiveKey = cat.key;
       careSearchTerm = "";
@@ -791,11 +1346,11 @@ function careRenderGrid(){
 
   const term = careSearchTerm.trim().toLowerCase();
   const pool = term
-    ? careCategories.flatMap(c=>c.items.map(b=>({...b, cat:c.label})))
-    : cat.items.map(b=>({...b, cat:cat.label}));
+    ? careCategories.flatMap(c=>c.items.map(b=>({...b, cat:c.label, catCode:c.code})))
+    : cat.items.map(b=>({...b, cat:cat.label, catCode:cat.code}));
 
   const filtered = term
-    ? pool.filter(b => (b.name+" "+b.tag+" "+b.note).toLowerCase().includes(term))
+    ? pool.filter(b => (b.name+" "+b.tag+" "+b.note+" "+(b.detail||"")).toLowerCase().includes(term))
     : pool;
 
   if(term){
@@ -813,21 +1368,164 @@ function careRenderGrid(){
 
   filtered.forEach((b, i)=>{
     const card = document.createElement('div');
-    card.className = 'card';
+    card.className = 'card care-card';
     card.style.animationDelay = (i*0.03)+'s';
-    const actions = b.mapsUrl
-      ? '<div class="card-actions"><a href="'+b.mapsUrl+'" target="_blank" rel="noopener">Get directions ↗</a></div>'
-      : '';
+    const fileLabel = b.catCode + ' ' + String(i+1).padStart(3,'0');
+    const totalLinks = b.linkGroups && b.linkGroups.length
+      ? b.linkGroups.reduce((sum,g)=>sum+g.links.length, 0)
+      : (b.links ? b.links.length : 0);
+    const hint = totalLinks
+      ? '<span class="drill-hint">' + totalLinks + ' link' + (totalLinks===1?'':'s') + ' — tap for details ↗</span>'
+      : '<span class="drill-hint">Tap for details ↗</span>';
     card.innerHTML =
-      '<span class="card-index">CARE ' + String(i+1).padStart(3,'0') + (term ? ' · ' + b.cat.toUpperCase() : '') + '</span>' +
-      '<div class="card-image">' + catSketch(b.color) + '<span class="corner-tag">Reference</span></div>' +
+      '<span class="card-index">' + fileLabel + '</span>' +
+      '<div class="card-image">' + catSketch(b.color) + '</div>' +
       '<h4>' + b.name + '</h4>' +
       '<p>' + b.note + '</p>' +
-      '<span class="stamp">' + b.tag + '</span>' +
-      actions;
+      '<span class="stamp" style="border-color:' + b.color + '55; color:' + b.color + '">' + b.tag + '</span>' +
+      hint;
+    card.addEventListener('click', ()=> openCareModal(b, fileLabel));
     careGrid.appendChild(card);
   });
 }
+
+/* ============ CARE DETAIL MODAL ============ */
+const careModalOverlay = document.getElementById('careModalOverlay');
+const modalClose = document.getElementById('modalClose');
+const modalIndex = document.getElementById('modalIndex');
+const modalTitle = document.getElementById('modalTitle');
+const modalNote = document.getElementById('modalNote');
+const modalFacts = document.getElementById('modalFacts');
+const modalLinks = document.getElementById('modalLinks');
+const modalLinksGroups = document.getElementById('modalLinksGroups');
+
+const LINKS_MODE_CONFIG = {
+  entities:   {heading:"Options",              listClass:""},
+  references: {heading:"Further Reading",      listClass:"list-mode"},
+  actions:    {heading:"Contact & Directions",  listClass:"list-mode"}
+};
+
+function renderLinkGroup(mode, heading, links){
+  const cfg = LINKS_MODE_CONFIG[LINKS_MODE_CONFIG[mode] ? mode : 'entities'];
+  const showThumb = mode === 'entities';
+  const groupHeading = heading || cfg.heading;
+
+  const itemsHtml = links.map(l=>{
+    const isInternal = l.url.startsWith('internal:');
+    const anchor = isInternal
+      ? '<a href="#" onclick="jumpToCareTab(\''+l.url.split(':')[1]+'\'); return false;">'+l.label+'</a>'
+      : '<a href="'+l.url+'" target="_blank" rel="noopener">'+l.label+'</a>';
+    const thumb = showThumb
+      ? '<div class="link-thumb">' + (l.image ? '<img src="'+l.image+'" alt="" loading="lazy">' : productPlaceholder()) + '</div>'
+      : '';
+    return '<div class="modal-link-item' + (showThumb ? '' : ' no-thumb') + '">' +
+    thumb +
+    anchor +
+    (l.meta ? '<span class="link-meta">'+l.meta+'</span>' : '') +
+    '</div>';
+  }).join('');
+
+  return '<div class="link-group">' +
+    '<div class="modal-links-heading">' + groupHeading + '</div>' +
+    '<div class="link-list ' + cfg.listClass + '">' + itemsHtml + '</div>' +
+  '</div>';
+}
+
+/* Converts a detail string into real HTML: blank-line-separated blocks become <p>,
+   and blocks made of consecutive "• " or "1. " lines become <ul>/<ol>. Inline <strong>/<b>
+   tags already present in the source text pass through untouched. */
+function formatDetail(text){
+  const blocks = text.split('\n\n');
+  return blocks.map(block=>{
+    const lines = block.split('\n').filter(l=>l.length);
+    const isBulleted = lines.length > 1 && lines.every(l=>l.trim().startsWith('•'));
+    const isNumbered = lines.length > 1 && lines.every(l=>/^\d+\.\s/.test(l.trim()));
+    if(isBulleted){
+      return '<ul>' + lines.map(l=>'<li>'+l.trim().replace(/^•\s*/,'')+'</li>').join('') + '</ul>';
+    }
+    if(isNumbered){
+      return '<ol>' + lines.map(l=>'<li>'+l.trim().replace(/^\d+\.\s*/,'')+'</li>').join('') + '</ol>';
+    }
+    return '<p>' + lines.join(' ') + '</p>';
+  }).join('');
+}
+
+function openCareModal(item, fileLabel){
+  modalIndex.textContent = fileLabel;
+  modalTitle.textContent = item.name;
+  modalFacts.style.display = 'none';
+  modalFacts.innerHTML = '';
+  modalNote.innerHTML = formatDetail(item.detail || item.note);
+
+  // Normalize to a list of groups: prefer item.linkGroups (multi-section items),
+  // fall back to the single item.links/linksMode (most items).
+  const groups = item.linkGroups && item.linkGroups.length
+    ? item.linkGroups
+    : (item.links && item.links.length ? [{mode:item.linksMode, links:item.links}] : []);
+
+  if(groups.length){
+    modalLinksGroups.innerHTML = groups.map(g => renderLinkGroup(g.mode, g.heading, g.links)).join('');
+    modalLinks.style.display = 'block';
+  } else {
+    modalLinksGroups.innerHTML = '';
+    modalLinks.style.display = 'none';
+  }
+
+  careModalOverlay.classList.add('visible');
+}
+
+function factChip(label, value){
+  return '<div class="fact-chip"><span class="fact-label">' + label + '</span><span class="fact-value">' + value + '</span></div>';
+}
+
+function openBreedModal(breed, fileLabel){
+  modalIndex.textContent = fileLabel;
+  modalTitle.textContent = breed.name;
+
+  modalFacts.innerHTML =
+    factChip('Origin', breed.origin) +
+    factChip('Weight', breed.weight) +
+    factChip('Lifespan', breed.lifespan) +
+    factChip('Coat', breed.coat) +
+    factChip('Energy', breed.energy) +
+    factChip('Best for', breed.bestFor);
+  modalFacts.style.display = 'grid';
+
+  modalNote.innerHTML = formatDetail(breed.detail || breed.note);
+
+  if(breed.link){
+    modalLinksGroups.innerHTML = renderLinkGroup('references', 'Further Reading', [breed.link]);
+    modalLinks.style.display = 'block';
+  } else {
+    modalLinksGroups.innerHTML = '';
+    modalLinks.style.display = 'none';
+  }
+
+  careModalOverlay.classList.add('visible');
+}
+
+function closeCareModal(){
+  careModalOverlay.classList.remove('visible');
+}
+
+function jumpToCareTab(key){
+  careActiveKey = key;
+  careSearchTerm = "";
+  careSearchInput.value = "";
+  careBuildTabs();
+  careRenderGrid();
+  closeCareModal();
+  const cabinet = document.querySelector('#care .cabinet');
+  if(cabinet) cabinet.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+modalClose.addEventListener('click', closeCareModal);
+careModalOverlay.addEventListener('click', (e)=>{
+  if(e.target === careModalOverlay) closeCareModal();
+});
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape') closeCareModal();
+});
 
 careSearchInput.addEventListener('input', (e)=>{
   careSearchTerm = e.target.value;
