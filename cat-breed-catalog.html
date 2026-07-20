@@ -257,6 +257,25 @@
     grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
     gap:16px;
   }
+  .card-grid.grouped{
+    display:block;
+  }
+  .grid-group-heading{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin:0 0 12px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--line);
+  }
+  .grid-group-heading:not(:first-child){
+    margin-top:32px;
+  }
+  .card-grid.grid-group{
+    margin-bottom:4px;
+  }
 
   .card{
     background:var(--panel);
@@ -287,12 +306,58 @@
     align-items:center;
     justify-content:center;
     overflow:hidden;
+    position:relative;
   }
   .card-image svg{
     width:44%;
     height:44%;
     opacity:0.85;
   }
+  .card-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .thumb-nav{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:24px; height:24px;
+    border-radius:50%;
+    border:none;
+    background:rgba(21,45,34,0.55);
+    color:#fff;
+    font-size:13px;
+    line-height:1;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:2;
+  }
+  .thumb-nav:hover{background:rgba(21,45,34,0.85);}
+  .thumb-prev{left:6px;}
+  .thumb-next{right:6px;}
+  .thumb-dots{
+    position:absolute;
+    bottom:6px;
+    left:0; right:0;
+    display:flex;
+    justify-content:center;
+    gap:4px;
+    z-index:2;
+  }
+  .thumb-dot{
+    width:5px; height:5px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.55);
+    border:none;
+    padding:0;
+    cursor:pointer;
+    z-index:2;
+  }
+  .thumb-dot.active{background:#fff;}
 
   .card-index{
     font-family:'JetBrains Mono', monospace;
@@ -388,6 +453,89 @@
     .card-grid{grid-template-columns:1fr;}
   }
 
+  /* ---------- READINESS GAUGE ---------- */
+  .readiness-gauge{
+    background:var(--canvas);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:22px 22px 24px;
+    margin-bottom:22px;
+  }
+  .gauge-visual{
+    max-width:240px;
+    margin:0 auto;
+  }
+  .gauge-svg{width:100%; height:auto; display:block;}
+  .gauge-zone{fill:none; stroke-width:16; stroke-linecap:round;}
+  .zone-red{stroke:var(--clay);}
+  .zone-amber{stroke:var(--brass-light);}
+  .zone-green{stroke:var(--forest);}
+  .gauge-needle{
+    stroke:var(--ink);
+    stroke-width:3;
+    stroke-linecap:round;
+    transition:transform 0.5s cubic-bezier(.34,1.4,.64,1);
+  }
+  .gauge-pivot{fill:var(--ink);}
+  .gauge-readout{text-align:center; margin:6px 0 18px;}
+  .gauge-verdict{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.02rem;
+    color:var(--ink);
+    margin-bottom:4px;
+  }
+  .gauge-verdict.verdict-green{color:var(--forest);}
+  .gauge-verdict.verdict-amber{color:var(--olive);}
+  .gauge-verdict.verdict-red{color:var(--clay);}
+  .gauge-progress{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--ink-faint);
+    letter-spacing:0.04em;
+  }
+  .gauge-questions{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-bottom:18px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+  }
+  .gauge-question p{font-size:13.5px; color:var(--ink-soft); margin:0 0 8px; line-height:1.5;}
+  .gauge-options{display:flex; gap:8px; flex-wrap:wrap;}
+  .gauge-option{font-family:'JetBrains Mono', monospace; font-size:11.5px; cursor:pointer;}
+  .gauge-option input{position:absolute; opacity:0; width:1px; height:1px; pointer-events:none;}
+  .gauge-option span{
+    display:inline-block;
+    padding:6px 14px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    color:var(--ink-soft);
+    transition:background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .gauge-option:hover span{border-color:var(--brass);}
+  .gauge-option input:checked + span{
+    background:var(--forest);
+    border-color:var(--forest);
+    color:#F2EFE3;
+  }
+  .gauge-reset{
+    display:block;
+    margin:0 auto;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    background:none;
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:7px 16px;
+    cursor:pointer;
+  }
+  .gauge-reset:hover{border-color:var(--clay); color:var(--clay);}
+
   /* ---------- CARE CARD DRILL-HINT ---------- */
   .card{cursor:pointer;}
   .drill-hint{
@@ -397,6 +545,13 @@
     font-size:10.5px;
     color:var(--teal);
     letter-spacing:0.02em;
+  }
+  /* Products & Services cards skip the drill-in — actions sit directly on the card. */
+  .card.no-drill{cursor:default;}
+  .card.no-drill:hover{
+    transform:none;
+    border-color:var(--line);
+    box-shadow:none;
   }
 
   /* ---------- DETAIL MODAL ---------- */
@@ -458,6 +613,84 @@
     padding-right:30px;
     color:var(--ink);
   }
+  .modal-gallery{
+    width:100%;
+    aspect-ratio:4/3;
+    border-radius:8px;
+    overflow:hidden;
+    position:relative;
+    margin-bottom:18px;
+    background:var(--canvas-dim);
+  }
+  .modal-gallery img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .gallery-placeholder{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .gallery-placeholder svg{
+    width:42%;
+    height:42%;
+    opacity:0.8;
+  }
+  .gallery-credit{
+    position:absolute;
+    bottom:8px; right:10px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:9.5px;
+    color:#fff;
+    background:rgba(21,45,34,0.6);
+    padding:2px 8px;
+    border-radius:999px;
+  }
+  .gallery-credit a{
+    color:#fff;
+    text-decoration:underline;
+    text-underline-offset:2px;
+  }
+  .gallery-nav{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:32px; height:32px;
+    border-radius:50%;
+    border:none;
+    background:rgba(21,45,34,0.55);
+    color:#fff;
+    font-size:16px;
+    line-height:1;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .gallery-nav:hover{background:rgba(21,45,34,0.85);}
+  .gallery-prev{left:10px;}
+  .gallery-next{right:10px;}
+  .gallery-dots{
+    position:absolute;
+    bottom:10px;
+    left:0; right:0;
+    display:flex;
+    justify-content:center;
+    gap:6px;
+  }
+  .gallery-dot{
+    width:6px; height:6px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.5);
+    border:none;
+    padding:0;
+    cursor:pointer;
+  }
+  .gallery-dot.active{background:#fff;}
   .modal-facts{
     display:grid;
     grid-template-columns:repeat(auto-fill, minmax(130px, 1fr));
@@ -574,6 +807,14 @@
     height:38%;
     opacity:0.5;
   }
+  .modal-link-item .link-name{
+    display:block;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--ink);
+    line-height:1.4;
+  }
   .modal-link-item a{
     font-family:'JetBrains Mono', monospace;
     font-size:12.5px;
@@ -590,6 +831,20 @@
     margin-top:6px;
     line-height:1.5;
   }
+  .link-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:8px;
+  }
+  .link-actions a{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:var(--forest);
+    text-decoration:underline;
+    text-underline-offset:2px;
+  }
+  .link-actions a:hover, .link-actions a:focus-visible{color:var(--clay);}
   .modal-link-item.no-thumb{
     background:transparent;
     border:none;
@@ -602,8 +857,8 @@
 <body>
 
   <nav class="quickjump">
-    <a href="#" id="navBreeds" class="active">Breed Index</a>
-    <a href="#" id="navCare">Care Guide</a>
+    <a href="#" id="navCare" class="active">Care Guide</a>
+    <a href="#" id="navBreeds">Breed Index</a>
   </nav>
 
   <div class="hero">
@@ -612,7 +867,47 @@
     <p>An index of domestic cat breeds and everyday care, arranged the way a natural history collection catalogs its specimens.</p>
   </div>
 
-  <div id="breeds" class="view-section visible">
+  <div id="care" class="view-section visible">
+  <div class="section-heading">
+    <div class="eyebrow">Reference section</div>
+    <h2>The Care Guide</h2>
+    <p>Applies to any cat, any breed — organized by life stage and by topic, the way a vet's handout would be.</p>
+  </div>
+
+  <div class="cabinet" style="margin-top:20px;">
+    <div class="drawer-rail" id="careRail"></div>
+    <div class="drawer-body">
+      <div class="drawer-label">
+        <h3 id="careDrawerTitle">Emergencies</h3>
+        <p id="careDrawerDesc">If your cat is acting off, start here.</p>
+      </div>
+      <div class="readiness-gauge" id="readinessGauge" style="display:none;">
+        <div class="gauge-visual">
+          <svg viewBox="0 0 200 112" class="gauge-svg">
+            <path d="M 20 100 A 80 80 0 0 1 60 30.72" class="gauge-zone zone-red"/>
+            <path d="M 60 30.72 A 80 80 0 0 1 140 30.72" class="gauge-zone zone-amber"/>
+            <path d="M 140 30.72 A 80 80 0 0 1 180 100" class="gauge-zone zone-green"/>
+            <line x1="100" y1="100" x2="100" y2="28" class="gauge-needle" id="gaugeNeedle"/>
+            <circle cx="100" cy="100" r="6" class="gauge-pivot"/>
+          </svg>
+        </div>
+        <div class="gauge-readout">
+          <div class="gauge-verdict" id="gaugeVerdict">Answer the 5 questions below to see where you land.</div>
+          <div class="gauge-progress" id="gaugeProgress">0 of 5 answered</div>
+        </div>
+        <div class="gauge-questions" id="gaugeQuestions"></div>
+        <button type="button" class="gauge-reset" id="gaugeReset">Reset</button>
+      </div>
+      <div class="search-box">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="careSearchInput" placeholder="Search the care guide…">
+      </div>
+      <div class="card-grid" id="careGrid"></div>
+    </div>
+  </div>
+  </div>
+
+  <div id="breeds" class="view-section">
   <div class="cabinet">
     <div class="drawer-rail" id="drawerRail"></div>
     <div class="drawer-body">
@@ -629,29 +924,6 @@
   </div>
   </div>
 
-  <div id="care" class="view-section">
-  <div class="section-heading">
-    <div class="eyebrow">Reference section</div>
-    <h2>The Care Guide</h2>
-    <p>Applies to any cat, any breed — organized by life stage and by topic, the way a vet's handout would be.</p>
-  </div>
-
-  <div class="cabinet" style="margin-top:20px;">
-    <div class="drawer-rail" id="careRail"></div>
-    <div class="drawer-body">
-      <div class="drawer-label">
-        <h3 id="careDrawerTitle">Emergencies</h3>
-        <p id="careDrawerDesc">If your cat is acting off, start here.</p>
-      </div>
-      <div class="search-box">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="careSearchInput" placeholder="Search the care guide…">
-      </div>
-      <div class="card-grid" id="careGrid"></div>
-    </div>
-  </div>
-  </div>
-
   <footer>
     <p class="disclaimer">General reference only — not veterinary advice. Any sudden change in eating, litter habits, or coat condition is worth a call to an actual vet, not a card catalog.</p>
     41 wild species. 1 domestic species. Countless opinions about the Sphynx.
@@ -662,6 +934,7 @@
       <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
       <span class="modal-index" id="modalIndex"></span>
       <h4 id="modalTitle"></h4>
+      <div class="modal-gallery" id="modalGallery" style="display:none;"></div>
       <div class="modal-facts" id="modalFacts" style="display:none;"></div>
       <div id="modalNote"></div>
       <div class="modal-links" id="modalLinks" style="display:none;">
@@ -683,6 +956,44 @@ function catSketch(color){
     '</svg>';
 }
 
+/* First photo if the breed has any (with a mini carousel if it has more than one),
+   otherwise the recolored sketch icon. */
+function breedThumb(b, color){
+  if(b.images && b.images.length){
+    const img = b.images[0];
+    const imgTag = '<img src="'+img.url+'" alt="'+(img.alt || b.name)+'" loading="lazy">';
+    if(b.images.length > 1){
+      const dots = b.images.map((_,i)=>
+        '<button type="button" class="thumb-dot' + (i===0 ? ' active' : '') + '" data-i="'+i+'" aria-label="Photo '+(i+1)+'"></button>'
+      ).join('');
+      return imgTag +
+        '<button type="button" class="thumb-nav thumb-prev" aria-label="Previous photo">‹</button>' +
+        '<button type="button" class="thumb-nav thumb-next" aria-label="Next photo">›</button>' +
+        '<div class="thumb-dots">' + dots + '</div>';
+    }
+    return imgTag;
+  }
+  return catSketch(color);
+}
+
+/* Wires up a card's own mini carousel controls, scoped to that card only, and stops
+   clicks on the controls from bubbling up and opening the breed's drill-in modal. */
+function wireCardCarousel(card, breed){
+  if(!breed.images || breed.images.length < 2) return;
+  let index = 0;
+  const imgEl = card.querySelector('.card-image img');
+  const dots = card.querySelectorAll('.thumb-dot');
+  const show = (i)=>{
+    index = (i + breed.images.length) % breed.images.length;
+    imgEl.src = breed.images[index].url;
+    imgEl.alt = breed.images[index].alt || breed.name;
+    dots.forEach((d,di)=> d.classList.toggle('active', di===index));
+  };
+  card.querySelector('.thumb-prev').addEventListener('click', (e)=>{ e.stopPropagation(); show(index-1); });
+  card.querySelector('.thumb-next').addEventListener('click', (e)=>{ e.stopPropagation(); show(index+1); });
+  dots.forEach((d,di)=> d.addEventListener('click', (e)=>{ e.stopPropagation(); show(di); }));
+}
+
 function productPlaceholder(){
   return '<svg viewBox="0 0 24 24" fill="none" stroke="'+'#5c4a3d'+'" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
     '<path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>' +
@@ -691,7 +1002,7 @@ function productPlaceholder(){
     '</svg>';
 }
 
-/* ============ BREED CATALOG ============ */
+/* ============ BREED CATALOG ============https://www.pexels.com/search/siberian%20cat/ */
 const categories = [
   {
     key:"natural", label:"Natural", code:"NATURAL", title:"Natural Breeds",
@@ -700,16 +1011,25 @@ const categories = [
       {name:"Maine Coon", tag:"Gentle giant", note:"Tufted ears and a shaggy coat built for New England winters; one of the largest breeds.",
        origin:"United States (Maine), 19th c.", weight:"4–10kg", lifespan:"12–15 yrs",
        coat:"Long, shaggy, water-resistant", energy:"Medium", bestFor:"Families, cold climates",
+       images:[{url:"images/breed/maine-coon-1.jpg", alt:"Maine Coon", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/maine%20coon/"},
+               {url:"images/breed/maine-coon-2.jpg", alt:"Maine Coon", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/maine%20coon/"},
+               {url:"images/breed/maine-coon-3.jpg", alt:"Maine Coon", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/maine%20coon/"}],
        detail:"One of the oldest natural breeds in North America, likely descended from long-haired cats brought by European sailors and settlers, crossing with local shorthairs in New England. A popular but false folk tale claims part-raccoon ancestry — genetically impossible, but the bushy ringed tail didn't help dispel it. Maine became the first US state to have an official state cat when it named the Maine Coon in 1985.\n\nOne of the largest domestic breeds, with males regularly exceeding 8kg. Despite the size, the temperament is famously easygoing and sociable — often called 'gentle giants' — and many chirp or trill rather than meow. The dense, water-resistant coat and tufted paws evolved for genuine New England winters, not just show-ring looks.",
        link:{label:"TICA: Maine Coon ↗", url:"https://tica.org/breed/maine-coon/", meta:"Official TICA breed profile"}},
       {name:"Siberian", tag:"Forest cat", note:"Triple-layered coat from the Russian taiga; often marketed as low-allergen.",
        origin:"Russia, ancient natural breed", weight:"3.6–9kg", lifespan:"11–18 yrs",
        coat:"Long, triple-layered, water-resistant", energy:"Medium-High", bestFor:"Active families",
+       images:[{url:"images/breed/siberian-1.jpg", alt:"Siberian", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/siberian%20cat/"},
+               {url:"images/breed/siberian-2.jpg", alt:"Siberian", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/siberian%20cat/"},
+               {url:"images/breed/siberian-3.jpg", alt:"Siberian", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/siberian%20cat/"}],
        detail:"A landrace breed that developed naturally across Russia over centuries before being formally standardized and exported internationally in the 1990s. The name comes from its association with the harsh Siberian climate, though the breed is found across Russia more broadly.\n\nThe triple-layered coat is built for genuinely cold winters, yet the cat itself is notably agile and athletic for its size, capable of impressive jumps. Siberians are often marketed as producing less of the Fel d 1 protein that triggers cat allergies — some studies support lower average levels, but this varies by individual and isn't a guarantee for allergy sufferers.",
        link:{label:"TICA: Siberian ↗", url:"https://tica.org/breed/siberian/", meta:"Official TICA breed profile"}},
-      {name:"Norwegian Forest Cat", tag:"Climber", note:"Water-resistant double coat evolved for Scandinavian barns and forests.",
+      {name:"Norwegian Forest", tag:"Climber", note:"Water-resistant double coat evolved for Scandinavian barns and forests.",
        origin:"Norway, ancient natural breed", weight:"3.6–9kg", lifespan:"14–16 yrs",
        coat:"Long, dense, water-resistant double coat", energy:"Medium", bestFor:"Climbers, cold climates",
+       images:[{url:"images/breed/norwegian-forest-1.jpg", alt:"Norwegian Forest", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/norwegian%20forest%20cat/"},
+               {url:"images/breed/norwegian-forest-2.jpg", alt:"Norwegian Forest", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/norwegian%20forest%20cat/"},
+               {url:"images/breed/norwegian-forest-3.jpg", alt:"Norwegian Forest", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/norwegian%20forest%20cat/"}],
        detail:"Referenced in Norse mythology and folklore as the 'skogkatt' (forest cat), this is a natural landrace shaped by Scandinavian winters over centuries rather than a deliberately engineered breed. Formal breeding programs and international recognition began in the 1930s–70s, after a period where the breed nearly disappeared through crossbreeding with shorthairs.\n\nBuilt for climbing — strong claws and hind legs let it descend trees head-first, unlike most cats. The double coat sheds its dense undercoat seasonally in large clumps. Temperament is calm and independent, but genuinely affectionate once bonded, and generally tolerant of the cold in a way few other breeds are.",
        link:{label:"TICA: Norwegian Forest Cat ↗", url:"https://tica.org/breed/norwegian-forest/", meta:"Official TICA breed profile"}},
       {name:"Turkish Van", tag:"The swimmer", note:"Chalk-white body with an auburn tail; famously unbothered by water.",
@@ -979,12 +1299,13 @@ function renderGrid(){
     const fileLabel = b.catCode + ' ' + String(i+1).padStart(3,'0');
     card.innerHTML =
       '<span class="card-index">' + fileLabel + '</span>' +
-      '<div class="card-image">' + catSketch(color) + '</div>' +
+      '<div class="card-image">' + breedThumb(b, color) + '</div>' +
       '<h4>' + b.name + '</h4>' +
       '<p>' + b.note + '</p>' +
       '<span class="stamp" style="border-color:' + color + '55; color:' + color + '">' + b.tag + '</span>' +
       '<span class="drill-hint">Tap for details ↗</span>';
     card.addEventListener('click', ()=> openBreedModal(b, fileLabel));
+    wireCardCarousel(card, b);
     grid.appendChild(card);
   });
 }
@@ -997,14 +1318,158 @@ searchInput.addEventListener('input', (e)=>{
 buildTabs();
 renderGrid();
 
+/* ============ SHARED SHOP DIRECTORY ============
+   Single source of truth for every real-world business referenced anywhere in the guide
+   (vets, groomers, stores, mesh installers). An address, phone, or link only needs
+   updating in one place, and every mention renders through the same chip. */
+const SHOPS = {
+  atlasVet:{name:"Atlas Veterinary Clinic & Surgery", tag:"4.9★ · Bukit Merah", color:"#3d6b6d",
+    address:"163 Bukit Merah Central, #03-3573", phone:"+65 6980 8038", tel:"+6569808038",
+    blurb:"General practice with WhatsApp follow-ups between visits; on-site ICU, cardiology, and surgery. Mon–Fri 10am–12:30pm & 2–6:30pm, Sat/Sun 10am–12:30pm & 2–4:30pm, closed public holidays.",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJv0OglfMb2jERZOIDRlip4Qc"},
+  advancedVetCareBedok:{name:"Advanced VetCare (Bedok)", tag:"24hrs · Emergency", color:"#3d6b6d", short:"East Singapore",
+    address:"26 Jln Pari Burong", phone:"+65 6636 1788", tel:"+6566361788",
+    blurb:"Genuinely open 24 hours, every day — critical care, oncology, orthopedic surgery, endoscopy and CT imaging on-site.",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJkS4WOzA92jERQ5_fAGVwalg"},
+  drPaws:{name:"Dr Paws Vet Care", tag:"4.8★ · Same-day slots", color:"#3d6b6d",
+    address:"77 Lucky Heights, off Upper E Coast Rd", phone:"+65 6243 4668", tel:"+6562434668",
+    blurb:"Known for fitting in same-day appointments and gentle handling of senior pets; also offers acupuncture alongside Western medicine. Open Mon/Tue/Wed/Fri/Sat 10am–8pm; closed Thu, Sun, and public holidays.",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJfRaURk8j2jERcWYJ859at3k"},
+  likeablePets:{name:"Likeable Pets", tag:"4.4★ · Mobile grooming", color:"#6b4a7a",
+    address:"18 Howard Rd", phone:"+65 8685 2360", tel:"+6586852360",
+    blurb:"Mobile cat and dog grooming by SKC-certified groomers, often booked for anxious or older cats; island-wide by appointment, daily 10am–6pm.",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJK8_-sPgP2jERbUHRjc67iZM"},
+  petsWorkshop:{name:"The Pets Workshop (Telepark)", tag:"4.9★ · Cat specialist", color:"#6b4a7a",
+    address:"5 Tampines Central 6, #01-12 Telepark", phone:"+65 8499 5160", tel:"+6584995160",
+    blurb:"Grooming studio with a dedicated cat-handling focus, led by a resident cat groomer. Open daily 10am–7pm — this unit handles cats/rabbits/guinea pigs specifically.",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJzy-K38M92jERh78glk3GhdU"},
+  pawpyKisses:{name:"Pawpy Kisses Pet Shop & Grooming", tag:"4.9★ · Shop + groom", color:"#6b4a7a",
+    address:"238 Balestier Rd", phone:"+65 9060 6501", tel:"+6590606501",
+    blurb:"Grooming hub — the retail shop for food and accessories is a separate unit at 232 Balestier Rd. Known for styled cuts and free pet-transport pickup across several central/north-east zones. Tue–Sat 10am–6pm, closed Sun/Mon.",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJPz582lYW2jERhWT6a8loUkI"},
+  polypet:{name:"Polypet", tag:"4.5★ · Online + store", color:"#8a6b1f",
+    address:"109 Clementi Street 11", phone:"+65 6779 5309", tel:"+6567795309",
+    website:"https://polypet.com.sg/",
+    blurb:"Sells cat food (Royal Canin, Orijen, Hill's Science Diet, Purina Pro Plan and more), litter, and supplements, with reliable islandwide delivery. Trading since 2004. Mon–Sat 9am–7pm, closed Sundays & public holidays.",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJs1eHtIYa2jERR6jOXK674Ns"},
+  petMasterMega:{name:"Pet Master Mega Store by CatSmart", tag:"4.7★ · Large store", color:"#8a6b1f",
+    address:"920 East Coast Park, Parkland Green", phone:"+65 6908 9777", tel:"+6569089777",
+    website:"https://petmaster.com.sg/megastore-ecp",
+    blurb:"Large physical store (~5,000 sq ft) selling cat food, litter, carriers, and condos; features a dog pool and DIY grooming rooms. Mon–Fri 12–8:30pm, Sat/Sun 9am–8:30pm.",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJnxU0wwkZ2jERYn6FCbMY0xU"},
+  petSafariVivoCity:{name:"The Pet Safari (VivoCity)", tag:"4.4★ · Central location", color:"#8a6b1f",
+    address:"1 HarbourFront Walk, #03-03 VivoCity", phone:"+65 6376 9508", tel:"+6563769508",
+    blurb:"Part of the long-running Pet Lovers Centre chain; sells cat food, litter, and accessories at a central, easy-to-reach mall location. Daily 10am–10pm. Rating is aggregated across the chain, not this outlet alone.",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJpUW1vFgZ2jERK1JWTopXcho"},
+  aPetMart:{name:"aPetMart", tag:"4.8★ · Online store", color:"#8a6b1f",
+    address:"1014 Geylang East Ave 3, #05-216", website:"https://apetmart.com/",
+    blurb:"Sells cat food across 180+ brands, plus litter and accessories; convenient for bulk or recurring orders. Islandwide delivery including Sentosa; self-collection needs an online appointment, no walk-ins.",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJQTfrXC8Z2jERuAqe276CURY"},
+  westsideVet:{name:"Westside Vet Emergency & Referral", tag:"4.3★ · 24hr Emergency", color:"#3d6b6d", short:"North/Central Singapore",
+    address:"86 Serangoon Garden Wy", phone:"+65 6931 0095", tel:"+6569310095",
+    blurb:"Genuinely open 24/7, every day including public holidays — one of only three registered veterinary hospitals in Singapore, with ICU, ultrasound, and CT imaging.",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJResu3XgR2jERS0q4o65mCHM"},
+  vesWhitley:{name:"VES Hospital @ Whitley", tag:"24hrs · Central", color:"#3d6b6d",
+    address:"232 Whitley Rd", phone:"+65 6266 0232", tel:"+6562660232",
+    blurb:"Emergency/critical care runs 24/7; general reception is Mon–Fri 8am–6pm. First full-service vet hospital in Singapore recognized by AVA — offers ophthalmology, neurology, oncology, and cardiology.",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJSVzs_iUZ2jERZGrhI_Lqd3k"},
+  beecroft:{name:"Beecroft Animal Specialist & Emergency", tag:"3.8★ · 24hr Emergency", color:"#3d6b6d", short:"South/West Singapore",
+    address:"991E Alexandra Rd, #01-27", phone:"+65 6996 1812", tel:"+6569961812",
+    blurb:"Genuinely open 24/7, no appointment needed for emergencies — the only independent referral veterinary hospital in Singapore, with its own physio team. Some reviews cite long waits and cost; still solidly positive overall.",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJH_J3lxkb2jER55nivLabKZo"},
+  blindnetMesh:{name:"BLINDNET Cat Mesh & Mosquito Net", tag:"5.0★", color:"#6b4a7a",
+    address:"33 Ubi Ave 3, #01-05 (Vertex)", phone:"+65 9222 4949", tel:"+6592224949", short:"Cat mesh specialist",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJTU9mnLcX2jERd_KskXOxbgM"},
+  mozziefyMesh:{name:"Mozziefy Insect Screens & Cat Mesh", tag:"5.0★ · By appointment", color:"#6b4a7a",
+    address:"1 Commonwealth Lane", phone:"+65 8814 5147", tel:"+6588145147", short:"Magnetic cat mesh screens",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJV1ijK2AR2jER6ji91ev6ybY"},
+  skygrilles:{name:"SkyGrilles Pte Ltd", tag:"4.6★ · Ang Mo Kio", color:"#8a6b1f",
+    address:"4028 Ang Mo Kio Industrial Park 1, #01-217", phone:"+65 6659 5838", tel:"+6566595838", short:"Invisible grilles, cat-safe option",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJS1RjmT492jERrd6QG6M746I"},
+  magicseal:{name:"Magicseal S'pore Pte Ltd", tag:"4.9★", color:"#8a6b1f",
+    address:"22 New Industrial Rd, #08-28 (Primax Building)", phone:"+65 6245 2292", tel:"+6562452292", short:"Pet-safe click-on mesh",
+    mapsUrl:"https://www.google.com/maps/place/?q=place_id:ChIJRWljPMgZ2jERxkO83GKeqDo"},
+  kuroCatHotel:{name:"Kuro Cat Hotel", tag:"5.0★ · Cats-only", color:"#5B3A5C",
+    address:"21A Kreta Ayer Road", phone:"+65 8775 7025", tel:"+6587757025", website:"https://kurocats.sg/",
+    blurb:"Cats-only boarding in Chinatown, no shared rooms — 24/7 in-suite camera per suite, Fear Free® certified staff, AVS-licensed (AVS00145). From $60/night (1–2 cats) to $120/night (up to 5 cats); owner covers emergency vet costs if needed.",
+    mapsUrl:"https://www.google.com/maps/search/?api=1&query=21A+Kreta+Ayer+Road%2C+Singapore+088991"},
+  catzillaHotel:{name:"Catzilla Hotel", tag:"4.9★ · Cats-only", color:"#5B3A5C",
+    address:"261 Geylang Road, #02-01", phone:"+65 6513 0002", tel:"+6565130002", website:"https://catzillahotel.com/",
+    blurb:"Cats-only boarding, explicitly never housed near dogs. AVS-licensed (AVS00075), partner vet on call 24/7, free door-to-door pickup/drop-off. From $48/night (1 cat) to $108+/night (up to 4 cats); daily update is a video + photos rather than a live camera.",
+    mapsUrl:"https://www.google.com/maps/search/?api=1&query=261+Geylang+Road%2C+%2302-01%2C+Singapore+389317"},
+  shangriPaw:{name:"Shangri-Paw", tag:"Cats-only · Senior specialist", color:"#5B3A5C",
+    phone:"+65 8073 4156", tel:"+6580734156", website:"https://www.shangri-paw.sg/",
+    blurb:"Cats-only boarding specialising in senior and medically complex cats; Fear Free® certified staff, 24/7 CCTV or use of your own camera. Check-in by appointment only at a central shophouse location — pricing isn't published, so confirm directly.",
+    mapsUrl:""},
+  sundaysCatHotel:{name:"Sundays Cat Hotel & Resort", tag:"Cats-only · Serangoon Gdns", color:"#5B3A5C",
+    address:"182 Yio Chu Kang Road", phone:"+65 8399 3040", tel:"+6583993040", website:"https://www.sundays.sg/",
+    blurb:"Cats-only boarding near NEX Mall, AVS-licensed, 24/7 two-way-voice CCTV and a daily 30-minute personalised session. From $54/night (1 cat) to $128/night (up to 3 cats), plus a peak-season surcharge.",
+    mapsUrl:"https://www.google.com/maps/search/?api=1&query=182+Yio+Chu+Kang+Road%2C+Singapore+545629"},
+  nekoyaCatSitting:{name:"Nekoya Cat Sitting", tag:"In-home sitting", color:"#3d6b6d",
+    phone:"+65 6288 3636", tel:"+6562883636", website:"https://nekoya.co/cat-sitting/",
+    blurb:"In-home visits island-wide — feeding, water, litter refresh, and a wellness check per visit; sitters are background-checked. From $35 (15 min) to $80 (up to 3 cats, 60 min); +$20 for medication. A couple of reviews wanted more photo/video updates during visits.",
+    mapsUrl:""},
+  catWhisperer:{name:"The Cat Whisperer Singapore", tag:"In-home sitting · Behaviourist", color:"#3d6b6d",
+    phone:"+65 8100 7084", tel:"+6581007084", website:"https://www.thecatwhisperer.com.sg/catsitting",
+    blurb:"In-home sitting from a feline-behaviour specialist, island-wide; also handles vet/groomer transport and AVS quarantine visits. From $35/visit. Requires a signed declaration and 50% upfront — cancelling within 7 days forfeits 30%, stricter than most competitors.",
+    mapsUrl:""},
+  catParadise:{name:"Cat Paradise (Cat Sitting Services)", tag:"In-home sitting · Joo Chiat", color:"#3d6b6d",
+    address:"169 Joo Chiat Road, Level 2", phone:"+65 8066 0867", tel:"+6580660867", website:"https://catparadisehotel.sg/cat-sitting-services",
+    blurb:"In-home sitting island-wide, run out of a Joo Chiat cattery/salon; covers seniors, kittens, and special-needs cats. Single 30-min visit $40 (+$15/extra cat) up to a 12-hour overnight at $120 (+$40/extra cat).",
+    mapsUrl:"https://www.google.com/maps/search/?api=1&query=169+Joo+Chiat+Road%2C+Singapore+427729"}
+};
+
+/* Builds one link-chip for a shop, pulling its facts from SHOPS. The shop name itself
+   is plain text — "Get directions"/"Call"/"Website" are the actual links, in the actions
+   row. Pass `overrides` to swap in context-specific label/meta copy, or a `primaryAction`
+   (e.g. a link straight to a product page) that appears before the standard actions. */
+function shopChip(id, overrides){
+  overrides = overrides || {};
+  const s = SHOPS[id];
+  const actions = [];
+  if(overrides.primaryAction) actions.push(overrides.primaryAction);
+  if(s.mapsUrl) actions.push({label:"Get directions ↗", url:s.mapsUrl});
+  if(s.tel) actions.push({label:"Call ↗", url:"tel:"+s.tel});
+  if(s.website) actions.push({label:"Website ↗", url:s.website});
+  return {
+    label: overrides.label || s.name,
+    meta: overrides.meta || [s.tag, s.address, s.phone, s.short].filter(Boolean).join(' · '),
+    image: overrides.image || s.image,
+    actions
+  };
+}
+function shopLinks(ids){
+  return ids.map(id => shopChip(id));
+}
+/* Full standalone card for the Products & Services tab, built from the same SHOPS entry.
+   linksMode "self" — the card IS this one shop, so its modal skips the "Options" heading/
+   thumbnail/repeated name and just shows the Get directions/Call/Website actions directly. */
+function shopCard(id){
+  const s = SHOPS[id];
+  return {
+    name: s.name, tag: s.tag, color: s.color,
+    note: [s.address, s.phone].filter(Boolean).join(' · ') + (s.blurb ? ' — ' + s.blurb : ''),
+    directActions: true,
+    links:[shopChip(id)]
+  };
+}
+
+/* Sub-groupings for the Products & Services tab — same SHOPS ids, just clustered by what they are. */
+const PRODUCT_SHOP_GROUPS = [
+  {label:"Veterinary Clinics", ids:['atlasVet','advancedVetCareBedok','drPaws']},
+  {label:"Grooming Services", ids:['likeablePets','petsWorkshop','pawpyKisses']},
+  {label:"Pet Food & Supplies", ids:['polypet','petMasterMega','petSafariVivoCity','aPetMart']}
+];
+
+/* Same idea, for the Travel & Boarding tab. */
+const TRAVEL_SHOP_GROUPS = [
+  {label:"Catteries", ids:['kuroCatHotel','catzillaHotel','shangriPaw','sundaysCatHotel']},
+  {label:"In-Home Cat Sitting", ids:['nekoyaCatSitting','catWhisperer','catParadise']}
+];
+
 /* ============ CARE GUIDE ============ */
 /* Shared 24hr emergency vet contacts — reused across every emergency card so the numbers are always one tap away */
-const emergencyContactLinks = [
-  {label:"Advanced VetCare (Bedok) ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJkS4WOzA92jERQ5_fAGVwalg", meta:"26 Jln Pari Burong · +65 6636 1788 · 24hrs · East"},
-  {label:"Westside Vet Emergency & Referral ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJResu3XgR2jERS0q4o65mCHM", meta:"86 Serangoon Garden Wy · +65 6931 0095 · 24hrs · North/Central"},
-  {label:"VES Hospital @ Whitley ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJSVzs_iUZ2jERZGrhI_Lqd3k", meta:"232 Whitley Rd · +65 6266 0232 · 24hrs · Central"},
-  {label:"Beecroft Animal Specialist & Emergency ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJH_J3lxkb2jER55nivLabKZo", meta:"991E Alexandra Rd, #01-27 · +65 6996 1812 · 24hrs · South/West"}
-];
+const emergencyContactLinks = shopLinks(['advancedVetCareBedok','westsideVet','vesWhitley','beecroft']);
 
 const careCategories = [
   {
@@ -1058,7 +1523,8 @@ const careCategories = [
          {mode:"references", links:[
             {label:"Cornell: Common Cat Hazards ↗", url:"https://vet.cornell.edu/node/4043", meta:"Cornell Feline Health Center — what to do if you suspect poisoning"},
             {label:"ASPCA Animal Poison Control ↗", url:"https://www.aspca.org/pet-care/animal-poison-control", meta:"US-based; in Singapore, call your vet or an emergency clinic first"},
-            {label:"Pet Poison Helpline ↗", url:"https://www.petpoisonhelpline.com/", meta:"24/7 line, US-based, consultation fee applies"}
+            {label:"Pet Poison Helpline ↗", url:"https://www.petpoisonhelpline.com/", meta:"24/7 line, US-based, consultation fee applies"},
+            {label:"Jump to Health & Safety tab ↓", url:"internal:health", meta:"The Home-Proofing card's fuller list of household hazards"}
          ]}
        ]},
       {name:"Heatstroke", tag:"Cool first, transport second", color:"#8A6A2E",
@@ -1077,7 +1543,9 @@ const careCategories = [
        linkGroups:[
          {mode:"entities", heading:"24hr Emergency Vets (Singapore)", links: emergencyContactLinks},
          {mode:"references", links:[
-            {label:"VCA: Emergencies in Cats ↗", url:"https://vcahospitals.com/know-your-pet/emergencies-in-cats", meta:"How to safely move an injured cat"}
+            {label:"VCA: Emergencies in Cats ↗", url:"https://vcahospitals.com/know-your-pet/emergencies-in-cats", meta:"How to safely move an injured cat"},
+            {label:"Jump to Adoption tab ↓", url:"internal:adoption", meta:"Why window meshing is now a legal and shelter requirement"},
+            {label:"Jump to Health & Safety tab ↓", url:"internal:health", meta:"The Home-Proofing card on 'high-rise syndrome'"}
          ]}
        ]},
       {name:"Emergency Contacts (Singapore)", tag:"Save these numbers", color:"#2C5D5A",
@@ -1085,6 +1553,44 @@ const careCategories = [
        linkGroups:[
          {mode:"entities", heading:"24hr Emergency Vets (Singapore)", links: emergencyContactLinks}
        ]}
+    ]
+  },
+  {
+    key:"readiness", label:"Before You Get a Cat", code:"READY", title:"Before You Get a Cat",
+    desc:"Worth an honest answer before you adopt or buy — not to talk anyone out of it, just to make sure the fit is right for the next 15–20 years.",
+    items:[
+      {name:"The 15–20 Year Commitment", tag:"Long-term", color:"#3f5443",
+       note:"A cat's average lifespan runs 12 to 20 years — long enough to outlast a few apartments, jobs, and relationships.",
+       detail:"Cats routinely live into their late teens, and indoor-only cats on the higher end of that range aren't unusual — see the Life Stages tab for what changes decade to decade. That's a genuinely long planning horizon, longer than most first jobs, most leases, and plenty of relationships.\n\nWorth thinking through before committing, not after:\n\n• Where realistically might you be in 5, 10, 15 years — a different country, a smaller place, a partner or kids who may or may not want a cat around\n• Who takes over care if you can't — travel for work, a health issue, or simply burnout — is there a backup person, even informally\n• Whether you're prepared for a senior cat's rising vet costs in its final years, often the most expensive stretch of ownership (see Health & Safety and Life Stages)\n\nNone of this is meant to talk anyone out of it — it's the same honesty a good shelter screening interview already asks for (see the Adoption tab), just worth answering for yourself first.",
+       linksMode:"references",
+       links:[{label:"Jump to Life Stages tab ↓", url:"internal:stages", meta:"What changes decade to decade, and what a senior cat actually costs"},
+              {label:"Jump to Health & Safety tab ↓", url:"internal:health", meta:"What rising vet costs actually look like in the final years"},
+              {label:"Jump to Adoption tab ↓", url:"internal:adoption", meta:"The same honesty a shelter screening interview already asks for"}]},
+      {name:"What It Actually Costs", tag:"Budget", color:"#a15a3a",
+       note:"Upfront costs are once-off; the ongoing monthly costs are the ones people underestimate.",
+       detail:"<b>Upfront, one-time:</b>\n\n• Adoption fee ($25–$200) or breeder price ($1,000–$5,000+) — see the Adoption tab for the comparison\n• Sterilisation, core vaccinations, and microchipping, if not already bundled into an adoption fee\n• An initial vet check-up\n• Carrier, litter box, scratching post, and starter food and litter\n\n<b>Ongoing, monthly or recurring:</b>\n\n• Food — see Diet & Nutrition for wet vs. dry cost and quality tradeoffs\n• Litter, replaced regularly rather than topped up indefinitely\n• Parasite prevention (flea/worm treatment), typically monthly\n• A vet fund or pet insurance — set aside something even if nothing's wrong, since emergency and senior-year care both spike fast (see Emergencies and Health & Safety)\n• Grooming, especially for long-haired breeds needing professional grooming a few times a year\n• PALS licence renewal (see the card below)\n\nThere's no single 'correct' monthly figure since it depends heavily on food quality and whether insurance is involved — but budgeting for surprise vet bills specifically, not just routine costs, is the part most first-time owners skip.",
+       linksMode:"references",
+       links:[{label:"Jump to Diet & Nutrition tab ↓", url:"internal:diet", meta:"Wet vs. dry cost and quality tradeoffs"},
+              {label:"Jump to Products & Services tab ↓", url:"internal:resources", meta:"Where to actually buy food, litter, and supplies in Singapore"},
+              {label:"Jump to Adoption tab ↓", url:"internal:adoption", meta:"Adoption fee vs. breeder price comparison"},
+              {label:"Jump to Emergencies tab ↓", url:"internal:emergencies", meta:"What a genuine emergency actually costs to treat"},
+              {label:"Jump to Health & Safety tab ↓", url:"internal:health", meta:"Annual vs. biannual vet visit costs by life stage"}]},
+      {name:"HDB & Rental Rules (Singapore)", tag:"Legal", color:"#8A3B2B",
+       note:"Up to 2 cats per HDB flat, PALS licensing is mandatory, and private landlords or condo MCSTs can add their own rules on top.",
+       detail:"Under HDB's Animals Rules, a flat may keep up to <b>2 cats</b> (alongside one approved-breed dog) — this is a hard cap, not a guideline, enforceable with fines up to $4,000 for non-compliance.\n\nSince 1 September 2024, every pet cat in Singapore must be microchipped and licensed through AVS's Pet Animal Licensing System (PALS), as part of the same National Cat Management Framework covered in the Adoption tab. Licensing is free during a transition period running until 31 August 2026. First-time applicants also need to complete a short, free online pet ownership course before a licence is issued.\n\nOwners who already had more than 2 cats before 1 September 2024 can keep them, provided every cat gets licensed during the transition window — this grandfathering doesn't extend to new cats added after that date.\n\n<b>If you're renting or in a condo:</b> HDB's rules don't automatically apply to private property. Check your tenancy agreement and your building's MCST by-laws separately — some private leases still prohibit pets outright regardless of what HDB or AVS permit, and that's a landlord-level restriction, not a legal loophole to test.",
+       linksMode:"references",
+       links:[{label:"AVS: Cat Ownership Limits ↗", url:"https://avs.nparks.gov.sg/noticeboard/cat-management-framework/cat-ownership-limits/", meta:"Official 2-cats-per-flat rule and transition period details"},
+              {label:"Jump to Adoption tab ↓", url:"internal:adoption", meta:"PALS licensing and window-meshing requirements before a shelter will hand over a cat"}]},
+      {name:"Lifestyle Fit Checklist", tag:"Self-check", color:"#3d6b6d",
+       note:"A few honest questions worth answering before, not after.",
+       detail:"• How many hours a day are you realistically away from home, and who covers feeding/litter if a trip runs long\n• Does anyone in the household have a cat allergy — worth testing exposure with a friend's cat first if unsure, rather than finding out after\n• How would a cat fit with any existing pets, and with young kids specifically (supervised introductions, not assumptions)\n• Are you genuinely prepared for the indoor-only-plus-meshed-windows commitment that's now standard practice in Singapore (see Adoption and Health & Safety)\n• Is everyone in the household actually on board — not just the person filling out the adoption form\n\nNone of these have a 'right' answer that applies to everyone — they're just the questions worth being honest about before, rather than after, a cat is already home.",
+       linksMode:"references",
+       links:[{label:"Jump to Adoption tab ↓", url:"internal:adoption", meta:"Window meshing and what shelters actually check for"},
+              {label:"Jump to Health & Safety tab ↓", url:"internal:health", meta:"Home-proofing hazards, including the meshing requirement"},
+              {label:"Jump to Travel & Boarding tab ↓", url:"internal:travel", meta:"What actually happens to the cat when a trip runs long"}]},
+      {name:"Who's the Primary Caregiver?", tag:"Household", color:"#5B3A5C",
+       note:"Shared responsibility, in practice, often means nobody's responsibility — one person should own the daily routine.",
+       detail:"Feeding schedule, litter scooping, and vet appointments go more smoothly when one person is clearly responsible for them day to day, even in a household where everyone loves the cat. This matters most in two common situations:\n\n• A child's promise to 'take care of it' — a good way to build responsibility, but not a substitute for an adult who owns the actual routine and the vet decisions\n• Shared households or couples — worth a quick conversation up front about who does what, rather than assuming it'll sort itself out\n\nIt's also worth naming a backup caregiver for when the primary person travels, gets sick, or simply has a bad week — a cat's routine (especially medication, if any) doesn't pause for that."}
     ]
   },
   {
@@ -1156,8 +1662,9 @@ const careCategories = [
        note:"Wet food adds hydration and is gentler on kidneys; dry food is convenient and helps a little with dental wear.",
        detail:"<b>Wet food</b> is typically 70–80% moisture, versus roughly 10% for dry kibble — a meaningful difference, since cats evolved from desert-dwelling ancestors and instinctively drink less water than they probably should, even when it's freely available. That makes wet food a genuine tool for supporting kidney health, especially as cats age.\n\n<b>Dry food</b> is more convenient, shelf-stable after opening, and its crunch does provide some mechanical scraping of plaque — though this effect is modest and shouldn't be relied on as a substitute for actual dental care or brushing. Once opened, canned wet food should generally be refrigerated and used within a few days.\n\nMany owners mix both: dry food available for grazing, wet food for at least one measured meal a day to boost hydration. The ratio often shifts toward more wet food as a cat ages or develops kidney or urinary issues.",
        linksMode:"entities",
-       links:[{label:"Polypet — Cat Food Range ↗", url:"https://polypet.com.sg/collections/cat", meta:"Singapore retailer stocking Royal Canin, Orijen, Hill's Science Diet, Purina Pro Plan & more, both wet and dry"},
-              {label:"aPetMart — Cat Supplies ↗", url:"https://apetmart.com/", meta:"Online-first Singapore store, 180+ brands, islandwide delivery"}]},
+       links:[shopChip('polypet', {label:"Polypet — Cat Food Range", meta:"Stocks Royal Canin, Orijen, Hill's Science Diet, Purina Pro Plan & more, both wet and dry",
+                primaryAction:{label:"View products ↗", url:"https://polypet.com.sg/collections/cat"}}),
+              shopChip('aPetMart', {label:"aPetMart — Cat Supplies", meta:"Online-first, 180+ brands, islandwide delivery"})]},
       {name:"Foods to Avoid", tag:"Toxic list", color:"#a15a3a",
        note:"<strong>Onion</strong>, <strong>garlic</strong>, <strong>chocolate</strong>, <strong>grapes/raisins</strong>, and <strong>xylitol</strong> are all toxic to cats, even in small amounts.",
        detail:"• <strong>Onion & garlic</strong> (cooked, raw, or powdered) — contain compounds that damage red blood cells, leading to hemolytic anemia. The damage is cumulative, so repeated small exposures can be just as harmful as one large one.\n• <strong>Chocolate</strong> — contains theobromine, a stimulant cats metabolize far more slowly than humans; darker chocolate has more of it and is more dangerous.\n• <strong>Grapes & raisins</strong> — linked to sudden kidney failure in some pets even in small quantities, and the exact toxic mechanism still isn't fully understood, which is part of why vets treat any amount as a concern.\n• <strong>Xylitol</strong> (a sugar substitute in sugar-free gum and baked goods) — well documented as dangerous in dogs and treated with the same caution in cats.\n• <strong>Raw bread dough</strong> — can continue to rise in a warm stomach and expand dangerously, alongside producing alcohol as it ferments.\n• <strong>Lilies</strong> — severely toxic to cats specifically; even pollen brushed onto fur and later licked off during grooming can cause kidney failure.\n\nIf you suspect your cat has eaten any of these, contact a vet or emergency clinic immediately rather than waiting for symptoms.",
@@ -1168,8 +1675,8 @@ const careCategories = [
        note:"Specialty pet stores stock a wider range of vet-recommended formulas than supermarkets, and deliver islandwide.",
        detail:"Specialty pet stores generally stock a wider range of vet-recommended formulas than supermarkets do, and staff can usually advise on which brands suit specific issues (sensitive stomachs, weight management, kidney support) better than general signage can.\n\nIf you're switching a cat's food for any reason, doing it gradually over 7–10 days — mixing increasing proportions of the new food into the old — helps avoid the vomiting or loose stool a sudden switch can trigger. Specialty stores can usually advise on a transition schedule specific to the brands they carry.\n\nBelow are two Singapore options that deliver islandwide — more choices, including physical stores you can browse in person, are in the Products & Services tab.",
        linksMode:"entities",
-       links:[{label:"Polypet ↗", url:"https://polypet.com.sg/", meta:"Clementi storefront + online, trading since 2004"},
-              {label:"aPetMart ↗", url:"https://apetmart.com/", meta:"Online-first, Paya Lebar warehouse, islandwide delivery"}]}
+       links:[shopChip('polypet', {label:"Polypet", meta:"Clementi storefront + online, trading since 2004"}),
+              shopChip('aPetMart', {label:"aPetMart", meta:"Online-first, Paya Lebar warehouse, islandwide delivery"})]}
     ]
   },
   {
@@ -1204,12 +1711,15 @@ const careCategories = [
        linksMode:"references",
        links:[{label:"International Cat Care: Everyday Care for Your Cat ↗", url:"https://icatcare.org/articles/everyday-care-for-your-cat", meta:"Feline welfare charity — daily routine basics"},
               {label:"WSAVA: Calorie Needs for Healthy Adult Cats ↗", url:"https://wsava.org/wp-content/uploads/2020/07/Calorie-Needs-for-Healthy-Adult-Cats-updated-July-2020.pdf", meta:"Official kcal/day chart by body weight"},
-              {label:"Cornell: Hydration ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/hydration", meta:"Cornell Feline Health Center — source for the water-per-kg guideline"}]},
+              {label:"Cornell: Hydration ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/hydration", meta:"Cornell Feline Health Center — source for the water-per-kg guideline"},
+              {label:"Jump to Life Stages tab ↓", url:"internal:stages", meta:"The Adult card's body-condition check that tells you whether to adjust portions"}]},
       {name:"Grooming", tag:"Weekly+", color:"#6b4a7a",
        note:"Short-haired cats mostly self-groom; long-haired breeds need brushing every day or two to prevent mats.",
        detail:"Short-haired cats mostly self-groom, but a weekly brush still cuts down on shedding and the hairballs that come with a cat swallowing loose fur. Long-haired breeds need brushing every day or two — mats aren't just cosmetic, they pull painfully at the skin and, left long enough, can restrict movement or trap moisture against the skin.\n\nDouble-coated breeds (Maine Coon, Siberian, Norwegian Forest Cat) benefit from an undercoat rake during seasonal shedding, and most cats need nail trims roughly every 2–3 weeks.\n\n<b>Turn one grooming session a month into a full nose-to-tail scan</b> — it takes a few extra minutes and catches most early problems before they become vet visits:\n\n• Ears — look inside for redness, dark buildup, or odor\n• Eyes — should be clear, no discharge or squinting\n• Gums and teeth — lift the lip; pink and moist gums, no redness at the gumline or visible tartar\n• Whole body — run flat hands over it feeling for new lumps, bumps, or tender spots the cat pulls away from\n• Tail base and groin — check for fleas or flea dirt (see the Flea Allergy card in Allergies for the exact test)\n• Nails — check for overgrowth or splitting\n• Ribs and waist — the body-condition check described in the Adult card under Life Stages\n\nNothing here needs special tools — just doing it on the same schedule every month is what makes it useful, since you're comparing against last month's cat, not a stranger's.",
        linksMode:"references",
-       links:[{label:"International Cat Care: Grooming Your Cat ↗", url:"https://icatcare.org/articles/grooming-your-cat", meta:"Technique by coat type, plus flea-checking while you brush"}]},
+       links:[{label:"International Cat Care: Grooming Your Cat ↗", url:"https://icatcare.org/articles/grooming-your-cat", meta:"Technique by coat type, plus flea-checking while you brush"},
+              {label:"Jump to Allergies tab ↓", url:"internal:allergies", meta:"The Flea Allergy card's fleas-vs-flea-dirt test"},
+              {label:"Jump to Life Stages tab ↓", url:"internal:stages", meta:"The Adult card's body-condition check"}]},
       {name:"Litter Box", tag:"Daily scoop", color:"#3f5443",
        note:"Scoop daily, and keep one box per cat plus one extra — box avoidance is often an early warning sign.",
        detail:"<b>Setup:</b> scoop at least once a day, and keep one box per cat plus one extra (the standard rule of thumb is n+1), placed in quiet, easy-to-reach spots away from loud appliances that might startle a cat mid-use. A box should be roughly 1.5 times the cat's body length — many commercial boxes are actually too small for adult cats, which can itself cause avoidance.\n\n<b>Litter type:</b> most cats prefer unscented litter; fragranced litter is more for the owner's benefit than the cat's, and a strong scent can actually discourage use. Clumping litter is easier to spot-clean daily, while non-clumping needs a full change more frequently to stay hygienic. Box avoidance — going near the box but not in it, or avoiding it entirely — is one of the most common early signs that something, behavioral or medical (like a urinary tract issue), is wrong, and is worth investigating rather than just correcting as a habit problem.\n\n<b>Monitoring:</b> the daily scoop is also your best early-warning system, since you're already looking in the box anyway.\n\n• Frequency — more trips than usual, or noticeably fewer\n• Clump size — shrinking output over a few days is worth watching\n• Color — pink-tinged or reddish is never normal\n• Sound — straining or crying while in the box\n\nThis matters most for male cats — frequent trips producing little or no urine, or crying while trying to go, is the single most time-critical sign in this whole guide (see the Can't Urinate card in Emergencies) — it's not something to monitor overnight and see how it goes.",
@@ -1222,6 +1732,31 @@ const careCategories = [
        linksMode:"references",
        links:[{label:"Ohio State: Indoor Pet Initiative — For Cat Owners ↗", url:"https://indoorpet.osu.edu/cats", meta:"Toys, perches, scratching, and territory needs for indoor cats"},
               {label:"Catster: Will a Cat Fake a Limp for Sympathy? ↗", url:"https://www.catster.com/cat-behavior/will-cat-fake-a-limp-for-sympathy/", meta:"Vet-reviewed — what's learned behavior vs. a real injury"}]}
+    ]
+  },
+  {
+    key:"travel", label:"Travel & Boarding", code:"TRAVEL", title:"Travel & Boarding",
+    desc:"What to do with your cat while you're away — the sitter-vs-boarding tradeoff, what to check, and real Singapore options.",
+    groups:[{label:"Advice"}, ...TRAVEL_SHOP_GROUPS],
+    items:[
+      {name:"Boarding vs. In-Home Sitting", tag:"Which to choose", color:"#3d6b6d", group:"Advice",
+       note:"Cats bond to territory more than dogs do, so in-home sitting is usually gentler — but boarding still has a place.",
+       detail:"Cats are territorial in a way dogs typically aren't, and a lot of feline stress behavior — hiding, not eating, over-grooming — shows up specifically when a cat is moved somewhere unfamiliar. That's the main reason most cat behaviourists lean toward in-home sitting as the lower-stress default, when it's available.\n\n<b>In-home sitting tends to suit:</b>\n\n• Trips of roughly one to two weeks or shorter\n• Cats that already stress visibly at vet visits or in new places\n• Multi-cat households, where the existing feeding-spot and litter-box routine matters\n\n<b>Boarding tends to suit:</b>\n\n• Longer trips, or last-minute travel with no sitter available\n• Cats needing closer supervision than a once- or twice-daily visit gives — medication schedules, senior cats, recovery from a procedure\n• Situations where nobody trusted has access to your home while you're away\n\nNeither option is risk-free, which is why the next two cards matter regardless of which you pick — what to actually check in a cattery, and what to hand a sitter or relative before you leave."},
+      {name:"What to Look For in a Cattery", tag:"Boarding checklist", color:"#a15a3a", group:"Advice",
+       note:"Cats-only housing, vaccination requirements, and how they actually update you matter more than the price per night.",
+       detail:"• <b>Cats-only housing</b> — a cattery that keeps cats fully separate from dogs (sight, sound, and smell) reduces a major source of stress; ask specifically, don't assume from the name\n• <b>Vaccination requirements</b> — a cattery that insists on up-to-date core vaccinations for every boarder is also protecting your cat from what other boarders might carry\n• <b>Space and enrichment</b> — a private suite/cage with room to move, a litter box separate from the sleeping area, and some vertical space or a window view\n• <b>Vet arrangement</b> — ask exactly what happens in a medical emergency: is there a vet on call, which clinic, and who approves treatment and pays for it\n• <b>Updates</b> — live camera access, daily photos/video, or neither — decide what actually reassures you rather than assuming more is always better\n• <b>AVS licensing</b> — Singapore boarding facilities should hold a valid AVS licence; it's reasonable to ask for the licence number\n\nBook well ahead of school holidays and festive periods specifically — reputable catteries fill up weeks in advance for those windows."},
+      {name:"Briefing a Friend, Relative, or Sitter", tag:"Before you leave", color:"#8a6b1f", group:"Advice",
+       note:"Written instructions beat a rushed verbal handover — cover feeding, litter, and who to call if something's wrong.",
+       detail:"A friend or relative watching your cat is often cheaper and more familiar than boarding, but it only works as well as the instructions you leave. Worth writing down, not just saying out loud on your way out the door:\n\n• Exact feeding schedule and amounts — 'a bit of food' means something different to everyone\n• Litter box location(s) and how often to scoop (see Daily Care)\n• Any medication, with dose and timing, written out plainly\n• Your regular vet's contact, plus a 24-hour emergency vet as backup (see Emergencies)\n• What's actually urgent versus what can wait for you to be reachable — a sitter who doesn't know your cat can't tell a hairball from something serious on their own\n• Where the carrier is, in case a vet trip becomes necessary\n\nIt's also worth doing a short trial — a weekend rather than two weeks the first time — so you both find out what you missed while the stakes are lower.",
+       linksMode:"references",
+       links:[{label:"Jump to Daily Care tab ↓", url:"internal:daily", meta:"Feeding amounts and litter box routine to hand off"},
+              {label:"Jump to Emergencies tab ↓", url:"internal:emergencies", meta:"What actually counts as urgent, and the 24hr vet contacts to leave behind"}]},
+      {name:"Pre-Trip Checklist", tag:"Self-check", color:"#5B3A5C", group:"Advice",
+       note:"A few things worth confirming before you book anything.",
+       detail:"• Book a cattery or sitter as early as you can — good ones fill up weeks ahead of school holidays and festive periods\n• Confirm your cat's PALS licence and microchip details are current, in case it goes missing while you're away (see the Adoption tab)\n• Pack something familiar for boarding — their own blanket or a toy with a familiar scent can ease the transition\n• Leave a recent photo with whoever's caring for your cat, useful if it ever needs to be described to a vet or, worst case, reported missing\n• Confirm payment terms and cancellation policy before booking — some sitters and catteries require a deposit or full payment upfront\n\nNone of this replaces knowing your own cat — a cat that's never tolerated change well is a stronger case for in-home sitting specifically, whatever a listing's star rating says.",
+       linksMode:"references",
+       links:[{label:"Jump to Adoption tab ↓", url:"internal:adoption", meta:"PALS licensing and microchip registration"}]},
+      ...TRAVEL_SHOP_GROUPS.flatMap(g => g.ids.map(id => ({...shopCard(id), group:g.label})))
     ]
   },
   {
@@ -1239,15 +1774,11 @@ const careCategories = [
        note:"Lilies, string, meds, and unsecured windows are the hazards cats most often get into.",
        detail:"• <strong>Lilies</strong> — highly toxic even in small amounts; even pollen brushed onto fur and licked off later during grooming can cause kidney failure, making them one of the few houseplants worth banning outright rather than just keeping out of reach.\n• <strong>String, thread, ribbon, hair elastics</strong> — a serious swallowing risk. If part of a string gets caught under the tongue while the rest is swallowed, it can saw through the intestine as it tries to pass — a genuine surgical emergency.\n• <strong>Human medication</strong> — over-the-counter painkillers like ibuprofen are highly toxic to cats even in small doses; keep pill bottles and blister packs somewhere a cat can't knock them onto the floor.\n• <strong>Essential oil diffusers</strong> — some oils (tea tree is a frequently cited one) can be absorbed through the skin or inhaled and cause toxicity.\n• <strong>Electrical cords</strong> — a chewing risk, especially for kittens.\n• <strong>Unsecured windows and balconies</strong> — 'high-rise syndrome,' where a cat falls while chasing a bird or insect outside a window, is a real and common injury in cats living in high-rise buildings, which is most homes in Singapore.\n\nThis last one is exactly why shelters and now Singapore law require meshing (see the Adoption tab for details). Wire mesh and invisible grilles are the two most common ways owners secure windows — a few Singapore installers who specifically offer cat-safe options are below.",
        linkGroups:[
-         {mode:"entities", heading:"Window Mesh & Grille Options", links:[
-            {label:"BLINDNET Cat Mesh & Mosquito Net ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJTU9mnLcX2jERd_KskXOxbgM", meta:"5.0★ · 33 Ubi Ave 3 · +65 9222 4949 · cat mesh specialist"},
-            {label:"Mozziefy Insect Screens & Cat Mesh ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJV1ijK2AR2jER6ji91ev6ybY", meta:"5.0★ · by appointment · +65 8814 5147 · magnetic cat mesh screens"},
-            {label:"SkyGrilles Pte Ltd ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJS1RjmT492jERrd6QG6M746I", meta:"4.7★ · Ang Mo Kio · +65 6659 5838 · invisible grilles, cat-safe option"},
-            {label:"Magicseal S'pore Pte Ltd ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJRWljPMgZ2jERxkO83GKeqDo", meta:"4.9★ · New Industrial Rd · +65 6245 2292 · pet-safe click-on mesh"}
-         ]},
+         {mode:"entities", heading:"Window Mesh & Grille Options", links: shopLinks(['blindnetMesh','mozziefyMesh','skygrilles','magicseal'])},
          {mode:"references", links:[
             {label:"ASPCA Animal Poison Control ↗", url:"https://www.aspca.org/pet-care/animal-poison-control", meta:"US-based; in Singapore, call your vet or an emergency clinic first"},
-            {label:"Pet Poison Helpline ↗", url:"https://www.petpoisonhelpline.com/", meta:"24/7 line, US-based, consultation fee applies"}
+            {label:"Pet Poison Helpline ↗", url:"https://www.petpoisonhelpline.com/", meta:"24/7 line, US-based, consultation fee applies"},
+            {label:"Jump to Adoption tab ↓", url:"internal:adoption", meta:"Why shelters and Singapore law both require window meshing"}
          ]}
        ]}
     ]
@@ -1255,60 +1786,8 @@ const careCategories = [
   {
     key:"resources", label:"Products & Services", code:"SERVICE", title:"Products & Services in Singapore",
     desc:"A starting point, not an endorsement — always check current hours and reviews before booking.",
-    items:[
-      {name:"Atlas Veterinary Clinic & Surgery", tag:"4.9★ · Bukit Merah", color:"#3d6b6d",
-       note:"163 Bukit Merah Central, #03-3573 · +65 6980 8038 — General practice with WhatsApp follow-ups between visits.",
-       linksMode:"actions",
-       links:[{label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJv0OglfMb2jERZOIDRlip4Qc"},
-              {label:"Call +65 6980 8038 ↗", url:"tel:+6569808038"}]},
-      {name:"Advanced VetCare (Bedok)", tag:"24hrs · Emergency", color:"#3d6b6d",
-       note:"26 Jln Pari Burong · +65 6636 1788 — Open 24 hours, useful to have on hand for after-midnight emergencies.",
-       linksMode:"actions",
-       links:[{label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJkS4WOzA92jERQ5_fAGVwalg"},
-              {label:"Call +65 6636 1788 ↗", url:"tel:+6566361788"}]},
-      {name:"Dr Paws Vet Care", tag:"4.8★ · Same-day slots", color:"#3d6b6d",
-       note:"77 Lucky Heights, off Upper E Coast Rd · +65 6243 4668 — Known for fitting in same-day appointments and gentle handling of senior pets.",
-       linksMode:"actions",
-       links:[{label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJfRaURk8j2jERcWYJ859at3k"},
-              {label:"Call +65 6243 4668 ↗", url:"tel:+6562434668"}]},
-      {name:"Likeable Pets", tag:"5.0★ · Mobile grooming", color:"#6b4a7a",
-       note:"18 Howard Rd · +65 8685 2360 — Mobile cat and dog grooming, often booked for anxious or older cats.",
-       linksMode:"actions",
-       links:[{label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJK8_-sPgP2jERbUHRjc67iZM"},
-              {label:"Call +65 8685 2360 ↗", url:"tel:+6586852360"}]},
-      {name:"The Pets Workshop (Telepark)", tag:"4.8★ · Cat specialist", color:"#6b4a7a",
-       note:"5 Tampines Central 6, #01-12 Telepark · +65 8499 5160 — Grooming studio with a dedicated cat-handling focus.",
-       linksMode:"actions",
-       links:[{label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJzy-K38M92jERh78glk3GhdU"},
-              {label:"Call +65 8499 5160 ↗", url:"tel:+6584995160"}]},
-      {name:"Pawpy Kisses Pet Shop & Grooming", tag:"4.9★ · Shop + groom", color:"#6b4a7a",
-       note:"232 Balestier Rd · +65 9060 6501 — Grooming plus an in-house shop for food and accessories.",
-       linksMode:"actions",
-       links:[{label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJPz582lYW2jERhWT6a8loUkI"},
-              {label:"Call +65 9060 6501 ↗", url:"tel:+6590606501"}]},
-      {name:"Polypet", tag:"4.7★ · Online + store", color:"#8a6b1f",
-       note:"109 Clementi Street 11 · +65 6779 5309 — Sells cat food (Royal Canin, Orijen, Hill's Science Diet, Purina Pro Plan and more), litter, and supplements, with reliable islandwide delivery.",
-       linksMode:"actions",
-       links:[{label:"Visit website ↗", url:"https://polypet.com.sg/", meta:"Online store + Clementi storefront"},
-              {label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJs1eHtIYa2jERR6jOXK674Ns"},
-              {label:"Call +65 6779 5309 ↗", url:"tel:+6567795309"}]},
-      {name:"Pet Master Mega Store by CatSmart", tag:"4.8★ · Large store", color:"#8a6b1f",
-       note:"920 East Coast Park, Parkland Green · +65 6908 9777 — Large physical store selling cat food, litter, carriers, and condos, good for browsing and comparing brands in person.",
-       linksMode:"actions",
-       links:[{label:"Visit website ↗", url:"https://petmaster.com.sg/megastore-ecp", meta:"Store info, hours, and services"},
-              {label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJnxU0wwkZ2jERYn6FCbMY0xU"},
-              {label:"Call +65 6908 9777 ↗", url:"tel:+6569089777"}]},
-      {name:"The Pet Safari (VivoCity)", tag:"4.3★ · Central location", color:"#8a6b1f",
-       note:"1 HarbourFront Walk, #03-03 VivoCity · +65 6376 9508 — Part of the long-running Pet Lovers Centre chain; sells cat food, litter, and accessories at a central, easy-to-reach mall location.",
-       linksMode:"actions",
-       links:[{label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJpUW1vFgZ2jERK1JWTopXcho"},
-              {label:"Call +65 6376 9508 ↗", url:"tel:+6563769508"}]},
-      {name:"aPetMart", tag:"4.8★ · Online store", color:"#8a6b1f",
-       note:"1014 Geylang East Ave 3 · online-first — Sells cat food across 180+ brands, plus litter and accessories; convenient for bulk or recurring orders.",
-       linksMode:"actions",
-       links:[{label:"Visit website ↗", url:"https://apetmart.com/", meta:"180+ brands, islandwide delivery"},
-              {label:"Get directions ↗", url:"https://www.google.com/maps/place/?q=place_id:ChIJQTfrXC8Z2jERuAqe276CURY"}]}
-    ]
+    groups: PRODUCT_SHOP_GROUPS,
+    items: PRODUCT_SHOP_GROUPS.flatMap(g => g.ids.map(id => ({...shopCard(id), group:g.label})))
   }
 ];
 
@@ -1338,6 +1817,47 @@ function careBuildTabs(){
   });
 }
 
+function buildCareCard(b, i){
+  const card = document.createElement('div');
+  const fileLabel = b.catCode + ' ' + String(i+1).padStart(3,'0');
+
+  if(b.directActions){
+    // Products & Services: no drill-in — Get directions/Call/Website sit right on the card.
+    card.className = 'card care-card no-drill';
+    card.style.animationDelay = (i*0.03)+'s';
+    const actions = (b.links && b.links[0] && b.links[0].actions) || [];
+    const actionsHtml = actions.length
+      ? '<div class="card-actions">' + actions.map(a=>'<a href="'+a.url+'" target="_blank" rel="noopener">'+a.label+'</a>').join('') + '</div>'
+      : '';
+    card.innerHTML =
+      '<span class="card-index">' + fileLabel + '</span>' +
+      '<div class="card-image">' + catSketch(b.color) + '</div>' +
+      '<h4>' + b.name + '</h4>' +
+      '<p>' + b.note + '</p>' +
+      '<span class="stamp" style="border-color:' + b.color + '55; color:' + b.color + '">' + b.tag + '</span>' +
+      actionsHtml;
+    return card;
+  }
+
+  card.className = 'card care-card';
+  card.style.animationDelay = (i*0.03)+'s';
+  const totalLinks = b.linkGroups && b.linkGroups.length
+    ? b.linkGroups.reduce((sum,g)=>sum+g.links.length, 0)
+    : (b.links ? b.links.length : 0);
+  const hint = totalLinks
+    ? '<span class="drill-hint">' + totalLinks + ' link' + (totalLinks===1?'':'s') + ' — tap for details ↗</span>'
+    : '<span class="drill-hint">Tap for details ↗</span>';
+  card.innerHTML =
+    '<span class="card-index">' + fileLabel + '</span>' +
+    '<div class="card-image">' + catSketch(b.color) + '</div>' +
+    '<h4>' + b.name + '</h4>' +
+    '<p>' + b.note + '</p>' +
+    '<span class="stamp" style="border-color:' + b.color + '55; color:' + b.color + '">' + b.tag + '</span>' +
+    hint;
+  card.addEventListener('click', ()=> openCareModal(b, fileLabel));
+  return card;
+}
+
 function careRenderGrid(){
   careGrid.innerHTML = "";
   const cat = careCategories.find(c=>c.key===careActiveKey);
@@ -1358,6 +1878,12 @@ function careRenderGrid(){
     careDesc.textContent = filtered.length + " match" + (filtered.length===1?"":"es") + " across the care guide";
   }
 
+  const grouped = !term && !!cat.groups;
+  careGrid.classList.toggle('grouped', grouped);
+
+  const readinessGauge = document.getElementById('readinessGauge');
+  readinessGauge.style.display = (cat.key === 'readiness' && !term) ? 'block' : 'none';
+
   if(filtered.length === 0){
     const empty = document.createElement('div');
     empty.className = 'no-results';
@@ -1366,28 +1892,104 @@ function careRenderGrid(){
     return;
   }
 
-  filtered.forEach((b, i)=>{
-    const card = document.createElement('div');
-    card.className = 'card care-card';
-    card.style.animationDelay = (i*0.03)+'s';
-    const fileLabel = b.catCode + ' ' + String(i+1).padStart(3,'0');
-    const totalLinks = b.linkGroups && b.linkGroups.length
-      ? b.linkGroups.reduce((sum,g)=>sum+g.links.length, 0)
-      : (b.links ? b.links.length : 0);
-    const hint = totalLinks
-      ? '<span class="drill-hint">' + totalLinks + ' link' + (totalLinks===1?'':'s') + ' — tap for details ↗</span>'
-      : '<span class="drill-hint">Tap for details ↗</span>';
-    card.innerHTML =
-      '<span class="card-index">' + fileLabel + '</span>' +
-      '<div class="card-image">' + catSketch(b.color) + '</div>' +
-      '<h4>' + b.name + '</h4>' +
-      '<p>' + b.note + '</p>' +
-      '<span class="stamp" style="border-color:' + b.color + '55; color:' + b.color + '">' + b.tag + '</span>' +
-      hint;
-    card.addEventListener('click', ()=> openCareModal(b, fileLabel));
-    careGrid.appendChild(card);
+  if(grouped){
+    let counter = 0;
+    cat.groups.forEach(group=>{
+      const groupItems = filtered.filter(b => b.group === group.label);
+      if(!groupItems.length) return;
+      const heading = document.createElement('div');
+      heading.className = 'grid-group-heading';
+      heading.textContent = group.label + ' (' + groupItems.length + ')';
+      careGrid.appendChild(heading);
+      const subGrid = document.createElement('div');
+      subGrid.className = 'card-grid grid-group';
+      groupItems.forEach(b=>{
+        subGrid.appendChild(buildCareCard(b, counter));
+        counter++;
+      });
+      careGrid.appendChild(subGrid);
+    });
+    return;
+  }
+
+  filtered.forEach((b, i)=> careGrid.appendChild(buildCareCard(b, i)));
+}
+
+/* ============ READINESS GAUGE ============
+   One question per card in the "Before You Get a Cat" tab — this doesn't introduce new
+   topics, it just scores the same 5 things those cards already cover. */
+const READINESS_QUESTIONS = [
+  {key:"commitment", text:"Are you prepared for a 15–20 year commitment, including possible moves, relationship changes, or career shifts?"},
+  {key:"budget", text:"Have you budgeted for both routine costs (food, litter, vet visits) and a buffer for emergency or senior-year vet bills?"},
+  {key:"legal", text:"If you're in an HDB flat or a rental, have you confirmed you're within the cat limit and actually allowed to keep one?"},
+  {key:"lifestyle", text:"Does your day-to-day lifestyle — time away, allergies, other pets or kids — genuinely fit a cat right now?"},
+  {key:"caregiver", text:"Is there one specific person (not just \"the family\") who will own daily feeding, litter, and vet care?"}
+];
+const gaugeAnswers = {};
+
+function buildGaugeQuestions(){
+  const container = document.getElementById('gaugeQuestions');
+  container.innerHTML = READINESS_QUESTIONS.map(q =>
+    '<div class="gauge-question">' +
+      '<p>' + q.text + '</p>' +
+      '<div class="gauge-options">' +
+        [['2','Yes'],['1','Somewhat'],['0','No']].map(([val,label])=>
+          '<label class="gauge-option">' +
+            '<input type="radio" name="gauge-' + q.key + '" value="' + val + '">' +
+            '<span>' + label + '</span>' +
+          '</label>'
+        ).join('') +
+      '</div>' +
+    '</div>'
+  ).join('');
+  container.querySelectorAll('input[type="radio"]').forEach(input=>{
+    input.addEventListener('change', (e)=>{
+      const key = e.target.name.replace('gauge-','');
+      gaugeAnswers[key] = Number(e.target.value);
+      updateGauge();
+    });
   });
 }
+
+function updateGauge(){
+  const total = READINESS_QUESTIONS.length;
+  const answeredKeys = Object.keys(gaugeAnswers);
+  const answeredCount = answeredKeys.length;
+  const answeredSum = answeredKeys.reduce((sum,k)=>sum+gaugeAnswers[k], 0);
+  const maxScore = total * 2;
+  // Unanswered questions count as neutral (1pt) so the needle previews live instead of sitting pinned at zero.
+  const projectedScore = answeredSum + (total - answeredCount) * 1;
+  const deg = (projectedScore / maxScore) * 180 - 90;
+  document.getElementById('gaugeNeedle').setAttribute('transform', 'rotate(' + deg + ' 100 100)');
+  document.getElementById('gaugeProgress').textContent = answeredCount + ' of ' + total + ' answered';
+
+  const verdict = document.getElementById('gaugeVerdict');
+  if(answeredCount < total){
+    verdict.textContent = "Answer all " + total + " — the needle's just previewing so far.";
+    verdict.className = 'gauge-verdict';
+    return;
+  }
+  const pct = answeredSum / maxScore;
+  if(pct >= 0.8){
+    verdict.textContent = "Looks like a good fit — sounds like you've thought this through.";
+    verdict.className = 'gauge-verdict verdict-green';
+  } else if(pct >= 0.4){
+    verdict.textContent = "A few things worth sorting out first — not a no, just not fully ready yet.";
+    verdict.className = 'gauge-verdict verdict-amber';
+  } else {
+    verdict.textContent = "Might not be the right time yet — worth revisiting the cards above before deciding.";
+    verdict.className = 'gauge-verdict verdict-red';
+  }
+}
+
+document.getElementById('gaugeReset').addEventListener('click', ()=>{
+  Object.keys(gaugeAnswers).forEach(k=> delete gaugeAnswers[k]);
+  document.querySelectorAll('#gaugeQuestions input[type="radio"]').forEach(i=> i.checked = false);
+  updateGauge();
+});
+
+buildGaugeQuestions();
+updateGauge();
 
 /* ============ CARE DETAIL MODAL ============ */
 const careModalOverlay = document.getElementById('careModalOverlay');
@@ -1401,8 +2003,7 @@ const modalLinksGroups = document.getElementById('modalLinksGroups');
 
 const LINKS_MODE_CONFIG = {
   entities:   {heading:"Options",              listClass:""},
-  references: {heading:"Further Reading",      listClass:"list-mode"},
-  actions:    {heading:"Contact & Directions",  listClass:"list-mode"}
+  references: {heading:"Further Reading",      listClass:"list-mode"}
 };
 
 function renderLinkGroup(mode, heading, links){
@@ -1411,15 +2012,27 @@ function renderLinkGroup(mode, heading, links){
   const groupHeading = heading || cfg.heading;
 
   const itemsHtml = links.map(l=>{
+    const actionsHtml = l.actions && l.actions.length
+      ? '<div class="link-actions">' + l.actions.map(a=>'<a href="'+a.url+'">'+a.label+'</a>').join('') + '</div>'
+      : '';
+
+    if(showThumb){
+      // Shop entity: name is plain text, not a link — Get directions/Call/Website live in the actions row below.
+      const thumb = '<div class="link-thumb">' + (l.image ? '<img src="'+l.image+'" alt="" loading="lazy">' : productPlaceholder()) + '</div>';
+      return '<div class="modal-link-item">' +
+      thumb +
+      '<span class="link-name">' + l.label + '</span>' +
+      (l.meta ? '<span class="link-meta">'+l.meta+'</span>' : '') +
+      actionsHtml +
+      '</div>';
+    }
+
+    // References / internal jumps: the label itself is the clickable link.
     const isInternal = l.url.startsWith('internal:');
     const anchor = isInternal
       ? '<a href="#" onclick="jumpToCareTab(\''+l.url.split(':')[1]+'\'); return false;">'+l.label+'</a>'
       : '<a href="'+l.url+'" target="_blank" rel="noopener">'+l.label+'</a>';
-    const thumb = showThumb
-      ? '<div class="link-thumb">' + (l.image ? '<img src="'+l.image+'" alt="" loading="lazy">' : productPlaceholder()) + '</div>'
-      : '';
-    return '<div class="modal-link-item' + (showThumb ? '' : ' no-thumb') + '">' +
-    thumb +
+    return '<div class="modal-link-item no-thumb">' +
     anchor +
     (l.meta ? '<span class="link-meta">'+l.meta+'</span>' : '') +
     '</div>';
@@ -1450,9 +2063,72 @@ function formatDetail(text){
   }).join('');
 }
 
+/* ============ BREED PHOTO GALLERY ============
+   Optional per-breed `images` array: [{url, alt, credit}]. Falls back to the sketch icon
+   when a breed has none yet — the carousel controls only appear once photos exist. */
+let galleryImages = [];
+let galleryIndex = 0;
+
+function renderGallery(breed){
+  const el = document.getElementById('modalGallery');
+  galleryImages = breed.images || [];
+  galleryIndex = 0;
+
+  if(!galleryImages.length){
+    el.innerHTML = '<div class="gallery-placeholder">' + catSketch('#8A8067') + '</div>';
+    return;
+  }
+
+  el.innerHTML =
+    '<img id="galleryImg" src="" alt="">' +
+    (galleryImages.length > 1
+      ? '<button type="button" class="gallery-nav gallery-prev" id="galleryPrev" aria-label="Previous photo">‹</button>' +
+        '<button type="button" class="gallery-nav gallery-next" id="galleryNext" aria-label="Next photo">›</button>' +
+        '<div class="gallery-dots" id="galleryDots"></div>'
+      : '') +
+    '<div class="gallery-credit" id="galleryCredit"></div>';
+
+  if(galleryImages.length > 1){
+    document.getElementById('galleryPrev').addEventListener('click', ()=> stepGallery(-1));
+    document.getElementById('galleryNext').addEventListener('click', ()=> stepGallery(1));
+  }
+  updateGalleryFrame();
+}
+
+function stepGallery(delta){
+  galleryIndex = (galleryIndex + delta + galleryImages.length) % galleryImages.length;
+  updateGalleryFrame();
+}
+
+function updateGalleryFrame(){
+  const current = galleryImages[galleryIndex];
+  const imgEl = document.getElementById('galleryImg');
+  if(imgEl){
+    imgEl.src = current.url;
+    imgEl.alt = current.alt || '';
+  }
+  const creditEl = document.getElementById('galleryCredit');
+  if(creditEl){
+    creditEl.innerHTML = current.creditUrl
+      ? '<a href="'+current.creditUrl+'" target="_blank" rel="noopener">'+(current.credit || 'Source')+'</a>'
+      : (current.credit || '');
+  }
+
+  const dotsEl = document.getElementById('galleryDots');
+  if(dotsEl){
+    dotsEl.innerHTML = galleryImages.map((_,i)=>
+      '<button type="button" class="gallery-dot' + (i===galleryIndex ? ' active' : '') + '" data-i="'+i+'" aria-label="Photo '+(i+1)+'"></button>'
+    ).join('');
+    dotsEl.querySelectorAll('.gallery-dot').forEach(dot=>{
+      dot.addEventListener('click', ()=>{ galleryIndex = Number(dot.dataset.i); updateGalleryFrame(); });
+    });
+  }
+}
+
 function openCareModal(item, fileLabel){
   modalIndex.textContent = fileLabel;
   modalTitle.textContent = item.name;
+  document.getElementById('modalGallery').style.display = 'none';
   modalFacts.style.display = 'none';
   modalFacts.innerHTML = '';
   modalNote.innerHTML = formatDetail(item.detail || item.note);
@@ -1481,6 +2157,9 @@ function factChip(label, value){
 function openBreedModal(breed, fileLabel){
   modalIndex.textContent = fileLabel;
   modalTitle.textContent = breed.name;
+
+  document.getElementById('modalGallery').style.display = 'block';
+  renderGallery(breed);
 
   modalFacts.innerHTML =
     factChip('Origin', breed.origin) +
