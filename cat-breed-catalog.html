@@ -229,6 +229,27 @@
   }
 
   /* ---------- SEARCH ---------- */
+  .global-search-row{
+    max-width:1000px;
+    margin:28px auto 0;
+    padding:0 24px;
+  }
+  .global-search-row .search-box{
+    max-width:480px;
+    margin-bottom:0;
+    background:var(--panel);
+    box-shadow:0 2px 8px rgba(27,36,30,0.06);
+  }
+  .search-results-msg{
+    max-width:480px;
+    min-height:1.4em;
+    margin-top:6px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.02em;
+    color:var(--ink-faint);
+  }
+  .search-results-msg.no-results-text{color:var(--clay);}
   .search-box{
     display:flex;
     align-items:center;
@@ -397,6 +418,35 @@
     padding:3px 10px;
   }
 
+  /* ---------- SEVERITY BADGE ----------
+     Deliberately a filled pill (vs. the outlined, decorative .stamp) so it reads
+     as a semantic status, not just another free-text label. */
+  .card-tags{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .card-tags .stamp{margin:0;}
+  .severity-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:9.5px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    border-radius:999px;
+    padding:3px 10px;
+    background:none;
+    border:1px solid;
+  }
+  .severity-badge[data-level="emergency"]{border-color:var(--clay); color:var(--clay);}
+  .severity-badge[data-level="vet"]{border-color:var(--brass); color:var(--brass);}
+  .severity-badge[data-level="monitor"]{border-color:var(--forest); color:var(--forest);}
+  #modalSeverityBadge{margin-bottom:10px;}
+
   .card-actions{
     margin-top:10px;
     display:flex;
@@ -437,6 +487,12 @@
     font-size:11px;
     line-height:1.65;
   }
+  .last-reviewed{
+    margin:14px 0 0;
+    color:var(--ink-faint);
+    font-size:10px;
+    letter-spacing:0.04em;
+  }
 
   @media (prefers-reduced-motion: reduce){
     *{animation:none !important; transition:none !important;}
@@ -453,88 +509,51 @@
     .card-grid{grid-template-columns:1fr;}
   }
 
-  /* ---------- READINESS GAUGE ---------- */
-  .readiness-gauge{
-    background:var(--canvas);
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:22px 22px 24px;
+  /* ---------- READINESS CHECK / KNOWLEDGE QUIZ CALLOUTS ---------- */
+  .callout-group{
+    flex-direction:column;
+    gap:12px;
     margin-bottom:22px;
   }
-  .gauge-visual{
-    max-width:240px;
-    margin:0 auto;
-  }
-  .gauge-svg{width:100%; height:auto; display:block;}
-  .gauge-zone{fill:none; stroke-width:16; stroke-linecap:round;}
-  .zone-red{stroke:var(--clay);}
-  .zone-amber{stroke:var(--brass-light);}
-  .zone-green{stroke:var(--forest);}
-  .gauge-needle{
-    stroke:var(--ink);
-    stroke-width:3;
-    stroke-linecap:round;
-    transition:transform 0.5s cubic-bezier(.34,1.4,.64,1);
-  }
-  .gauge-pivot{fill:var(--ink);}
-  .gauge-readout{text-align:center; margin:6px 0 18px;}
-  .gauge-verdict{
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-size:1.02rem;
-    color:var(--ink);
-    margin-bottom:4px;
-  }
-  .gauge-verdict.verdict-green{color:var(--forest);}
-  .gauge-verdict.verdict-amber{color:var(--olive);}
-  .gauge-verdict.verdict-red{color:var(--clay);}
-  .gauge-progress{
-    font-family:'JetBrains Mono', monospace;
-    font-size:11px;
-    color:var(--ink-faint);
-    letter-spacing:0.04em;
-  }
-  .gauge-questions{
+  .readiness-callout{
     display:flex;
-    flex-direction:column;
-    gap:14px;
-    margin-bottom:18px;
-    padding-top:16px;
-    border-top:1px solid var(--line);
-  }
-  .gauge-question p{font-size:13.5px; color:var(--ink-soft); margin:0 0 8px; line-height:1.5;}
-  .gauge-options{display:flex; gap:8px; flex-wrap:wrap;}
-  .gauge-option{font-family:'JetBrains Mono', monospace; font-size:11.5px; cursor:pointer;}
-  .gauge-option input{position:absolute; opacity:0; width:1px; height:1px; pointer-events:none;}
-  .gauge-option span{
-    display:inline-block;
-    padding:6px 14px;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+    background:var(--canvas);
     border:1px solid var(--line);
-    border-radius:999px;
+    border-left:4px solid var(--brass);
+    border-radius:8px;
+    padding:18px 20px;
+  }
+  .readiness-callout-text h4{
+    font-family:'Fraunces', serif;
+    font-size:1.05rem;
+    font-weight:500;
+    margin:0 0 4px;
+    color:var(--forest);
+  }
+  .readiness-callout-text p{
+    font-size:13px;
     color:var(--ink-soft);
-    transition:background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    margin:0;
+    max-width:420px;
   }
-  .gauge-option:hover span{border-color:var(--brass);}
-  .gauge-option input:checked + span{
-    background:var(--forest);
-    border-color:var(--forest);
-    color:#F2EFE3;
-  }
-  .gauge-reset{
-    display:block;
-    margin:0 auto;
+  .readiness-callout-btn{
     font-family:'JetBrains Mono', monospace;
-    font-size:11px;
-    letter-spacing:0.05em;
+    font-size:12px;
+    letter-spacing:0.03em;
     text-transform:uppercase;
-    color:var(--ink-soft);
-    background:none;
-    border:1px solid var(--line);
+    color:#F2EFE3;
+    background:var(--forest);
     border-radius:999px;
-    padding:7px 16px;
-    cursor:pointer;
+    padding:10px 18px;
+    text-decoration:none;
+    white-space:nowrap;
+    transition:background 0.15s ease;
   }
-  .gauge-reset:hover{border-color:var(--clay); color:var(--clay);}
+  .readiness-callout-btn:hover{background:var(--forest-deep);}
 
   /* ---------- CARE CARD DRILL-HINT ---------- */
   .card{cursor:pointer;}
@@ -750,6 +769,152 @@
     color:var(--ink);
     font-weight:700;
   }
+
+  /* ---------- CHECKLISTS ---------- */
+  #modalNote ul.checklist{list-style:none; padding-left:0; margin:0 0 4px;}
+  #modalNote ul.checklist li{margin-bottom:2px;}
+  .check-item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:8px 4px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:background 0.15s ease;
+  }
+  .check-item:hover{background:var(--canvas-dim);}
+  .check-input{position:absolute; opacity:0; width:1px; height:1px; pointer-events:none;}
+  .check-box{
+    flex:0 0 18px;
+    width:18px; height:18px;
+    margin-top:2px;
+    border:1.5px solid var(--line-strong);
+    border-radius:4px;
+    background:var(--panel);
+    position:relative;
+    transition:background 0.15s ease, border-color 0.15s ease;
+  }
+  .check-input:checked + .check-box{background:var(--forest); border-color:var(--forest);}
+  .check-input:checked + .check-box::after{
+    content:'';
+    position:absolute;
+    left:5px; top:1px;
+    width:5px; height:9px;
+    border:solid #F2EFE3;
+    border-width:0 2px 2px 0;
+    transform:rotate(40deg);
+  }
+  .check-input:focus-visible + .check-box{outline:2px solid var(--brass); outline-offset:2px;}
+  .check-label{font-size:14px; line-height:1.55; color:var(--ink-soft);}
+  .check-input:checked ~ .check-label{
+    color:var(--ink-faint);
+    text-decoration:line-through;
+    text-decoration-color:var(--line-strong);
+  }
+  .checklist-progress{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin:-2px 0 16px;
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline{
+    position:relative;
+    margin:18px 0 4px;
+    padding-left:70px;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:44px; top:4px; bottom:4px;
+    width:2px;
+    background:var(--line-strong);
+  }
+  .timeline-item{position:relative; margin-bottom:18px;}
+  .timeline-item:last-child{margin-bottom:0;}
+  .timeline-age{
+    position:absolute;
+    left:-70px; top:1px;
+    width:56px;
+    text-align:right;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.05em;
+    color:var(--brass);
+  }
+  .timeline-dot{
+    position:absolute;
+    left:-30px; top:3px;
+    width:9px; height:9px;
+    border-radius:50%;
+    background:var(--forest);
+  }
+  .timeline-item p{
+    margin:0;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    line-height:1.5;
+  }
+
+  /* ---------- DECISION TREE ---------- */
+  .dtree-crumb{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin-bottom:10px;
+  }
+  .dtree-question{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.05rem;
+    color:var(--ink);
+    margin:0 0 16px;
+    line-height:1.4;
+  }
+  .dtree-answers{display:flex; flex-direction:column; gap:8px; margin-bottom:16px;}
+  .dtree-answer{
+    font-family:'Archivo', sans-serif;
+    font-size:14px;
+    text-align:left;
+    padding:12px 16px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:var(--canvas);
+    color:var(--ink);
+    cursor:pointer;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .dtree-answer:hover{border-color:var(--brass); background:var(--panel);}
+  .dtree-answer:focus-visible{outline:2px solid var(--brass); outline-offset:2px;}
+  .dtree-outcome{
+    border:1px solid var(--line);
+    border-left:4px solid var(--forest);
+    border-radius:6px;
+    padding:14px 16px;
+    background:var(--canvas);
+    margin-bottom:14px;
+  }
+  .dtree-outcome[data-level="emergency"]{border-left-color:var(--clay);}
+  .dtree-outcome[data-level="vet"]{border-left-color:var(--brass);}
+  .dtree-outcome[data-level="monitor"]{border-left-color:var(--forest);}
+  .dtree-outcome p{margin:8px 0 0; font-size:14px; line-height:1.6; color:var(--ink-soft);}
+  .dtree-back{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    background:none;
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:6px 14px;
+    cursor:pointer;
+  }
+  .dtree-back:hover{border-color:var(--clay); color:var(--clay);}
+
   .modal-links{
     border-top:1px solid var(--line);
     padding-top:18px;
@@ -867,6 +1032,14 @@
     <p>An index of domestic cat breeds and everyday care, arranged the way a natural history collection catalogs its specimens.</p>
   </div>
 
+  <div class="global-search-row">
+    <div class="search-box">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="globalSearchInput" placeholder="Search the care guide…">
+    </div>
+    <div class="search-results-msg" id="searchResultsMsg"></div>
+  </div>
+
   <div id="care" class="view-section visible">
   <div class="section-heading">
     <div class="eyebrow">Reference section</div>
@@ -881,26 +1054,30 @@
         <h3 id="careDrawerTitle">Emergencies</h3>
         <p id="careDrawerDesc">If your cat is acting off, start here.</p>
       </div>
-      <div class="readiness-gauge" id="readinessGauge" style="display:none;">
-        <div class="gauge-visual">
-          <svg viewBox="0 0 200 112" class="gauge-svg">
-            <path d="M 20 100 A 80 80 0 0 1 60 30.72" class="gauge-zone zone-red"/>
-            <path d="M 60 30.72 A 80 80 0 0 1 140 30.72" class="gauge-zone zone-amber"/>
-            <path d="M 140 30.72 A 80 80 0 0 1 180 100" class="gauge-zone zone-green"/>
-            <line x1="100" y1="100" x2="100" y2="28" class="gauge-needle" id="gaugeNeedle"/>
-            <circle cx="100" cy="100" r="6" class="gauge-pivot"/>
-          </svg>
+      <div class="callout-group" id="emergencySheetCallout" style="display:none;">
+        <div class="readiness-callout">
+          <div class="readiness-callout-text">
+            <h4>Want this on paper?</h4>
+            <p>A one-page printable sheet — vet numbers, warning signs, and dangerous foods/plants.</p>
+          </div>
+          <a class="readiness-callout-btn" href="cat-emergency-sheet.html">Open the Emergency Sheet ↗</a>
         </div>
-        <div class="gauge-readout">
-          <div class="gauge-verdict" id="gaugeVerdict">Answer the 5 questions below to see where you land.</div>
-          <div class="gauge-progress" id="gaugeProgress">0 of 5 answered</div>
-        </div>
-        <div class="gauge-questions" id="gaugeQuestions"></div>
-        <button type="button" class="gauge-reset" id="gaugeReset">Reset</button>
       </div>
-      <div class="search-box">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="careSearchInput" placeholder="Search the care guide…">
+      <div class="callout-group" id="readinessCallout" style="display:none;">
+        <div class="readiness-callout">
+          <div class="readiness-callout-text">
+            <h4>Not sure where you stand?</h4>
+            <p>Answer 8 quick questions and get a live readiness gauge — takes about a minute.</p>
+          </div>
+          <a class="readiness-callout-btn" href="cat-readiness-check.html">Take the Readiness Check ↗</a>
+        </div>
+        <div class="readiness-callout">
+          <div class="readiness-callout-text">
+            <h4>Think you know cat care?</h4>
+            <p>Test yourself against 20 questions pulled straight from this guide.</p>
+          </div>
+          <a class="readiness-callout-btn" href="cat-knowledge-quiz.html">Take the Knowledge Quiz ↗</a>
+        </div>
       </div>
       <div class="card-grid" id="careGrid"></div>
     </div>
@@ -915,10 +1092,6 @@
         <h3 id="drawerTitle">Natural Breeds</h3>
         <p id="drawerDesc">Shaped by climate and geography before anyone bred them on purpose.</p>
       </div>
-      <div class="search-box">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="searchInput" placeholder="Search every breed by name or trait…">
-      </div>
       <div class="card-grid" id="cardGrid"></div>
     </div>
   </div>
@@ -927,12 +1100,14 @@
   <footer>
     <p class="disclaimer">General reference only — not veterinary advice. Any sudden change in eating, litter habits, or coat condition is worth a call to an actual vet, not a card catalog.</p>
     41 wild species. 1 domestic species. Countless opinions about the Sphynx.
+    <p class="last-reviewed">Last reviewed: July 2026</p>
   </footer>
 
   <div class="modal-overlay" id="careModalOverlay">
     <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
       <span class="modal-index" id="modalIndex"></span>
+      <span class="severity-badge" id="modalSeverityBadge" style="display:none;"></span>
       <h4 id="modalTitle"></h4>
       <div class="modal-gallery" id="modalGallery" style="display:none;"></div>
       <div class="modal-facts" id="modalFacts" style="display:none;"></div>
@@ -1035,21 +1210,33 @@ const categories = [
       {name:"Turkish Van", tag:"The swimmer", note:"Chalk-white body with an auburn tail; famously unbothered by water.",
        origin:"Lake Van region, Turkey, ancient breed", weight:"3.5–9kg", lifespan:"12–17 yrs",
        coat:"Semi-long, water-resistant, no undercoat", energy:"High", bestFor:"Active, playful households",
+       images:[{url:"images/breed/turkish-van-1.jpg", alt:"Turkish Van", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/turkish%20van/"},
+               {url:"images/breed/turkish-van-2.jpg", alt:"Turkish Van", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/turkish%20van/"},
+               {url:"images/breed/turkish-van-3.jpg", alt:"Turkish Van", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/turkish%20van/"}],
        detail:"Named for the Lake Van region of eastern Turkey, where the breed developed naturally over a very long history, largely isolated from other cat populations. The distinctive 'Van pattern' — a chalk-white body with color confined to the head and tail — became so associated with the breed that it's sometimes used as shorthand for the pattern itself, even in other breeds.\n\nFamous as 'the swimming cat' — the semi-long coat lacks a dense undercoat and has a texture closer to cashmere, drying quickly and repelling water well enough that many individuals genuinely enjoy paddling. Athletic, intelligent, and often quite vocal, this isn't a lap cat so much as an active companion.",
        link:{label:"TICA: Turkish Van ↗", url:"https://tica.org/breed/turkish-van/", meta:"Official TICA breed profile"}},
       {name:"Turkish Angora", tag:"Original silk", note:"Ankara's native long-hair, slender build, frequently odd-eyed.",
        origin:"Ankara, Turkey, ancient breed", weight:"2.5–5kg", lifespan:"12–18 yrs",
        coat:"Long, fine, silky single coat", energy:"High", bestFor:"Attentive, engaged owners",
+       images:[{url:"images/breed/turkish-angora-1.jpg", alt:"Turkish Angora", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/turkish%20angora/"},
+               {url:"images/breed/turkish-angora-2.jpg", alt:"Turkish Angora", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/turkish%20angora/"},
+               {url:"images/breed/turkish-angora-3.jpg", alt:"Turkish Angora", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/turkish%20angora/"}],
        detail:"One of the oldest identifiable natural cat breeds, developed around Ankara and prized for centuries — often in solid white with odd or blue eyes. The population dwindled through crossbreeding until the Ankara Zoo began a dedicated conservation breeding program in the mid-20th century specifically to preserve the original white, odd-eyed line.\n\nSlender and athletic compared to the heavier-boned Van, with a fine single coat (no dense undercoat) that's lower-maintenance than it looks. Highly intelligent and demanding of attention, sometimes described as more dog-like in loyalty. As with several other white, blue-eyed cat lines, the pigment gene involved carries an elevated risk of congenital deafness in some individuals.",
        link:{label:"TICA: Turkish Angora ↗", url:"https://tica.org/breed/turkish-angora/", meta:"Official TICA breed profile"}},
       {name:"Egyptian Mau", tag:"Fastest cat", note:"Naturally spotted coat; the quickest domestic breed on record.",
        origin:"Egypt (ancient); modern line via Italy/US, 1950s", weight:"2.5–5kg", lifespan:"12–15 yrs",
        coat:"Short, fine, naturally spotted", energy:"High", bestFor:"Active owners, breed enthusiasts",
+       images:[{url:"images/breed/egyptian-mau-1.jpg", alt:"Egyptian Mau", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/egyptian%20mau/"},
+               {url:"images/breed/egyptian-mau-2.jpg", alt:"Egyptian Mau", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/egyptian%20mau/"},
+               {url:"images/breed/egyptian-mau-3.jpg", alt:"Egyptian Mau", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/egyptian%20mau/"}],
        detail:"Spotted cats appear in ancient Egyptian art, and the breed's name comes directly from the Egyptian Arabic word for cat. The modern breed traces to a small number of cats exported from Cairo to Italy and then the US in the 1950s by exiled Russian princess Nathalie Troubetzkoy — nearly the entire modern gene pool descends from that handful of founding cats.\n\nThe spotted pattern here is naturally occurring, not selectively bred in the way it is in hybrid breeds like the Bengal. Widely cited as the fastest domestic cat breed, with a distinctive 'worry wrinkle' across the forehead and loose skin flap on the belly that aids its stride. Loyal and bonded to family, but frequently shy or reserved around strangers.",
        link:{label:"TICA: Egyptian Mau ↗", url:"https://tica.org/breed/egyptian-mau/", meta:"Official TICA breed profile"}},
       {name:"American Shorthair", tag:"Working mouser", note:"Descended from ships' cats brought to the colonies for pest control.",
        origin:"United States, colonial-era working cats", weight:"3–7kg", lifespan:"15–20 yrs",
        coat:"Short, dense", energy:"Medium", bestFor:"Families, first-time owners",
+       images:[{url:"images/breed/american-shorthair-1.jpg", alt:"American Shorthair", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/american%20shorthair/"},
+               {url:"images/breed/american-shorthair-2.jpg", alt:"American Shorthair", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/american%20shorthair/"},
+               {url:"images/breed/american-shorthair-3.jpg", alt:"American Shorthair", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/american%20shorthair/"}],
        detail:"Descended from European domestic cats brought over by early settlers, valued for keeping ship holds and grain stores free of rodents — the popular claim that some arrived on the Mayflower itself is folklore rather than documented fact, though the general colonial-era origin is well established. These cats were shown under the name 'Domestic Shorthair' from around 1900, and weren't renamed and recognized as the American Shorthair until the early 1960s.\n\nBuilt for function rather than extremes: a sturdy, medium build, dense weather-resistant coat, and a famously even, low-maintenance temperament. One of the longer-lived common breeds, and a frequent 'blank slate' starting point used in the development of several other American breeds.",
        link:{label:"TICA: American Shorthair ↗", url:"https://tica.org/breed/american-shorthair/", meta:"Official TICA breed profile"}}
     ]
@@ -1236,7 +1423,7 @@ const rail = document.getElementById('drawerRail');
 const grid = document.getElementById('cardGrid');
 const title = document.getElementById('drawerTitle');
 const desc = document.getElementById('drawerDesc');
-const searchInput = document.getElementById('searchInput');
+const searchInput = document.getElementById('globalSearchInput');
 
 const catColors = {
   natural:"#3f5443", hairless:"#a15a3a", hybrid:"#8a6b1f",
@@ -1263,6 +1450,24 @@ function buildTabs(){
   });
 }
 
+/* Shared "N results found" / "No results found" line under the one search box —
+   called by both renderGrid() and careRenderGrid() with that section's own filtered count. */
+const searchResultsMsg = document.getElementById('searchResultsMsg');
+function updateSearchResultsMsg(term, count){
+  if(!term){
+    searchResultsMsg.textContent = '';
+    searchResultsMsg.classList.remove('no-results-text');
+    return;
+  }
+  if(count === 0){
+    searchResultsMsg.textContent = 'No results found.';
+    searchResultsMsg.classList.add('no-results-text');
+  } else {
+    searchResultsMsg.textContent = count + ' result' + (count === 1 ? '' : 's') + ' found.';
+    searchResultsMsg.classList.remove('no-results-text');
+  }
+}
+
 function renderGrid(){
   grid.innerHTML = "";
   const cat = categories.find(c=>c.key===activeKey);
@@ -1277,6 +1482,8 @@ function renderGrid(){
   const filtered = term
     ? pool.filter(b => (b.name+" "+b.tag+" "+b.note+" "+(b.detail||"")).toLowerCase().includes(term))
     : pool;
+
+  updateSearchResultsMsg(term, filtered.length);
 
   if(term){
     title.textContent = "Search results";
@@ -1309,11 +1516,6 @@ function renderGrid(){
     grid.appendChild(card);
   });
 }
-
-searchInput.addEventListener('input', (e)=>{
-  searchTerm = e.target.value;
-  renderGrid();
-});
 
 buildTabs();
 renderGrid();
@@ -1454,6 +1656,40 @@ function shopCard(id){
   };
 }
 
+/* ============ SEVERITY BADGE ============
+   A semantic urgency indicator — deliberately a filled pill, distinct from the
+   free-text `.stamp`, so it isn't mistaken for just another decorative label. */
+const SEVERITY_CONFIG = {
+  emergency: {emoji:'🔴', label:'Emergency'},
+  vet:       {emoji:'🟡', label:'Vet Visit'},
+  monitor:   {emoji:'🟢', label:'Monitor'}
+};
+function severityBadge(level){
+  const cfg = SEVERITY_CONFIG[level];
+  return cfg ? '<span class="severity-badge" data-level="'+level+'">'+cfg.emoji+' '+cfg.label+'</span>' : '';
+}
+
+/* ============ READING TIME ============
+   Pure function of the detail text — never hand-authored per card. */
+function readingTimeLabel(text){
+  if(!text) return '';
+  const words = text.replace(/<[^>]+>/g, ' ').trim().split(/\s+/).filter(Boolean).length;
+  if(!words) return '';
+  return '~' + Math.max(1, Math.round(words / 200)) + ' min read';
+}
+
+/* ============ INTERNAL CROSS-LINKS ============
+   Shorthand for the "Jump to X tab" link objects already used throughout careCategories. */
+const CARE_TAB_LABELS = {
+  emergencies:"Emergencies", readiness:"Before You Get a Cat", adoption:"Adoption",
+  stages:"Life Stages", diet:"Diet & Nutrition", allergies:"Allergies",
+  daily:"Daily Care", travel:"Travel & Boarding", health:"Health & Safety",
+  resources:"Products & Services"
+};
+function internalLink(tabKey, meta, labelOverride){
+  return {label: labelOverride || ('Jump to ' + CARE_TAB_LABELS[tabKey] + ' tab ↓'), url:'internal:'+tabKey, meta:meta};
+}
+
 /* Sub-groupings for the Products & Services tab — same SHOPS ids, just clustered by what they are. */
 const PRODUCT_SHOP_GROUPS = [
   {label:"Veterinary Clinics", ids:['atlasVet','advancedVetCareBedok','drPaws']},
@@ -1476,7 +1712,7 @@ const careCategories = [
     key:"emergencies", label:"Emergencies", code:"URGENT", title:"Emergencies",
     desc:"If your cat is acting off, start here — what needs a vet right now, and what to do in the meantime.",
     items:[
-      {name:"Is This an Emergency?", tag:"Start here", color:"#8A3B2B",
+      {name:"Is This an Emergency?", tag:"Start here", color:"#8A3B2B", severity:"emergency",
        note:"A quick checklist of signs that mean go now — not tomorrow, not after monitoring overnight.",
        detail:"Cats are good at hiding illness, which makes it hard to know when 'acting weird' is actually urgent. Get to a vet immediately — don't wait to see if it passes — if you notice any of the following:\n\n• Difficulty breathing, open-mouth breathing, or panting (never normal in a cat)\n• Straining to urinate with little or no output, or crying in the litter box\n• A seizure lasting more than 2–3 minutes, or more than one in a day\n• Collapse, unresponsiveness, or inability to stand or walk normally\n• Uncontrolled bleeding, or pale, white, or blue-tinged gums\n• A hard, swollen, or painful abdomen\n• Known or suspected ingestion of something toxic\n• Any trauma — hit by a car, a fall from height, or an animal attack — even if the cat seems fine afterward\n\nWhen in doubt, call a clinic and describe what you're seeing — a quick phone triage is free and can tell you whether to come in immediately.",
        linkGroups:[
@@ -1487,7 +1723,41 @@ const careCategories = [
             {label:"Jump to Health & Safety tab ↓", url:"internal:health", meta:"How to actually check gum color and hydration at home"}
          ]}
        ]},
-      {name:"Can't Urinate (Urinary Blockage)", tag:"No home fix", color:"#8A3B2B",
+      {name:"Before Leaving for the Vet", tag:"Don't forget", color:"#8A6A2E",
+       note:"A few practical things people forget to grab in a panic — worth a glance on your way out the door.",
+       detail:"☐ Bring any medication, packaging, or plant matter — especially if poisoning is suspected, since it changes what the vet can do\n☐ Bring a fresh vomit or stool sample, if that's part of what's going on\n☐ Keep the cat in a secure carrier for the trip, even if it's normally calm — stress can make a cat bolt somewhere it never would at home\n☐ Avoid offering food or water unless a vet has told you to — sedation or surgery may be needed shortly after\n☐ Call ahead if you can, so the clinic can prepare before you arrive",
+       linksMode:"references",
+       links:[internalLink('resources', "Vet clinics in Singapore, if you don't already have one to call")]},
+      {name:"My Cat Won't Eat", tag:"Answer a few questions", color:"#8A6A2E",
+       note:"Answer a few quick questions below — the right response depends on how long it's been and what else is going on.",
+       tree:{
+         start:"q1",
+         nodes:{
+           q1:{type:"question", text:"Is your cat still drinking water normally?",
+               answers:[{label:"No — barely drinking, or not at all", next:"outcome_emergency"},
+                        {label:"Yes, drinking normally", next:"q2"}]},
+           q2:{type:"question", text:"How long has it been since your cat last ate anything?",
+               answers:[{label:"Under 24 hours", next:"q3"},
+                        {label:"More than 24 hours", next:"outcome_vetToday"}]},
+           q3:{type:"question", text:"Any other symptoms — vomiting, hiding, straining in the litter box, or noticeable weight loss?",
+               answers:[{label:"Yes, something else is off too", next:"outcome_vetToday"},
+                        {label:"No, just seems picky", next:"outcome_monitor"}]},
+           outcome_emergency:{type:"outcome", severity:"emergency",
+             text:"Not eating <b>and</b> not drinking together is a same-day emergency, not a wait-and-see situation — dehydration compounds quickly on top of the appetite loss. Call a vet now."},
+           outcome_vetToday:{type:"outcome", severity:"vet",
+             text:"Unlike most animals, cats can develop a serious liver condition (hepatic lipidosis) from going without food for more than about 24 hours — this risk is real even if your cat still seems otherwise alert, and it's higher in overweight cats. This needs a same-day or next-available vet visit, not a few more days of watching and waiting."},
+           outcome_monitor:{type:"outcome", severity:"monitor",
+             text:"A single day of reduced appetite with no other symptoms is often just pickiness or a minor stomach upset. Keep an eye on it — if it stretches past 24 hours, or anything else changes, treat it as the 'more than 24 hours' answer instead and call a vet."}
+         }
+       },
+       linkGroups:[
+         {mode:"entities", heading:"24hr Emergency Vets (Singapore)", links: emergencyContactLinks},
+         {mode:"references", links:[
+            {label:"Cornell: Feeding Your Cat ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/feeding-your-cat", meta:"Cornell Feline Health Center"},
+            internalLink('health', "The gum-color and skin-tent tests, for checking hydration yourself")
+         ]}
+       ]},
+      {name:"Can't Urinate (Urinary Blockage)", tag:"No home fix", color:"#8A3B2B", severity:"emergency",
        note:"Straining in the litter box with little or no urine — especially in male cats — can be fatal within 24–48 hours.",
        detail:"A urinary blockage happens when the urethra gets obstructed, most often in male cats because their urethra is longer and narrower. It stops urine flow entirely, and toxins build up in the bloodstream fast.\n\n<b>Watch for:</b>\n\n• Frequent trips to the litter box with little or no urine\n• Crying or straining while trying to go\n• Excessive licking of the genital area\n• A hard or painful lower abdomen\n• Vomiting, or sudden lethargy and hiding\n\nThere is no safe home first-aid step for this one — no bandaid, no waiting it out. A complete blockage can cause kidney failure or death within 24–48 hours, so the only correct action is to get to a vet immediately, even in the middle of the night.",
        linkGroups:[
@@ -1496,7 +1766,7 @@ const careCategories = [
             {label:"MSPCA-Angell: Urethral Obstruction in Cats ↗", url:"https://www.mspca.org/clinical/urethral-obstruction-in-cats/", meta:"Why male cats are especially at risk"}
          ]}
        ]},
-      {name:"Difficulty Breathing", tag:"Never normal", color:"#8A3B2B",
+      {name:"Difficulty Breathing", tag:"Never normal", color:"#8A3B2B", severity:"emergency",
        note:"Open-mouth breathing or panting in a cat is always serious — there's no 'wait and see' with this one.",
        detail:"Unlike dogs, cats don't pant from heat or exercise — open-mouth breathing, rapid breathing, or visible effort to breathe is always abnormal and always urgent, whatever the cause turns out to be (asthma, fluid in the chest, heart disease, or trauma).\n\n<b>While getting to a vet:</b>\n\n• Keep the cat as calm and still as possible — stress and struggling increase oxygen demand and can make breathing worse\n• Don't restrain or hold the cat tightly against its chest\n• Transport in a well-ventilated carrier, ideally propped slightly upright rather than flat\n• Don't attempt to give food or water\n\nThis is one of the clearest 'go now' signs in this whole guide — by the time breathing looks distressed, the underlying problem is usually already serious.",
        linkGroups:[
@@ -1505,7 +1775,7 @@ const careCategories = [
             {label:"VCA: Emergencies in Cats ↗", url:"https://vcahospitals.com/know-your-pet/emergencies-in-cats", meta:"Breathing, burns, poisoning, and collapse covered together"}
          ]}
        ]},
-      {name:"Seizures", tag:"Time it, don't touch", color:"#5B3A5C",
+      {name:"Seizures", tag:"Time it, don't touch", color:"#5B3A5C", severity:"emergency",
        note:"Clear the area, don't touch the mouth, and time how long it lasts — that detail matters most to the vet.",
        detail:"During a seizure a cat may fall over, twitch or paddle, drool, and lose control of bladder or bowel. It looks alarming, but the most useful thing you can do is stay calm and observe.\n\n<b>Do:</b>\n\n• Move nearby objects out of the way so the cat doesn't injure itself\n• Time the seizure on your phone\n• Dim harsh lights and reduce noise\n• Stay nearby speaking softly once it ends\n\n<b>Don't:</b>\n\n• Put your hands near the mouth (cats don't swallow their tongues, and you risk being bitten)\n• Try to restrain the movements\n\nA single seizure under 2–3 minutes that resolves on its own still needs a follow-up vet visit, but isn't necessarily a mid-seizure emergency drive. It becomes an immediate emergency if it lasts more than 5 minutes, if there's more than one in a 24-hour period (cluster seizures), or if breathing looks labored afterward.",
        linkGroups:[
@@ -1515,7 +1785,7 @@ const careCategories = [
             {label:"VCA: Seizures & Epilepsy in Cats ↗", url:"https://vcahospitals.com/know-your-pet/seizures-and-epilepsy-in-cats", meta:"What causes recurring seizures"}
          ]}
        ]},
-      {name:"Suspected Poisoning", tag:"Don't induce vomiting", color:"#8A3B2B",
+      {name:"Suspected Poisoning", tag:"Don't induce vomiting", color:"#8A3B2B", severity:"emergency",
        note:"Call a vet immediately — and don't try to make the cat vomit unless you're specifically told to.",
        detail:"Common culprits include lilies and other toxic plants, human medication, rodent or slug bait, and household chemicals (see the Home-Proofing card in Health & Safety for a fuller list). Signs of poisoning include vomiting, diarrhea, drooling, seizures, collapse, or skin irritation from a caustic substance.\n\n<b>The single most important rule:</b> do not induce vomiting unless a vet or poison control specifically tells you to. Some substances cause more damage coming back up than staying down, especially anything corrosive.\n\n• If you know what was ingested, bring the packaging, plant, or a sample with you — it changes what the vet can do\n• If the substance touched the skin or fur, rinse the area with water for about 15 minutes before you leave\n• Call your regular vet first if they're reachable; otherwise go straight to a 24hr clinic",
        linkGroups:[
@@ -1527,7 +1797,7 @@ const careCategories = [
             {label:"Jump to Health & Safety tab ↓", url:"internal:health", meta:"The Home-Proofing card's fuller list of household hazards"}
          ]}
        ]},
-      {name:"Heatstroke", tag:"Cool first, transport second", color:"#8A6A2E",
+      {name:"Heatstroke", tag:"Cool first, transport second", color:"#8A6A2E", severity:"emergency",
        note:"Move to a cool space and start gentle cooling immediately — then get to a vet regardless of how quickly they recover.",
        detail:"Cats can't cool themselves the way humans do — they rely mainly on finding shade and grooming, which makes them vulnerable if trapped somewhere hot (a car, an unventilated room, direct sun with no shade).\n\n<b>Early signs:</b> panting, drooling, restlessness, seeking cool surfaces.\n\n<b>Severe signs:</b> collapse, vomiting, staggering, seizures, gums turning dark red, white, or bluish.\n\n<b>First aid, in order:</b>\n\n1. Move the cat to a cool, shaded, or air-conditioned space immediately\n2. Apply cool — not ice-cold — damp towels to the belly, paws, and ears; ice water can cause blood vessels to constrict and is counterproductive\n3. Offer small sips of water only if the cat is alert enough to drink on its own, never force it\n4. Stop active cooling once things seem to improve, to avoid overshooting into hypothermia\n\nEven if your cat seems to recover in the car, organ damage from heatstroke can develop hours later — treat every case as one that needs a same-day vet visit, not just home cooling.",
        linkGroups:[
@@ -1537,7 +1807,7 @@ const careCategories = [
             {label:"AVMA: First Aid Tips for Pet Owners ↗", url:"https://www.avma.org/resources-tools/pet-owners/emergencycare/first-aid-tips-pet-owners", meta:"Includes heatstroke signs and cooling steps"}
          ]}
        ]},
-      {name:"Trauma, Falls & Bleeding", tag:"Move as little as possible", color:"#8A3B2B",
+      {name:"Trauma, Falls & Bleeding", tag:"Move as little as possible", color:"#8A3B2B", severity:"emergency",
        note:"Hit by a car, a fall from height, or an animal attack — minimize movement and go, even if the cat looks okay.",
        detail:"This covers the sudden, physical emergencies: being hit by a vehicle, a fall from a window or balcony ('high-rise syndrome' — see the Adoption and Home-Proofing cards on why meshing matters), or an attack by another animal.\n\n<b>First aid:</b>\n\n• Minimize how much the cat moves — use a towel or a flat, firm surface like a board or box lid as an improvised stretcher rather than letting the cat walk\n• Keep the cat warm (this is the one exception where you don't want cooling)\n• For visible bleeding, apply gentle, direct pressure with a clean cloth — don't use a tourniquet, and don't apply human antiseptics or peroxide, which can damage tissue further\n• Don't offer food or water in case sedation or surgery is needed shortly after\n\nThe hardest part of this one: a cat can look normal minutes after real trauma and still have internal bleeding or organ damage that takes hours to become obvious. Any cat involved in a fall, a collision, or a serious animal attack needs to be examined the same day, even with no visible injury.",
        linkGroups:[
@@ -1551,7 +1821,8 @@ const careCategories = [
       {name:"Emergency Contacts (Singapore)", tag:"Save these numbers", color:"#2C5D5A",
        note:"Four 24-hour clinics spread across Singapore — worth saving in your phone before you ever need them.",
        linkGroups:[
-         {mode:"entities", heading:"24hr Emergency Vets (Singapore)", links: emergencyContactLinks}
+         {mode:"entities", heading:"24hr Emergency Vets (Singapore)", links: emergencyContactLinks},
+         {mode:"references", links:[{label:"Open the printable Emergency Sheet ↗", url:"cat-emergency-sheet.html", meta:"One page: these numbers, warning signs, and dangerous foods/plants — save or print it"}]}
        ]}
     ]
   },
@@ -1568,9 +1839,11 @@ const careCategories = [
               {label:"Jump to Adoption tab ↓", url:"internal:adoption", meta:"The same honesty a shelter screening interview already asks for"}]},
       {name:"What It Actually Costs", tag:"Budget", color:"#a15a3a",
        note:"Upfront costs are once-off; the ongoing monthly costs are the ones people underestimate.",
-       detail:"<b>Upfront, one-time:</b>\n\n• Adoption fee ($25–$200) or breeder price ($1,000–$5,000+) — see the Adoption tab for the comparison\n• Sterilisation, core vaccinations, and microchipping, if not already bundled into an adoption fee\n• An initial vet check-up\n• Carrier, litter box, scratching post, and starter food and litter\n\n<b>Ongoing, monthly or recurring:</b>\n\n• Food — see Diet & Nutrition for wet vs. dry cost and quality tradeoffs\n• Litter, replaced regularly rather than topped up indefinitely\n• Parasite prevention (flea/worm treatment), typically monthly\n• A vet fund or pet insurance — set aside something even if nothing's wrong, since emergency and senior-year care both spike fast (see Emergencies and Health & Safety)\n• Grooming, especially for long-haired breeds needing professional grooming a few times a year\n• PALS licence renewal (see the card below)\n\nThere's no single 'correct' monthly figure since it depends heavily on food quality and whether insurance is involved — but budgeting for surprise vet bills specifically, not just routine costs, is the part most first-time owners skip.",
+       detail:"<b>Upfront, one-time:</b> (tick these off as you go)\n\n☐ Adoption fee ($25–$200) or breeder price ($1,000–$5,000+) — see the Adoption tab for the comparison\n☐ Sterilisation, core vaccinations, and microchipping, if not already bundled into an adoption fee\n☐ An initial vet check-up\n☐ Carrier, litter box, scratching post, and starter food and litter\n\n<b>Ongoing, monthly or recurring:</b>\n\n• Food — see Diet & Nutrition for wet vs. dry cost and quality tradeoffs\n• Litter, replaced regularly rather than topped up indefinitely\n• Parasite prevention (flea/worm treatment), typically monthly\n• A vet fund or pet insurance — set aside something even if nothing's wrong, since emergency and senior-year care both spike fast (see Emergencies and Health & Safety)\n• Grooming, especially for long-haired breeds needing professional grooming a few times a year\n• PALS licence renewal (see the card below)\n\nAs a rough Singapore benchmark, food, litter, and routine vet care combined commonly land around <b>$100–250 a month</b> — but there's no single 'correct' figure since it depends heavily on food quality and whether insurance is involved. Budgeting for surprise vet bills specifically, not just routine costs, is the part most first-time owners skip.",
        linksMode:"references",
-       links:[{label:"Jump to Diet & Nutrition tab ↓", url:"internal:diet", meta:"Wet vs. dry cost and quality tradeoffs"},
+       links:[{label:"Pawrenthood: Cat Costs in Singapore ↗", url:"https://www.pawrenthood.sg/cost-owning-cat-singapore/", meta:"Monthly cost breakdown by category"},
+              {label:"DollarsAndSense: Cost of Keeping a Cat in SG ↗", url:"https://dollarsandsense.sg/cost-guide-on-keeping-cat-singapore/", meta:"Local cost guide, upfront and ongoing"},
+              {label:"Jump to Diet & Nutrition tab ↓", url:"internal:diet", meta:"Wet vs. dry cost and quality tradeoffs"},
               {label:"Jump to Products & Services tab ↓", url:"internal:resources", meta:"Where to actually buy food, litter, and supplies in Singapore"},
               {label:"Jump to Adoption tab ↓", url:"internal:adoption", meta:"Adoption fee vs. breeder price comparison"},
               {label:"Jump to Emergencies tab ↓", url:"internal:emergencies", meta:"What a genuine emergency actually costs to treat"},
@@ -1604,9 +1877,10 @@ const careCategories = [
        links:[{label:"Compare adoption orgs & fees ↗", url:"https://www.pawrenthood.sg/adopt-cat-singapore/", meta:"Side-by-side look at SPCA, CWS, KiSS — fees, process, and what's included"}]},
       {name:"The Adoption Process", tag:"Step by step", color:"#3d6b6d",
        note:"Browse → apply → viewing appointment → screening/home check → sign & pay → bring your cat home.",
-       detail:"Steps vary slightly by organization, but most follow the same shape:\n\n1. Browse available cats online — most orgs post photos, age, and personality notes.\n2. Submit an application covering your household situation, past pet experience, work schedule, and who the primary caregiver will be.\n3. Book a viewing appointment to meet the cat in person — some orgs require more than one visit before approving a match.\n4. Pass a screening interview and a home check, which for cats usually means proving your windows and gates are fully meshed (photo or video evidence is often accepted in lieu of an in-person visit).\n5. Sign an adoption agreement — typically including clauses like keeping the cat indoors, not declawing, and contacting the org first if you can no longer keep the cat rather than rehoming it yourself.\n6. Pay the adoption fee and bring your cat home. Some orgs follow up with a post-adoption check-in.\n\nExpect the whole process to take anywhere from a few days to a few weeks — faster for older or special-needs cats that are harder to place, slower for popular kittens with several interested applicants.",
+       detail:"Steps vary slightly by organization, but most follow the same shape:\n\n1. Browse available cats online — most orgs post photos, age, and personality notes.\n2. Submit an application covering your household situation, past pet experience, work schedule, and who the primary caregiver will be.\n3. Book a viewing appointment to meet the cat in person — some orgs require more than one visit before approving a match.\n4. Pass a screening interview and a home check, which for cats usually means proving your windows and gates are fully meshed (photo or video evidence is often accepted in lieu of an in-person visit).\n5. Sign an adoption agreement — typically including clauses like keeping the cat indoors, not declawing, and contacting the org first if you can no longer keep the cat rather than rehoming it yourself.\n6. Pay the adoption fee and bring your cat home. Some orgs follow up with a post-adoption check-in.\n\n<b>Why 'no declawing' is a standard clause:</b> declawing (onychectomy) amputates the last bone of each toe, not just the claw itself. The AVMA's current policy strongly discourages the procedure whenever a cat's scratching is a behavioral rather than medical issue, citing it as an acutely painful surgery that can lead to chronic pain, complications, and maladaptive behavior — which is why most shelters and rescues write it into the adoption agreement rather than leaving it optional.\n\nExpect the whole process to take anywhere from a few days to a few weeks — faster for older or special-needs cats that are harder to place, slower for popular kittens with several interested applicants.",
        linksMode:"references",
-       links:[{label:"Compare adoption orgs & fees ↗", url:"https://www.pawrenthood.sg/adopt-cat-singapore/", meta:"Walks through SPCA's process step by step as a worked example"},
+       links:[{label:"AVMA: Declawing of Domestic Cats ↗", url:"https://www.avma.org/resources-tools/avma-policies/declawing-domestic-cats", meta:"Current official policy and welfare rationale"},
+              {label:"Compare adoption orgs & fees ↗", url:"https://www.pawrenthood.sg/adopt-cat-singapore/", meta:"Walks through SPCA's process step by step as a worked example"},
               {label:"SPCA: Rehoming & Screening Questions ↗", url:"https://spca.org.sg/services/rehoming/", meta:"The actual questions applicants are asked"}]},
       {name:"Know Before You Adopt (Singapore)", tag:"Legal requirement", color:"#a15a3a",
        note:"Cat licensing via PALS is now mandatory, and full window meshing is required before handover.",
@@ -1621,7 +1895,12 @@ const careCategories = [
        links:[{label:"SPCA Singapore ↗", url:"https://spca.org.sg/services/adoption/", meta:"50 Sungei Tengah Rd · +65 6287 5355 · $80–$200 fee incl. sterilisation, vaccination & microchip · by appointment"},
               {label:"Cat Welfare Society (CWS) ↗", url:"https://www.catwelfare.org/adoptions/", meta:"Foster-based adoption board, not a shelter you visit — cats live in homes, not cages"},
               {label:"Animal Lovers League (ALL) ↗", url:"https://animalloversleague.com/", meta:"59 Sungei Tengah Rd, Block Q #01-29 · +65 9670 8052 · no-kill shelter, WhatsApp for cat matters"},
-              {label:"Kitten Sanctuary Singapore (KiSS) ↗", url:"https://www.kittensanctuarysg.org/adopt", meta:"576A Geylang Rd, #02-01 · +65 9126 7379 · Singapore's only neonatal kitten nursery, bookable visits"}]}
+              {label:"Kitten Sanctuary Singapore (KiSS) ↗", url:"https://www.kittensanctuarysg.org/adopt", meta:"576A Geylang Rd, #02-01 · +65 9126 7379 · Singapore's only neonatal kitten nursery, bookable visits"}]},
+      {name:"Bringing Your Cat Home", tag:"First days", color:"#3d6b6d",
+       note:"A quiet base room first, then the rest of the house gradually — not the full run of the home on day one.",
+       detail:"The instinct to let a new cat explore the whole home immediately is understandable, but a smaller, quieter start almost always goes better.\n\n<b>Set up a base room first</b> — a spare room or a quiet bathroom works — with a litter box, food and water (kept apart from each other), a bed or blanket, and somewhere to hide (a covered carrier or box left open is enough). Close the door to the rest of the house for the first few days and let the cat decompress at its own pace rather than forcing introductions.\n\n<b>Expand room by room, gradually</b> — once the cat is eating, using the litter box, and seeming relaxed in the base room, open access to one additional room at a time over the following days to weeks, rather than all at once. Supervise the first few visits to each new room.\n\n<b>Let the cat choose to approach</b> — sit quietly nearby rather than picking the cat up or chasing it out from under furniture; most cats come around faster when the human isn't the one initiating contact. Keep visitors and loud household activity to a minimum for the first week or so.\n\n<b>Once settled, spread supplies to their permanent spots</b> — food, water, and litter boxes (one per cat plus one extra) move from the base room out to where they'll actually live long-term.",
+       linksMode:"references",
+       links:[{label:"Jump to Daily Care tab ↓", url:"internal:daily", meta:"Feeding, litter box setup, and how to train a new cat to use the box"}]}
     ]
   },
   {
@@ -1630,23 +1909,36 @@ const careCategories = [
     items:[
       {name:"Kitten (0–12 months)", tag:"Growth phase", color:"#8a6b1f",
        note:"Kitten-formula food, a core vaccine series, and the main socialization window all happen in this first year.",
-       detail:"<b>Feeding:</b> a kitten-formula food 3–4 times a day — kittens need roughly twice the calories per kilogram of an adult cat to fuel rapid growth, plus more protein and fat than an adult diet provides.\n\n<b>Vaccines:</b> core vaccines (typically covering feline viral rhinotracheitis, calicivirus, and panleukopenia — often shortened to FVRCP) run as a series of shots from about 6 to 16 weeks, since a kitten's immunity from its mother fades unpredictably during that window and a single shot can't be timed to catch it reliably. Deworming usually happens alongside these visits.\n\n<b>Socialization:</b> 2 to 9 weeks is considered the critical window — positive, low-stress exposure to new people, sounds, handling, and (carefully) other vaccinated animals shapes how confident and adaptable the cat is for life.\n\nMost vets schedule spay/neuter around 5–6 months, and kittens are typically transitioned to adult food somewhere between 10 and 12 months, once growth has largely leveled off.",
+       detail:"<b>Feeding:</b> a kitten-formula food 3–4 times a day — kittens need roughly twice the calories per kilogram of an adult cat to fuel rapid growth, plus more protein and fat than an adult diet provides.\n\n<b>Vaccines:</b> core vaccines (typically covering feline viral rhinotracheitis, calicivirus, and panleukopenia — often shortened to FVRCP) run as a series of shots from about 6 to 16 weeks, since a kitten's immunity from its mother fades unpredictably during that window and a single shot can't be timed to catch it reliably. Deworming usually happens alongside these visits.\n\n<b>Socialization:</b> 2 to 9 weeks is considered the critical window — positive, low-stress exposure to new people, sounds, handling, and (carefully) other vaccinated animals shapes how confident and adaptable the cat is for life.\n\nMost vets schedule spay/neuter around 5–6 months. Beyond preventing unwanted litters, it meaningfully lowers long-term health risk — spaying eliminates the risk of uterine infections and significantly cuts the risk of mammary tumors, while neutering prevents testicular cancer — and both tend to reduce roaming, spraying, territorial marking, and fighting with other cats. Kittens are typically transitioned to adult food somewhere between 10 and 12 months, once growth has largely leveled off.",
+       timeline:[
+         {age:"2–9 WK", text:"Critical socialization window — positive, low-stress exposure to new people, sounds, and handling."},
+         {age:"6–16 WK", text:"Core vaccine series (FVRCP), given roughly every 3–4 weeks."},
+         {age:"5–6 MO", text:"Spay/neuter, typically scheduled around this age."},
+         {age:"10–12 MO", text:"Transition from kitten-formula to adult food."},
+         {text:'Continues into adulthood — <a href="#" onclick="jumpToCareTab(\'stages\'); return false;">annual vet visits ↓</a>'}
+       ],
        linksMode:"references",
        links:[{label:"Cornell: Choosing & Caring for Your New Cat ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/choosing-and-caring-your-new-cat", meta:"Cornell Feline Health Center — setup, first vet visit, testing"},
-              {label:"AAHA/AAFP Feline Life Stage Guidelines ↗", url:"https://www.aaha.org/resources/2021-aaha-aafp-feline-life-stage-guidelines/", meta:"Vaccination and wellness schedule by age, kitten section"}]},
+              {label:"AAHA/AAFP Feline Life Stage Guidelines ↗", url:"https://www.aaha.org/resources/2021-aaha-aafp-feline-life-stage-guidelines/", meta:"Vaccination and wellness schedule by age, kitten section"},
+              internalLink('daily', "How to actually litter-train a new kitten"),
+              internalLink('health', "The same 6-to-16-week vaccine schedule, from the check-up side")]},
       {name:"Adult (1–10 years)", tag:"Maintenance", color:"#3f5443",
        note:"Two measured meals a day plus an annual vet visit is the steady baseline most general advice assumes.",
        detail:"Two measured meals a day is standard for a healthy adult cat, with portion size guided less by the bag's suggested amount and more by regularly checking body condition — being able to feel (but not see prominently) the ribs, with a visible waist from above, is a more reliable gauge than weight alone since it accounts for frame size.\n\nAn annual vet visit covers vaccine boosters, a dental check, and weight tracking — dental disease in particular is easy to miss day to day but extremely common by middle age, since cats are good at hiding the discomfort of a sore mouth.\n\nThis is the life stage most general feeding, grooming, and enrichment advice is written for by default, since metabolism, activity level, and disease risk are at their most stable and predictable here compared to the kitten and senior years on either side.\n\n<b>How to actually check body condition at home</b> (the WSAVA 'look-feel-look' method, takes under a minute):\n\n1. Stand the cat up rather than checking while it's hunched in a lap, since a curled-up cat always looks heavier\n2. Feel — place a flat hand on each side of the ribcage; in an ideal-weight cat you should feel each rib easily, like running a finger over the back of your other hand, without pressing hard\n3. Look from above — there should be a visible inward waist behind the ribs\n4. Look from the side — a slight upward tuck from ribs to hind legs\n\nIf you have to press firmly to find the ribs at all, or there's no waist visible, that's worth mentioning at the next vet visit rather than adjusting food on your own.",
        linksMode:"references",
        links:[{label:"Cornell: Feeding Your Cat ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/feeding-your-cat", meta:"Cornell Feline Health Center — nutrition basics for adult cats"},
               {label:"AAHA/AAFP Feline Life Stage Guidelines ↗", url:"https://www.aaha.org/resources/2021-aaha-aafp-feline-life-stage-guidelines/", meta:"Same guidelines, young/mature adult sections"},
-              {label:"VCA: Body Condition Score in Cats ↗", url:"https://vcahospitals.com/know-your-pet/body-condition-score-in-cats", meta:"Full 1–9 visual and hands-on scoring chart"}]},
+              {label:"VCA: Body Condition Score in Cats ↗", url:"https://vcahospitals.com/know-your-pet/body-condition-score-in-cats", meta:"Full 1–9 visual and hands-on scoring chart"},
+              internalLink('daily', "The Feeding & Water card that points back to this body-condition check"),
+              internalLink('health', "What the annual vet visit itself actually covers")]},
       {name:"Senior (10+ years)", tag:"Extra watch", color:"#a15a3a",
        note:"Twice-yearly vet visits and watching for kidney, thyroid, joint, and dental issues become the priority.",
        detail:"Many vets shift to twice-yearly visits starting around age 7–10, since conditions in older cats tend to progress faster between checkups than they do in younger adults. Four conditions account for most senior cat health issues:\n\n• Kidney disease — often first noticeable as increased thirst and urination, sometimes before a cat looks unwell in any other way.\n• Hyperthyroidism — weight loss despite a normal or increased appetite is the classic tell.\n• Arthritis — look for reluctance to jump onto furniture, stiffness after resting, or skipping the litter box if it has high sides.\n• Dental disease — bad breath, drooling, or dropping food while eating.\n\nSenior diets tend to be softer and lower in phosphorus (easier on aging kidneys), and practical home changes help too: a low-sided litter box for stiff joints, extra litter boxes on the same floor so a cat doesn't have to climb stairs, and a warm, easily-accessible bed. Twice-yearly bloodwork can catch several of the above conditions before symptoms are obvious.",
        linksMode:"references",
        links:[{label:"Cornell: The Special Needs of the Senior Cat ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/special-needs-senior-cat", meta:"Cornell Feline Health Center — aging changes to watch for"},
-              {label:"Cornell: Loving Care for Older Cats ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/loving-care-older-cats", meta:"Practical day-to-day adjustments for senior cats"}]}
+              {label:"Cornell: Loving Care for Older Cats ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/loving-care-older-cats", meta:"Practical day-to-day adjustments for senior cats"},
+              internalLink('health', "The twice-yearly visit schedule, from the check-up side"),
+              internalLink('readiness', "Budgeting for a senior cat's rising vet costs")]}
     ]
   },
   {
@@ -1657,48 +1949,58 @@ const careCategories = [
        note:"Cats need meat-based protein and can't thrive on a plant-based diet the way dogs or humans can.",
        detail:"Cats are obligate carnivores — their bodies are built to run on animal-derived nutrients specifically, not just protein in general. Taurine, an amino acid found only in animal tissue, is the clearest example: cats can't synthesize enough of it themselves, and a deficiency can cause dilated cardiomyopathy (a serious, sometimes fatal, weakening of the heart muscle) and irreversible retinal degeneration leading to blindness. This is also why dog food isn't a safe substitute for cats even short-term — it isn't fortified with the taurine or arachidonic acid levels a cat's metabolism requires.\n\nCommercial cat foods are formulated to meet these needs, which is why homemade or plant-based diets require careful veterinary supervision if attempted at all — it's very easy to under-supply what looks like a perfectly balanced meal by human standards.",
        linksMode:"references",
-       links:[{label:"Cornell: Feeding Your Cat ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/feeding-your-cat", meta:"Cornell Feline Health Center — why cats need animal protein"}]},
+       links:[{label:"Cornell: Feeding Your Cat ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/feeding-your-cat", meta:"Cornell Feline Health Center — why cats need animal protein"},
+              internalLink('allergies', "What happens when one of these same proteins triggers a reaction instead")]},
       {name:"Wet vs. Dry Food", tag:"Format", color:"#6b4a7a",
        note:"Wet food adds hydration and is gentler on kidneys; dry food is convenient and helps a little with dental wear.",
        detail:"<b>Wet food</b> is typically 70–80% moisture, versus roughly 10% for dry kibble — a meaningful difference, since cats evolved from desert-dwelling ancestors and instinctively drink less water than they probably should, even when it's freely available. That makes wet food a genuine tool for supporting kidney health, especially as cats age.\n\n<b>Dry food</b> is more convenient, shelf-stable after opening, and its crunch does provide some mechanical scraping of plaque — though this effect is modest and shouldn't be relied on as a substitute for actual dental care or brushing. Once opened, canned wet food should generally be refrigerated and used within a few days.\n\nMany owners mix both: dry food available for grazing, wet food for at least one measured meal a day to boost hydration. The ratio often shifts toward more wet food as a cat ages or develops kidney or urinary issues.",
-       linksMode:"entities",
-       links:[shopChip('polypet', {label:"Polypet — Cat Food Range", meta:"Stocks Royal Canin, Orijen, Hill's Science Diet, Purina Pro Plan & more, both wet and dry",
+       linkGroups:[
+         {mode:"entities", links:[shopChip('polypet', {label:"Polypet — Cat Food Range", meta:"Stocks Royal Canin, Orijen, Hill's Science Diet, Purina Pro Plan & more, both wet and dry",
                 primaryAction:{label:"View products ↗", url:"https://polypet.com.sg/collections/cat"}}),
               shopChip('aPetMart', {label:"aPetMart — Cat Supplies", meta:"Online-first, 180+ brands, islandwide delivery"})]},
+         {mode:"references", links:[internalLink('stages', "Why the wet/dry ratio often shifts as a cat ages into kidney or urinary issues")]}
+       ]},
       {name:"Foods to Avoid", tag:"Toxic list", color:"#a15a3a",
        note:"<strong>Onion</strong>, <strong>garlic</strong>, <strong>chocolate</strong>, <strong>grapes/raisins</strong>, and <strong>xylitol</strong> are all toxic to cats, even in small amounts.",
-       detail:"• <strong>Onion & garlic</strong> (cooked, raw, or powdered) — contain compounds that damage red blood cells, leading to hemolytic anemia. The damage is cumulative, so repeated small exposures can be just as harmful as one large one.\n• <strong>Chocolate</strong> — contains theobromine, a stimulant cats metabolize far more slowly than humans; darker chocolate has more of it and is more dangerous.\n• <strong>Grapes & raisins</strong> — linked to sudden kidney failure in some pets even in small quantities, and the exact toxic mechanism still isn't fully understood, which is part of why vets treat any amount as a concern.\n• <strong>Xylitol</strong> (a sugar substitute in sugar-free gum and baked goods) — well documented as dangerous in dogs and treated with the same caution in cats.\n• <strong>Raw bread dough</strong> — can continue to rise in a warm stomach and expand dangerously, alongside producing alcohol as it ferments.\n• <strong>Lilies</strong> — severely toxic to cats specifically; even pollen brushed onto fur and later licked off during grooming can cause kidney failure.\n\nIf you suspect your cat has eaten any of these, contact a vet or emergency clinic immediately rather than waiting for symptoms.",
+       detail:"• <strong>Onion & garlic</strong> (cooked, raw, or powdered) — contain compounds that damage red blood cells, leading to hemolytic anemia. The damage is cumulative, so repeated small exposures can be just as harmful as one large one.\n• <strong>Chocolate</strong> — contains theobromine, a stimulant cats metabolize far more slowly than humans; darker chocolate has more of it and is more dangerous.\n• <strong>Grapes & raisins</strong> — linked to sudden kidney failure in some pets even in small quantities, and the exact toxic mechanism still isn't fully understood, which is part of why vets treat any amount as a concern.\n• <strong>Xylitol</strong> (a sugar substitute in sugar-free gum and baked goods) — well documented as dangerous in dogs and treated with the same caution in cats.\n• <strong>Raw bread dough</strong> — can continue to rise in a warm stomach and expand dangerously, alongside producing alcohol as it ferments.\n• <strong>Milk and dairy</strong> — a persistent myth, not a treat: most adult cats lose the enzyme needed to digest lactose after weaning, so milk usually causes gas, diarrhea, or vomiting within 8–12 hours rather than anything more severe.\n• <strong>Lilies</strong> — severely toxic to cats specifically; even pollen brushed onto fur and later licked off during grooming can cause kidney failure.\n\nIf you suspect your cat has eaten any of these, contact a vet or emergency clinic immediately rather than waiting for symptoms.",
        linksMode:"references",
        links:[{label:"ASPCA: People Foods to Avoid Feeding Your Pets ↗", url:"https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets", meta:"Full list with the reason each food is dangerous"},
-              {label:"ASPCA Animal Poison Control ↗", url:"https://www.aspca.org/pet-care/animal-poison-control", meta:"US-based hotline — in Singapore, call your vet or an emergency clinic first"}]},
+              {label:"ASPCA Animal Poison Control ↗", url:"https://www.aspca.org/pet-care/animal-poison-control", meta:"US-based hotline — in Singapore, call your vet or an emergency clinic first"},
+              {label:"WebMD Pets: Cats and Dairy ↗", url:"https://www.webmd.com/pets/cats/features/cats-and-dairy-get-the-facts", meta:"Why most adult cats can't digest lactose"},
+              internalLink('emergencies', "What to do if your cat has already eaten one of these")]},
       {name:"Where to Buy", tag:"Local options", color:"#3f5443",
        note:"Specialty pet stores stock a wider range of vet-recommended formulas than supermarkets, and deliver islandwide.",
        detail:"Specialty pet stores generally stock a wider range of vet-recommended formulas than supermarkets do, and staff can usually advise on which brands suit specific issues (sensitive stomachs, weight management, kidney support) better than general signage can.\n\nIf you're switching a cat's food for any reason, doing it gradually over 7–10 days — mixing increasing proportions of the new food into the old — helps avoid the vomiting or loose stool a sudden switch can trigger. Specialty stores can usually advise on a transition schedule specific to the brands they carry.\n\nBelow are two Singapore options that deliver islandwide — more choices, including physical stores you can browse in person, are in the Products & Services tab.",
-       linksMode:"entities",
-       links:[shopChip('polypet', {label:"Polypet", meta:"Clementi storefront + online, trading since 2004"}),
-              shopChip('aPetMart', {label:"aPetMart", meta:"Online-first, Paya Lebar warehouse, islandwide delivery"})]}
+       linkGroups:[
+         {mode:"entities", links:[shopChip('polypet', {label:"Polypet", meta:"Clementi storefront + online, trading since 2004"}),
+              shopChip('aPetMart', {label:"aPetMart", meta:"Online-first, Paya Lebar warehouse, islandwide delivery"})]},
+         {mode:"references", links:[internalLink('resources', "More choices, including physical stores you can browse in person")]}
+       ]}
     ]
   },
   {
     key:"allergies", label:"Allergies", code:"ALLERGY", title:"Allergies & Sensitivities",
     desc:"The three usual suspects behind unexplained itching, hair loss, or a sudden change in coat.",
     items:[
-      {name:"Flea Allergy Dermatitis", tag:"Most common", color:"#a15a3a",
+      {name:"Flea Allergy Dermatitis", tag:"Most common", color:"#a15a3a", severity:"vet",
        note:"The single most common cat allergy — one bite can trigger intense itching around the tail base and neck.",
        detail:"This is the single most common allergy in cats. A cat sensitive to flea saliva can react intensely to just one bite, rather than needing an ongoing infestation to react — so owners are often surprised their indoor cat has it at all, not realizing a flea can hitch a ride in on another pet, on clothing, or through a window screen.\n\nThe classic pattern is intense itching and hair loss concentrated around the tail base, lower back, and neck, sometimes with small crusty bumps (miliary dermatitis) rather than visible fleas themselves, since affected cats often groom the evidence away. In tropical, humid climates like Singapore, fleas breed year-round rather than seasonally, so vets generally recommend consistent monthly prevention rather than only treating during a visible outbreak.\n\n<b>How to actually check, rather than guess:</b>\n\n1. Run a fine-toothed flea comb through the fur close to the skin, focusing on the tail base, armpits, and groin — the spots fleas favor\n2. After each pass, tap whatever comes off onto a damp white paper towel\n3. Live fleas will visibly move; small black specks are 'flea dirt' (digested blood) — confirm by adding a drop of water, since genuine flea dirt dissolves into a reddish-brown smear within about a minute, while ordinary debris won't\n\nFinding nothing doesn't fully rule it out (a cat can groom away most of the evidence), but finding either fleas or that red smear confirms it, and it's worth doing this check before starting any treatment rather than assuming.",
        linksMode:"references",
        links:[{label:"Cornell: Flea Allergy ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/flea-allergy", meta:"Cornell Feline Health Center"},
-              {label:"PetMD: What Do Fleas Look Like on Cats? ↗", url:"https://www.petmd.com/cat/general-health/what-do-fleas-look-cats", meta:"The flea comb + wet paper towel technique"}]},
-      {name:"Food Allergies", tag:"Protein source", color:"#8a6b1f",
+              {label:"PetMD: What Do Fleas Look Like on Cats? ↗", url:"https://www.petmd.com/cat/general-health/what-do-fleas-look-cats", meta:"The flea comb + wet paper towel technique"},
+              internalLink('daily', "The Grooming card's monthly scan already checks for this during routine brushing")]},
+      {name:"Food Allergies", tag:"Protein source", color:"#8a6b1f", severity:"vet",
        note:"Usually a reaction to a specific protein — beef, dairy, fish, and chicken are the most common culprits.",
        detail:"Food allergies are usually a reaction to a specific protein rather than a brand or ingredient category — beef, dairy, fish, and chicken are the most frequently reported culprits, somewhat counterintuitively since these are also the most common proteins in cat food generally (more exposure means more opportunity to react).\n\nSigns tend to be itching, vomiting, or soft stool rather than sneezing or respiratory symptoms, which makes food allergies easy to mistake for a sensitive stomach or a different skin condition. A true food allergy can also develop at any age, even to a protein a cat has eaten without issue for years — it isn't only a kitten or new-food problem.\n\n<b>Diagnosis</b> requires a strict elimination diet, typically a novel or hydrolyzed protein the cat has never eaten before, fed exclusively (no treats, no flavored medication) for 8–12 weeks before reintroducing the suspected trigger to confirm it.",
        linksMode:"references",
-       links:[{label:"Cornell: Food Allergies ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/food-allergies", meta:"Cornell Feline Health Center — signs and elimination-diet process"}]},
-      {name:"Environmental Allergies", tag:"Atopic", color:"#3d6b6d",
+       links:[{label:"Cornell: Food Allergies ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/food-allergies", meta:"Cornell Feline Health Center — signs and elimination-diet process"},
+              internalLink('diet', "Why cats need these same proteins in the first place")]},
+      {name:"Environmental Allergies", tag:"Atopic", color:"#3d6b6d", severity:"vet",
        note:"Pollen, dust mites, and mold can trigger atopic dermatitis — usually shown through skin, not sneezing.",
        detail:"Pollen, dust mites, and mold can all trigger atopic dermatitis in cats. Unlike in humans, it rarely shows up as sneezing or watery eyes — look instead for face-rubbing, recurring ear infections, or excessive grooming concentrated in one spot, which can eventually create a bald patch even without fleas or a food trigger present.\n\nPollen-driven reactions tend to be seasonal, while dust mite or mold sensitivity tends to be fairly constant year-round, which is one way vets start narrowing down the cause. Treatment options are more limited in cats than in dogs or humans — antihistamines have inconsistent efficacy, so vets often move toward allergy testing, prescription diets or supplements, or short courses of steroids to control bad flare-ups, and sometimes immunotherapy for a confirmed, specific trigger.",
        linksMode:"references",
-       links:[{label:"Cornell: The Challenge of Skin Disorders ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/challenge-skin-disorders", meta:"Cornell Feline Health Center — how the three allergy types are told apart"}]}
+       links:[{label:"Cornell: The Challenge of Skin Disorders ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/challenge-skin-disorders", meta:"Cornell Feline Health Center — how the three allergy types are told apart"},
+              internalLink('daily', "The monthly ear-check that's part of routine grooming")]}
     ]
   },
   {
@@ -1713,22 +2015,22 @@ const careCategories = [
               {label:"WSAVA: Calorie Needs for Healthy Adult Cats ↗", url:"https://wsava.org/wp-content/uploads/2020/07/Calorie-Needs-for-Healthy-Adult-Cats-updated-July-2020.pdf", meta:"Official kcal/day chart by body weight"},
               {label:"Cornell: Hydration ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/hydration", meta:"Cornell Feline Health Center — source for the water-per-kg guideline"},
               {label:"Jump to Life Stages tab ↓", url:"internal:stages", meta:"The Adult card's body-condition check that tells you whether to adjust portions"}]},
-      {name:"Grooming", tag:"Weekly+", color:"#6b4a7a",
+      {name:"Grooming", tag:"Weekly+", color:"#6b4a7a", severity:"monitor",
        note:"Short-haired cats mostly self-groom; long-haired breeds need brushing every day or two to prevent mats.",
        detail:"Short-haired cats mostly self-groom, but a weekly brush still cuts down on shedding and the hairballs that come with a cat swallowing loose fur. Long-haired breeds need brushing every day or two — mats aren't just cosmetic, they pull painfully at the skin and, left long enough, can restrict movement or trap moisture against the skin.\n\nDouble-coated breeds (Maine Coon, Siberian, Norwegian Forest Cat) benefit from an undercoat rake during seasonal shedding, and most cats need nail trims roughly every 2–3 weeks.\n\n<b>Turn one grooming session a month into a full nose-to-tail scan</b> — it takes a few extra minutes and catches most early problems before they become vet visits:\n\n• Ears — look inside for redness, dark buildup, or odor\n• Eyes — should be clear, no discharge or squinting\n• Gums and teeth — lift the lip; pink and moist gums, no redness at the gumline or visible tartar\n• Whole body — run flat hands over it feeling for new lumps, bumps, or tender spots the cat pulls away from\n• Tail base and groin — check for fleas or flea dirt (see the Flea Allergy card in Allergies for the exact test)\n• Nails — check for overgrowth or splitting\n• Ribs and waist — the body-condition check described in the Adult card under Life Stages\n\nNothing here needs special tools — just doing it on the same schedule every month is what makes it useful, since you're comparing against last month's cat, not a stranger's.",
        linksMode:"references",
        links:[{label:"International Cat Care: Grooming Your Cat ↗", url:"https://icatcare.org/articles/grooming-your-cat", meta:"Technique by coat type, plus flea-checking while you brush"},
               {label:"Jump to Allergies tab ↓", url:"internal:allergies", meta:"The Flea Allergy card's fleas-vs-flea-dirt test"},
               {label:"Jump to Life Stages tab ↓", url:"internal:stages", meta:"The Adult card's body-condition check"}]},
-      {name:"Litter Box", tag:"Daily scoop", color:"#3f5443",
+      {name:"Litter Box", tag:"Daily scoop", color:"#3f5443", severity:"monitor",
        note:"Scoop daily, and keep one box per cat plus one extra — box avoidance is often an early warning sign.",
-       detail:"<b>Setup:</b> scoop at least once a day, and keep one box per cat plus one extra (the standard rule of thumb is n+1), placed in quiet, easy-to-reach spots away from loud appliances that might startle a cat mid-use. A box should be roughly 1.5 times the cat's body length — many commercial boxes are actually too small for adult cats, which can itself cause avoidance.\n\n<b>Litter type:</b> most cats prefer unscented litter; fragranced litter is more for the owner's benefit than the cat's, and a strong scent can actually discourage use. Clumping litter is easier to spot-clean daily, while non-clumping needs a full change more frequently to stay hygienic. Box avoidance — going near the box but not in it, or avoiding it entirely — is one of the most common early signs that something, behavioral or medical (like a urinary tract issue), is wrong, and is worth investigating rather than just correcting as a habit problem.\n\n<b>Monitoring:</b> the daily scoop is also your best early-warning system, since you're already looking in the box anyway.\n\n• Frequency — more trips than usual, or noticeably fewer\n• Clump size — shrinking output over a few days is worth watching\n• Color — pink-tinged or reddish is never normal\n• Sound — straining or crying while in the box\n\nThis matters most for male cats — frequent trips producing little or no urine, or crying while trying to go, is the single most time-critical sign in this whole guide (see the Can't Urinate card in Emergencies) — it's not something to monitor overnight and see how it goes.",
+       detail:"<b>Setup:</b> scoop at least once a day, and keep one box per cat plus one extra (the standard rule of thumb is n+1), placed in quiet, easy-to-reach spots away from loud appliances that might startle a cat mid-use. A box should be roughly 1.5 times the cat's body length — many commercial boxes are actually too small for adult cats, which can itself cause avoidance.\n\n<b>Training a new cat or kitten:</b> most cats take to the box instinctively, but placing the cat inside gently after meals and naps, and lightly scratching the litter with a finger to demonstrate, helps a kitten or a nervous new arrival make the connection faster. Praise or a small treat right after use reinforces it — never scold or physically punish a miss, which tends to create anxiety around the box rather than fixing anything. Learning pace varies a lot by individual cat, so give it more than a day or two before assuming something's wrong.\n\n<b>Litter type:</b> most cats prefer unscented litter; fragranced litter is more for the owner's benefit than the cat's, and a strong scent can actually discourage use. Clumping litter is easier to spot-clean daily, while non-clumping needs a full change more frequently to stay hygienic. Box avoidance — going near the box but not in it, or avoiding it entirely — is one of the most common early signs that something, behavioral or medical (like a urinary tract issue), is wrong, and is worth investigating rather than just correcting as a habit problem.\n\n<b>Monitoring:</b> the daily scoop is also your best early-warning system, since you're already looking in the box anyway.\n\n• Frequency — more trips than usual, or noticeably fewer\n• Clump size — shrinking output over a few days is worth watching\n• Color — pink-tinged or reddish is never normal\n• Sound — straining or crying while in the box\n\nThis matters most for male cats — frequent trips producing little or no urine, or crying while trying to go, is the single most time-critical sign in this whole guide (see the Can't Urinate card in Emergencies) — it's not something to monitor overnight and see how it goes.",
        linksMode:"references",
        links:[{label:"Ohio State: Litter Boxes ↗", url:"https://indoorpet.osu.edu/cats/basic-indoor-cat-needs/litter-boxes", meta:"Indoor Pet Initiative — size, placement, and covered vs. uncovered"},
               {label:"Jump to Emergencies tab ↓", url:"internal:emergencies", meta:"Can't Urinate (Urinary Blockage) — signs and why there's no home fix"}]},
       {name:"Enrichment & Play", tag:"Daily", color:"#8a6b1f",
        note:"Short daily play sessions plus vertical space help prevent the boredom that shows up as stress or destruction.",
-       detail:"Cats stay natural hunters even indoors, and short daily play sessions with a wand toy — mimicking the stalk-chase-catch sequence of real hunting — satisfy that instinct in a way that batting at a stationary toy doesn't. Ending a play session by letting the cat 'catch' the toy, followed by a small snack, mimics the natural hunt-eat-groom-sleep cycle and tends to settle a cat down afterward rather than leaving it wound up.\n\nVertical space matters as much as floor space — cat trees, wall shelves, or a window perch give a cat territory to survey from, which is a real behavioral need, not just a nice-to-have. Puzzle feeders slow down cats that eat too fast and add mental stimulation to a meal that would otherwise take thirty seconds. Rotating toys every week or two (rather than leaving everything out permanently) helps prevent a cat from simply habituating to all of it. This matters most in single-cat, fully indoor households, where the cat has no other outlet for these instincts at all.\n\nOne related quirk worth knowing: cats can genuinely learn that a limp or a dramatic meow gets extra attention, and repeat it — not out of deception, but ordinary reinforcement learning (an injury once got a big sympathetic reaction, so the behavior resurfaces later when the cat wants that same attention). This is real, but it's also narrow: it applies to mild, inconsistent limping or attention-seeking vocalizing, never to vomiting, bleeding, lethargy, or difficulty breathing. The safe default is the same either way — rule out a genuine injury with a vet first, and only chalk it up to attention-seeking once that's been ruled out.\n\n<b>A few things you can check yourself before that vet visit</b>, none of which require touching anything painful:\n\n• Watch unobserved — record on your phone from another room; a limp disappearing the moment the cat is distracted, playing, or doesn't know you're watching is a tell, since genuine injuries don't clock an audience\n• Check consistency — always the same leg or spot points toward something real; switching between episodes points the other way\n• Look for visible signs — swelling, heat, a wound, a thorn, or matted fur hiding something underneath\n• Gentle touch test — very gently pressing around the area usually gets a clear reaction from a real injury (pulling away, hissing), while no reaction at all favors learned behavior\n• Check the rest of the picture — appetite, energy, and litter box habits staying completely normal makes attention-seeking more plausible; any of them slipping points back toward a real problem\n\nNone of this replaces a vet exam; it just helps you describe what you're seeing more precisely if you call one.",
+       detail:"Cats stay natural hunters even indoors, and short daily play sessions with a wand toy — mimicking the stalk-chase-catch sequence of real hunting — satisfy that instinct in a way that batting at a stationary toy doesn't. Ending a play session by letting the cat 'catch' the toy, followed by a small snack, mimics the natural hunt-eat-groom-sleep cycle and tends to settle a cat down afterward rather than leaving it wound up.\n\nVertical space matters as much as floor space — cat trees, wall shelves, or a window perch give a cat territory to survey from, which is a real behavioral need, not just a nice-to-have. Puzzle feeders slow down cats that eat too fast and add mental stimulation to a meal that would otherwise take thirty seconds. Rotating toys every week or two (rather than leaving everything out permanently) helps prevent a cat from simply habituating to all of it. This matters most in single-cat, fully indoor households, where the cat has no other outlet for these instincts at all.\n\n<b>Scratching is instinctive, not a behavior problem</b> — it sharpens claws, stretches muscles, and marks territory with scent glands in the paws, so the goal is redirecting it, not stopping it. Put a sturdy post (cardboard, sisal rope, or wood — cats vary in what they prefer) near, not instead of, whatever furniture is already getting scratched, and add a second one in another favorite spot; vertical posts near a doorway or window tend to get used the most. Rubbing a little catnip into a new post, or rewarding use with praise or a treat, speeds up the switch. Covering the furniture temporarily during the transition helps more than it might seem, since a surface that's already shredded keeps getting chosen out of habit.\n\nOne related quirk worth knowing: cats can genuinely learn that a limp or a dramatic meow gets extra attention, and repeat it — not out of deception, but ordinary reinforcement learning (an injury once got a big sympathetic reaction, so the behavior resurfaces later when the cat wants that same attention). This is real, but it's also narrow: it applies to mild, inconsistent limping or attention-seeking vocalizing, never to vomiting, bleeding, lethargy, or difficulty breathing. The safe default is the same either way — rule out a genuine injury with a vet first, and only chalk it up to attention-seeking once that's been ruled out.\n\n<b>A few things you can check yourself before that vet visit</b>, none of which require touching anything painful:\n\n• Watch unobserved — record on your phone from another room; a limp disappearing the moment the cat is distracted, playing, or doesn't know you're watching is a tell, since genuine injuries don't clock an audience\n• Check consistency — always the same leg or spot points toward something real; switching between episodes points the other way\n• Look for visible signs — swelling, heat, a wound, a thorn, or matted fur hiding something underneath\n• Gentle touch test — very gently pressing around the area usually gets a clear reaction from a real injury (pulling away, hissing), while no reaction at all favors learned behavior\n• Check the rest of the picture — appetite, energy, and litter box habits staying completely normal makes attention-seeking more plausible; any of them slipping points back toward a real problem\n\nNone of this replaces a vet exam; it just helps you describe what you're seeing more precisely if you call one.",
        linksMode:"references",
        links:[{label:"Ohio State: Indoor Pet Initiative — For Cat Owners ↗", url:"https://indoorpet.osu.edu/cats", meta:"Toys, perches, scratching, and territory needs for indoor cats"},
               {label:"Catster: Will a Cat Fake a Limp for Sympathy? ↗", url:"https://www.catster.com/cat-behavior/will-cat-fake-a-limp-for-sympathy/", meta:"Vet-reviewed — what's learned behavior vs. a real injury"}]}
@@ -1744,7 +2046,7 @@ const careCategories = [
        detail:"Cats are territorial in a way dogs typically aren't, and a lot of feline stress behavior — hiding, not eating, over-grooming — shows up specifically when a cat is moved somewhere unfamiliar. That's the main reason most cat behaviourists lean toward in-home sitting as the lower-stress default, when it's available.\n\n<b>In-home sitting tends to suit:</b>\n\n• Trips of roughly one to two weeks or shorter\n• Cats that already stress visibly at vet visits or in new places\n• Multi-cat households, where the existing feeding-spot and litter-box routine matters\n\n<b>Boarding tends to suit:</b>\n\n• Longer trips, or last-minute travel with no sitter available\n• Cats needing closer supervision than a once- or twice-daily visit gives — medication schedules, senior cats, recovery from a procedure\n• Situations where nobody trusted has access to your home while you're away\n\nNeither option is risk-free, which is why the next two cards matter regardless of which you pick — what to actually check in a cattery, and what to hand a sitter or relative before you leave."},
       {name:"What to Look For in a Cattery", tag:"Boarding checklist", color:"#a15a3a", group:"Advice",
        note:"Cats-only housing, vaccination requirements, and how they actually update you matter more than the price per night.",
-       detail:"• <b>Cats-only housing</b> — a cattery that keeps cats fully separate from dogs (sight, sound, and smell) reduces a major source of stress; ask specifically, don't assume from the name\n• <b>Vaccination requirements</b> — a cattery that insists on up-to-date core vaccinations for every boarder is also protecting your cat from what other boarders might carry\n• <b>Space and enrichment</b> — a private suite/cage with room to move, a litter box separate from the sleeping area, and some vertical space or a window view\n• <b>Vet arrangement</b> — ask exactly what happens in a medical emergency: is there a vet on call, which clinic, and who approves treatment and pays for it\n• <b>Updates</b> — live camera access, daily photos/video, or neither — decide what actually reassures you rather than assuming more is always better\n• <b>AVS licensing</b> — Singapore boarding facilities should hold a valid AVS licence; it's reasonable to ask for the licence number\n\nBook well ahead of school holidays and festive periods specifically — reputable catteries fill up weeks in advance for those windows."},
+       detail:"Ask about each of these before booking:\n\n☐ <b>Cats-only housing</b> — a cattery that keeps cats fully separate from dogs (sight, sound, and smell) reduces a major source of stress; ask specifically, don't assume from the name\n☐ <b>Vaccination requirements</b> — a cattery that insists on up-to-date core vaccinations for every boarder is also protecting your cat from what other boarders might carry\n☐ <b>Space and enrichment</b> — a private suite/cage with room to move, a litter box separate from the sleeping area, and some vertical space or a window view\n☐ <b>Vet arrangement</b> — ask exactly what happens in a medical emergency: is there a vet on call, which clinic, and who approves treatment and pays for it\n☐ <b>Updates</b> — live camera access, daily photos/video, or neither — decide what actually reassures you rather than assuming more is always better\n☐ <b>AVS licensing</b> — Singapore boarding facilities should hold a valid AVS licence; it's reasonable to ask for the licence number\n\nBook well ahead of school holidays and festive periods specifically — reputable catteries fill up weeks in advance for those windows."},
       {name:"Briefing a Friend, Relative, or Sitter", tag:"Before you leave", color:"#8a6b1f", group:"Advice",
        note:"Written instructions beat a rushed verbal handover — cover feeding, litter, and who to call if something's wrong.",
        detail:"A friend or relative watching your cat is often cheaper and more familiar than boarding, but it only works as well as the instructions you leave. Worth writing down, not just saying out loud on your way out the door:\n\n• Exact feeding schedule and amounts — 'a bit of food' means something different to everyone\n• Litter box location(s) and how often to scoop (see Daily Care)\n• Any medication, with dose and timing, written out plainly\n• Your regular vet's contact, plus a 24-hour emergency vet as backup (see Emergencies)\n• What's actually urgent versus what can wait for you to be reachable — a sitter who doesn't know your cat can't tell a hairball from something serious on their own\n• Where the carrier is, in case a vet trip becomes necessary\n\nIt's also worth doing a short trial — a weekend rather than two weeks the first time — so you both find out what you missed while the stakes are lower.",
@@ -1753,7 +2055,7 @@ const careCategories = [
               {label:"Jump to Emergencies tab ↓", url:"internal:emergencies", meta:"What actually counts as urgent, and the 24hr vet contacts to leave behind"}]},
       {name:"Pre-Trip Checklist", tag:"Self-check", color:"#5B3A5C", group:"Advice",
        note:"A few things worth confirming before you book anything.",
-       detail:"• Book a cattery or sitter as early as you can — good ones fill up weeks ahead of school holidays and festive periods\n• Confirm your cat's PALS licence and microchip details are current, in case it goes missing while you're away (see the Adoption tab)\n• Pack something familiar for boarding — their own blanket or a toy with a familiar scent can ease the transition\n• Leave a recent photo with whoever's caring for your cat, useful if it ever needs to be described to a vet or, worst case, reported missing\n• Confirm payment terms and cancellation policy before booking — some sitters and catteries require a deposit or full payment upfront\n\nNone of this replaces knowing your own cat — a cat that's never tolerated change well is a stronger case for in-home sitting specifically, whatever a listing's star rating says.",
+       detail:"☐ Book a cattery or sitter as early as you can — good ones fill up weeks ahead of school holidays and festive periods\n☐ Confirm your cat's PALS licence and microchip details are current, in case it goes missing while you're away (see the Adoption tab)\n☐ Pack something familiar for boarding — their own blanket or a toy with a familiar scent can ease the transition\n☐ Leave a recent photo with whoever's caring for your cat, useful if it ever needs to be described to a vet or, worst case, reported missing\n☐ Confirm payment terms and cancellation policy before booking — some sitters and catteries require a deposit or full payment upfront\n\nNone of this replaces knowing your own cat — a cat that's never tolerated change well is a stronger case for in-home sitting specifically, whatever a listing's star rating says.",
        linksMode:"references",
        links:[{label:"Jump to Adoption tab ↓", url:"internal:adoption", meta:"PALS licensing and microchip registration"}]},
       ...TRAVEL_SHOP_GROUPS.flatMap(g => g.ids.map(id => ({...shopCard(id), group:g.label})))
@@ -1765,14 +2067,14 @@ const careCategories = [
     items:[
       {name:"Vet Visits", tag:"Annual→biannual", color:"#3d6b6d",
        note:"Healthy adults need a yearly check-up; kittens need a tighter schedule, seniors move to every six months.",
-       detail:"A standard wellness exam covers more than it might seem from the outside: weight and body condition, temperature, listening to heart and lungs, palpating the abdomen for anything unusual, a dental check, and a conversation about any behavior changes you've noticed — often the most useful part, since owners catch subtle shifts a single exam can't.\n\nVaccination boosters follow a core vs. non-core split — core vaccines (like FVRCP) are recommended for essentially all cats, while non-core ones (like feline leukemia) depend on lifestyle, such as any outdoor access or contact with other cats. Parasite prevention is typically a monthly topical or oral treatment covering fleas, and often heartworm or intestinal parasites depending on the product.\n\nKittens need a tighter early schedule tied to their vaccine series (roughly every 3–4 weeks from 6 to 16 weeks), healthy adults generally need a check-up once a year, and seniors typically move to every six months once age-related conditions become more likely to progress quickly between visits.\n\n<b>Gum color</b> is one quick check you can do yourself between visits, borrowed from what a vet does in an exam: gently lift the upper lip; healthy gum tissue is a consistent bubblegum pink and moist to the touch. Press a fingertip against it for a second, then release — the color should return within 1–2 seconds (capillary refill time). Pale, white, or bluish gums, or a refill that takes noticeably longer, is a reason to call a vet, not just note and monitor.\n\n<b>The skin-tent test</b> is the other: gently lift a fold of skin between the shoulder blades and let go; in a well-hydrated cat it snaps back almost immediately. Skin that sinks back slowly, or stays 'tented,' suggests dehydration. Neither test is perfect on its own (senior cats naturally have less skin elasticity, and gum pigment varies by cat), so use them as one more data point, not a standalone diagnosis.",
+       detail:"A standard wellness exam covers more than it might seem from the outside: weight and body condition, temperature, listening to heart and lungs, palpating the abdomen for anything unusual, a dental check, and a conversation about any behavior changes you've noticed — often the most useful part, since owners catch subtle shifts a single exam can't.\n\nVaccination boosters follow a core vs. non-core split — core vaccines (like FVRCP) are recommended for essentially all cats, while non-core ones (like feline leukemia) depend on lifestyle, such as any outdoor access or contact with other cats. Parasite prevention is typically a monthly topical or oral treatment covering fleas, and often heartworm or intestinal parasites depending on the product.\n\n<b>Deworming:</b> most cats pick up roundworms, tapeworms, or hookworms at some point — from an infected prey animal, contaminated food or water, or contact with infected soil or feces — causing vomiting, diarrhea, weight loss, or reduced appetite if the burden gets high enough (some worm species can also transmit to humans). Vets typically recommend deworming once or twice a year as routine prevention rather than waiting for symptoms, alongside the monthly parasite topical mentioned above.\n\n<b>Rabies note (Singapore):</b> Singapore is officially rabies-free, so the rabies vaccine isn't a core requirement here the way it is in many other countries. Some vets still offer it, mainly for cats that travel overseas — worth a conversation with your vet rather than assuming it's a default part of the schedule.\n\nKittens need a tighter early schedule tied to their vaccine series (roughly every 3–4 weeks from 6 to 16 weeks), healthy adults generally need a check-up once a year, and seniors typically move to every six months once age-related conditions become more likely to progress quickly between visits.\n\n<b>Gum color</b> is one quick check you can do yourself between visits, borrowed from what a vet does in an exam: gently lift the upper lip; healthy gum tissue is a consistent bubblegum pink and moist to the touch. Press a fingertip against it for a second, then release — the color should return within 1–2 seconds (capillary refill time). Pale, white, or bluish gums, or a refill that takes noticeably longer, is a reason to call a vet, not just note and monitor.\n\n<b>The skin-tent test</b> is the other: gently lift a fold of skin between the shoulder blades and let go; in a well-hydrated cat it snaps back almost immediately. Skin that sinks back slowly, or stays 'tented,' suggests dehydration. Neither test is perfect on its own (senior cats naturally have less skin elasticity, and gum pigment varies by cat), so use them as one more data point, not a standalone diagnosis.",
        linksMode:"references",
        links:[{label:"AAHA/AAFP Feline Life Stage Guidelines ↗", url:"https://www.aaha.org/resources/2021-aaha-aafp-feline-life-stage-guidelines/", meta:"Full checkup and vaccination schedule by life stage"},
               {label:"Cornell: Hydration ↗", url:"https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/hydration", meta:"Cornell Feline Health Center — why hydration matters and signs to watch for"},
               {label:"Jump to Products & Services tab ↓", url:"internal:resources", meta:"Atlas, Advanced VetCare, Dr Paws — vet clinics in Singapore"}]},
       {name:"Home-Proofing", tag:"Ongoing", color:"#a15a3a",
-       note:"Lilies, string, meds, and unsecured windows are the hazards cats most often get into.",
-       detail:"• <strong>Lilies</strong> — highly toxic even in small amounts; even pollen brushed onto fur and licked off later during grooming can cause kidney failure, making them one of the few houseplants worth banning outright rather than just keeping out of reach.\n• <strong>String, thread, ribbon, hair elastics</strong> — a serious swallowing risk. If part of a string gets caught under the tongue while the rest is swallowed, it can saw through the intestine as it tries to pass — a genuine surgical emergency.\n• <strong>Human medication</strong> — over-the-counter painkillers like ibuprofen are highly toxic to cats even in small doses; keep pill bottles and blister packs somewhere a cat can't knock them onto the floor.\n• <strong>Essential oil diffusers</strong> — some oils (tea tree is a frequently cited one) can be absorbed through the skin or inhaled and cause toxicity.\n• <strong>Electrical cords</strong> — a chewing risk, especially for kittens.\n• <strong>Unsecured windows and balconies</strong> — 'high-rise syndrome,' where a cat falls while chasing a bird or insect outside a window, is a real and common injury in cats living in high-rise buildings, which is most homes in Singapore.\n\nThis last one is exactly why shelters and now Singapore law require meshing (see the Adoption tab for details). Wire mesh and invisible grilles are the two most common ways owners secure windows — a few Singapore installers who specifically offer cat-safe options are below.",
+       note:"Toxic plants, string, meds, tip-prone furniture, and unsecured windows are the hazards cats most often get into.",
+       detail:"• <strong>Toxic houseplants</strong> — lilies are the most dangerous of the common ones: even pollen brushed onto fur and licked off later during grooming can cause kidney failure, making them worth banning outright rather than just keeping out of reach. Sago palm is arguably worse (every part of the plant is toxic and can cause liver failure) and is sold locally as an ordinary ornamental, so it's easy to bring home without realizing what it is. Aloe vera, poinsettia, dracaena, cyclamen, asparagus fern, jade, and snake plant are milder but still cause vomiting, diarrhea, or skin irritation — worth checking any new houseplant against a toxic-plant list before it comes inside.\n• <strong>String, thread, ribbon, hair elastics</strong> — a serious swallowing risk. If part of a string gets caught under the tongue while the rest is swallowed, it can saw through the intestine as it tries to pass — a genuine surgical emergency.\n• <strong>Human medication</strong> — over-the-counter painkillers like ibuprofen are highly toxic to cats even in small doses; keep pill bottles and blister packs somewhere a cat can't knock them onto the floor.\n• <strong>Essential oil diffusers</strong> — some oils (tea tree is a frequently cited one) can be absorbed through the skin or inhaled and cause toxicity.\n• <strong>Electrical cords</strong> — a chewing risk, especially for kittens.\n• <strong>Tip-prone furniture</strong> — cats climb, and a falling TV or bookshelf is a real injury risk; anti-tip anchor kits (the same ones sold for babyproofing) are a cheap fix for anything tall and top-heavy.\n• <strong>Appliances and bins</strong> — check inside washing machines and dryers before starting a cycle, since a warm, enclosed drum is exactly the kind of spot a cat investigates; keep trash lidded and close appliance doors when not in use.\n• <strong>Unsecured windows and balconies</strong> — 'high-rise syndrome,' where a cat falls while chasing a bird or insect outside a window, is a real and common injury in cats living in high-rise buildings, which is most homes in Singapore.\n\nThis last one is exactly why shelters and now Singapore law require meshing (see the Adoption tab for details). Wire mesh and invisible grilles are the two most common ways owners secure windows — a few Singapore installers who specifically offer cat-safe options are below.",
        linkGroups:[
          {mode:"entities", heading:"Window Mesh & Grille Options", links: shopLinks(['blindnetMesh','mozziefyMesh','skygrilles','magicseal'])},
          {mode:"references", links:[
@@ -1780,7 +2082,15 @@ const careCategories = [
             {label:"Pet Poison Helpline ↗", url:"https://www.petpoisonhelpline.com/", meta:"24/7 line, US-based, consultation fee applies"},
             {label:"Jump to Adoption tab ↓", url:"internal:adoption", meta:"Why shelters and Singapore law both require window meshing"}
          ]}
-       ]}
+       ]},
+      {name:"Common Mistakes to Avoid", tag:"Quick reference", color:"#8A3B2B",
+       note:"A consolidated list of the mistakes covered in more detail elsewhere in this guide — milk, declawing, and human painkillers among them.",
+       detail:"<b>Toxic exposure — never do this:</b>\n\n• Give milk or dairy as a treat — most adult cats are lactose intolerant; it's a common myth, not a kindness\n• Feed onion, garlic, chocolate, grapes/raisins, or xylitol\n• Substitute dog food for cat food, even short-term\n• Leave human painkillers (e.g. ibuprofen) somewhere a cat can reach\n• Keep lilies or sago palm in the house\n• Run an essential oil diffuser near a cat\n\n<b>Emergency instincts that make things worse:</b>\n\n• Induce vomiting after suspected poisoning, unless a vet specifically tells you to\n• Touch the mouth or restrain a cat mid-seizure\n• Use a tourniquet, or human antiseptic/peroxide, on a wound\n• Assume panting or open-mouth breathing is normal, the way it is in a dog\n\n<b>Everyday habits worth rethinking:</b>\n\n• Scold or punish a litter box miss\n• Declaw a cat as a first response to scratching, rather than trying alternatives\n• Switch food abruptly instead of over 7–10 days\n• Leave a window or balcony unmeshed\n\nThe Home-Proofing card in this same tab covers the toxic-plant and hazard list in full detail.",
+       linksMode:"references",
+       links:[internalLink('diet', "Foods to Avoid card — the full toxic-food list, including milk and dairy"),
+              internalLink('emergencies', "Suspected Poisoning, Seizures, and Trauma cards — the first-aid do's and don'ts in full"),
+              internalLink('daily', "Litter Box card — training a cat without punishment"),
+              internalLink('adoption', "Adoption Process card — why shelters write 'no declawing' into agreements")]}
     ]
   },
   {
@@ -1795,7 +2105,7 @@ const careRail = document.getElementById('careRail');
 const careGrid = document.getElementById('careGrid');
 const careTitle = document.getElementById('careDrawerTitle');
 const careDesc = document.getElementById('careDrawerDesc');
-const careSearchInput = document.getElementById('careSearchInput');
+const careSearchInput = document.getElementById('globalSearchInput');
 
 let careActiveKey = careCategories[0].key;
 let careSearchTerm = "";
@@ -1844,15 +2154,21 @@ function buildCareCard(b, i){
   const totalLinks = b.linkGroups && b.linkGroups.length
     ? b.linkGroups.reduce((sum,g)=>sum+g.links.length, 0)
     : (b.links ? b.links.length : 0);
-  const hint = totalLinks
-    ? '<span class="drill-hint">' + totalLinks + ' link' + (totalLinks===1?'':'s') + ' — tap for details ↗</span>'
-    : '<span class="drill-hint">Tap for details ↗</span>';
+  const readTime = b.detail ? readingTimeLabel(b.detail) : '';
+  const linksPart = totalLinks ? (totalLinks + ' link' + (totalLinks===1?'':'s')) : '';
+  const metaParts = [readTime, linksPart].filter(Boolean);
+  const hint = '<span class="drill-hint">' +
+    (metaParts.length ? metaParts.join(' · ') + ' — ' : '') +
+    'Tap for details ↗</span>';
   card.innerHTML =
     '<span class="card-index">' + fileLabel + '</span>' +
     '<div class="card-image">' + catSketch(b.color) + '</div>' +
     '<h4>' + b.name + '</h4>' +
     '<p>' + b.note + '</p>' +
-    '<span class="stamp" style="border-color:' + b.color + '55; color:' + b.color + '">' + b.tag + '</span>' +
+    '<div class="card-tags">' +
+      '<span class="stamp" style="border-color:' + b.color + '55; color:' + b.color + '">' + b.tag + '</span>' +
+      severityBadge(b.severity) +
+    '</div>' +
     hint;
   card.addEventListener('click', ()=> openCareModal(b, fileLabel));
   return card;
@@ -1873,6 +2189,8 @@ function careRenderGrid(){
     ? pool.filter(b => (b.name+" "+b.tag+" "+b.note+" "+(b.detail||"")).toLowerCase().includes(term))
     : pool;
 
+  updateSearchResultsMsg(term, filtered.length);
+
   if(term){
     careTitle.textContent = "Search results";
     careDesc.textContent = filtered.length + " match" + (filtered.length===1?"":"es") + " across the care guide";
@@ -1881,8 +2199,11 @@ function careRenderGrid(){
   const grouped = !term && !!cat.groups;
   careGrid.classList.toggle('grouped', grouped);
 
-  const readinessGauge = document.getElementById('readinessGauge');
-  readinessGauge.style.display = (cat.key === 'readiness' && !term) ? 'block' : 'none';
+  const readinessCallout = document.getElementById('readinessCallout');
+  readinessCallout.style.display = (cat.key === 'readiness' && !term) ? 'flex' : 'none';
+
+  const emergencySheetCallout = document.getElementById('emergencySheetCallout');
+  emergencySheetCallout.style.display = (cat.key === 'emergencies' && !term) ? 'flex' : 'none';
 
   if(filtered.length === 0){
     const empty = document.createElement('div');
@@ -1915,86 +2236,11 @@ function careRenderGrid(){
   filtered.forEach((b, i)=> careGrid.appendChild(buildCareCard(b, i)));
 }
 
-/* ============ READINESS GAUGE ============
-   One question per card in the "Before You Get a Cat" tab — this doesn't introduce new
-   topics, it just scores the same 5 things those cards already cover. */
-const READINESS_QUESTIONS = [
-  {key:"commitment", text:"Are you prepared for a 15–20 year commitment, including possible moves, relationship changes, or career shifts?"},
-  {key:"budget", text:"Have you budgeted for both routine costs (food, litter, vet visits) and a buffer for emergency or senior-year vet bills?"},
-  {key:"legal", text:"If you're in an HDB flat or a rental, have you confirmed you're within the cat limit and actually allowed to keep one?"},
-  {key:"lifestyle", text:"Does your day-to-day lifestyle — time away, allergies, other pets or kids — genuinely fit a cat right now?"},
-  {key:"caregiver", text:"Is there one specific person (not just \"the family\") who will own daily feeding, litter, and vet care?"}
-];
-const gaugeAnswers = {};
-
-function buildGaugeQuestions(){
-  const container = document.getElementById('gaugeQuestions');
-  container.innerHTML = READINESS_QUESTIONS.map(q =>
-    '<div class="gauge-question">' +
-      '<p>' + q.text + '</p>' +
-      '<div class="gauge-options">' +
-        [['2','Yes'],['1','Somewhat'],['0','No']].map(([val,label])=>
-          '<label class="gauge-option">' +
-            '<input type="radio" name="gauge-' + q.key + '" value="' + val + '">' +
-            '<span>' + label + '</span>' +
-          '</label>'
-        ).join('') +
-      '</div>' +
-    '</div>'
-  ).join('');
-  container.querySelectorAll('input[type="radio"]').forEach(input=>{
-    input.addEventListener('change', (e)=>{
-      const key = e.target.name.replace('gauge-','');
-      gaugeAnswers[key] = Number(e.target.value);
-      updateGauge();
-    });
-  });
-}
-
-function updateGauge(){
-  const total = READINESS_QUESTIONS.length;
-  const answeredKeys = Object.keys(gaugeAnswers);
-  const answeredCount = answeredKeys.length;
-  const answeredSum = answeredKeys.reduce((sum,k)=>sum+gaugeAnswers[k], 0);
-  const maxScore = total * 2;
-  // Unanswered questions count as neutral (1pt) so the needle previews live instead of sitting pinned at zero.
-  const projectedScore = answeredSum + (total - answeredCount) * 1;
-  const deg = (projectedScore / maxScore) * 180 - 90;
-  document.getElementById('gaugeNeedle').setAttribute('transform', 'rotate(' + deg + ' 100 100)');
-  document.getElementById('gaugeProgress').textContent = answeredCount + ' of ' + total + ' answered';
-
-  const verdict = document.getElementById('gaugeVerdict');
-  if(answeredCount < total){
-    verdict.textContent = "Answer all " + total + " — the needle's just previewing so far.";
-    verdict.className = 'gauge-verdict';
-    return;
-  }
-  const pct = answeredSum / maxScore;
-  if(pct >= 0.8){
-    verdict.textContent = "Looks like a good fit — sounds like you've thought this through.";
-    verdict.className = 'gauge-verdict verdict-green';
-  } else if(pct >= 0.4){
-    verdict.textContent = "A few things worth sorting out first — not a no, just not fully ready yet.";
-    verdict.className = 'gauge-verdict verdict-amber';
-  } else {
-    verdict.textContent = "Might not be the right time yet — worth revisiting the cards above before deciding.";
-    verdict.className = 'gauge-verdict verdict-red';
-  }
-}
-
-document.getElementById('gaugeReset').addEventListener('click', ()=>{
-  Object.keys(gaugeAnswers).forEach(k=> delete gaugeAnswers[k]);
-  document.querySelectorAll('#gaugeQuestions input[type="radio"]').forEach(i=> i.checked = false);
-  updateGauge();
-});
-
-buildGaugeQuestions();
-updateGauge();
-
 /* ============ CARE DETAIL MODAL ============ */
 const careModalOverlay = document.getElementById('careModalOverlay');
 const modalClose = document.getElementById('modalClose');
 const modalIndex = document.getElementById('modalIndex');
+const modalSeverityBadge = document.getElementById('modalSeverityBadge');
 const modalTitle = document.getElementById('modalTitle');
 const modalNote = document.getElementById('modalNote');
 const modalFacts = document.getElementById('modalFacts');
@@ -2045,14 +2291,26 @@ function renderLinkGroup(mode, heading, links){
 }
 
 /* Converts a detail string into real HTML: blank-line-separated blocks become <p>,
-   and blocks made of consecutive "• " or "1. " lines become <ul>/<ol>. Inline <strong>/<b>
-   tags already present in the source text pass through untouched. */
-function formatDetail(text){
+   and blocks made of consecutive "• " or "1. " lines become <ul>/<ol>. A block made of
+   consecutive "☐ " lines becomes a tickable checklist instead — only when `itemKey` is
+   passed, so callers that don't want checkboxes (e.g. breed details) never get them.
+   Inline <strong>/<b> tags already present in the source text pass through untouched. */
+function formatDetail(text, itemKey){
   const blocks = text.split('\n\n');
+  let checkIndex = 0;
   return blocks.map(block=>{
     const lines = block.split('\n').filter(l=>l.length);
+    const isChecklist = itemKey && lines.length > 1 && lines.every(l=>l.trim().startsWith('☐'));
     const isBulleted = lines.length > 1 && lines.every(l=>l.trim().startsWith('•'));
     const isNumbered = lines.length > 1 && lines.every(l=>/^\d+\.\s/.test(l.trim()));
+    if(isChecklist){
+      return '<ul class="checklist">' + lines.map(l=>{
+        const label = l.trim().replace(/^☐\s*/,'');
+        const key = itemKey + '::' + (checkIndex++);
+        const checked = checklistState[key] ? ' checked' : '';
+        return '<li><label class="check-item"><input type="checkbox" class="check-input" data-key="'+key+'"'+checked+'><span class="check-box" aria-hidden="true"></span><span class="check-label">'+label+'</span></label></li>';
+      }).join('') + '</ul>';
+    }
     if(isBulleted){
       return '<ul>' + lines.map(l=>'<li>'+l.trim().replace(/^•\s*/,'')+'</li>').join('') + '</ul>';
     }
@@ -2061,6 +2319,72 @@ function formatDetail(text){
     }
     return '<p>' + lines.join(' ') + '</p>';
   }).join('');
+}
+
+/* In-memory only — ticks survive closing/reopening a card within this page load, and
+   reset on refresh, the same non-persistent pattern already used by the gauge/quiz
+   answer state on the companion pages. No localStorage anywhere in this codebase. */
+const checklistState = {};
+
+function wireChecklists(container){
+  container.querySelectorAll('ul.checklist').forEach(ul=>{
+    const progress = document.createElement('div');
+    progress.className = 'checklist-progress';
+    const update = ()=>{
+      const total = ul.querySelectorAll('.check-input').length;
+      const done = ul.querySelectorAll('.check-input:checked').length;
+      progress.textContent = done + ' of ' + total + ' checked';
+    };
+    ul.after(progress);
+    update();
+    ul.querySelectorAll('.check-input').forEach(cb=>{
+      cb.addEventListener('change', ()=>{ checklistState[cb.dataset.key] = cb.checked; update(); });
+    });
+  });
+}
+
+/* ============ TIMELINE ============
+   A lightweight CSS timeline for milestone-style content (currently just the Kitten
+   card) — reuses the site's existing type/color system rather than a new visual style. */
+function renderTimeline(items){
+  return '<div class="timeline">' + items.map(t=>
+    '<div class="timeline-item">' +
+      (t.age ? '<span class="timeline-age">'+t.age+'</span>' : '') +
+      '<span class="timeline-dot"></span>' +
+      '<p>' + t.text + '</p>' +
+    '</div>'
+  ).join('') + '</div>';
+}
+
+/* ============ DECISION TREE ============
+   Click-through, one question at a time (not a whole flowchart) — fewer decisions per
+   screen matters more than an overview when someone's using this stressed. Resets to
+   the start every time the modal opens; no persistence needed. Pilot: "My Cat Won't Eat." */
+let dtreeHistory = [];
+function renderDecisionTree(tree, container){
+  dtreeHistory = [tree.start];
+  drawDtreeNode(tree, container);
+}
+function drawDtreeNode(tree, container){
+  const node = tree.nodes[dtreeHistory[dtreeHistory.length-1]];
+  const crumb = '<div class="dtree-crumb">Step ' + dtreeHistory.length + '</div>';
+  const back = dtreeHistory.length > 1 ? '<button type="button" class="dtree-back" id="dtreeBack">← Back</button>' : '';
+  if(node.type === 'question'){
+    container.innerHTML = crumb + '<p class="dtree-question">' + node.text + '</p>' +
+      '<div class="dtree-answers">' + node.answers.map((a,i)=>
+        '<button type="button" class="dtree-answer" data-i="' + i + '">' + a.label + '</button>').join('') + '</div>' + back;
+    container.querySelectorAll('.dtree-answer').forEach(btn=>
+      btn.addEventListener('click', ()=>{
+        dtreeHistory.push(node.answers[Number(btn.dataset.i)].next);
+        drawDtreeNode(tree, container);
+      }));
+  } else {
+    container.innerHTML = crumb +
+      '<div class="dtree-outcome" data-level="' + (node.severity||'monitor') + '">' +
+        (node.severity ? severityBadge(node.severity) : '') + '<p>' + node.text + '</p></div>' + back;
+  }
+  const backBtn = document.getElementById('dtreeBack');
+  if(backBtn) backBtn.addEventListener('click', ()=>{ dtreeHistory.pop(); drawDtreeNode(tree, container); });
 }
 
 /* ============ BREED PHOTO GALLERY ============
@@ -2127,11 +2451,27 @@ function updateGalleryFrame(){
 
 function openCareModal(item, fileLabel){
   modalIndex.textContent = fileLabel;
+  if(item.severity){
+    modalSeverityBadge.dataset.level = item.severity;
+    modalSeverityBadge.innerHTML = SEVERITY_CONFIG[item.severity].emoji + ' ' + SEVERITY_CONFIG[item.severity].label;
+    modalSeverityBadge.style.display = 'inline-flex';
+  } else {
+    modalSeverityBadge.style.display = 'none';
+  }
   modalTitle.textContent = item.name;
   document.getElementById('modalGallery').style.display = 'none';
   modalFacts.style.display = 'none';
   modalFacts.innerHTML = '';
-  modalNote.innerHTML = formatDetail(item.detail || item.note);
+  if(item.tree){
+    modalNote.innerHTML = '<div class="dtree" id="dtree"></div>';
+    renderDecisionTree(item.tree, document.getElementById('dtree'));
+  } else {
+    modalNote.innerHTML = formatDetail(item.detail || item.note, item.name);
+    wireChecklists(modalNote);
+    if(item.timeline){
+      modalNote.innerHTML += renderTimeline(item.timeline);
+    }
+  }
 
   // Normalize to a list of groups: prefer item.linkGroups (multi-section items),
   // fall back to the single item.links/linksMode (most items).
@@ -2156,6 +2496,7 @@ function factChip(label, value){
 
 function openBreedModal(breed, fileLabel){
   modalIndex.textContent = fileLabel;
+  modalSeverityBadge.style.display = 'none';
   modalTitle.textContent = breed.name;
 
   document.getElementById('modalGallery').style.display = 'block';
@@ -2206,9 +2547,17 @@ document.addEventListener('keydown', (e)=>{
   if(e.key === 'Escape') closeCareModal();
 });
 
-careSearchInput.addEventListener('input', (e)=>{
-  careSearchTerm = e.target.value;
-  careRenderGrid();
+/* One shared search box (searchInput and careSearchInput both point to the same
+   #globalSearchInput element) — which dataset it searches depends on whichever
+   section is currently active. */
+searchInput.addEventListener('input', (e)=>{
+  if(careSection.classList.contains('visible')){
+    careSearchTerm = e.target.value;
+    careRenderGrid();
+  } else {
+    searchTerm = e.target.value;
+    renderGrid();
+  }
 });
 
 careBuildTabs();
@@ -2226,6 +2575,20 @@ function showSection(which){
   careSection.classList.toggle('visible', !showBreeds);
   navBreeds.classList.toggle('active', showBreeds);
   navCare.classList.toggle('active', !showBreeds);
+
+  // The shared search box always searches whichever section is now active — clear
+  // any leftover term from the other section so it doesn't look like a stale filter.
+  searchInput.value = '';
+  if(showBreeds){
+    searchInput.placeholder = 'Search every breed by name or trait…';
+    searchTerm = '';
+    renderGrid();
+  } else {
+    searchInput.placeholder = 'Search the care guide…';
+    careSearchTerm = '';
+    careRenderGrid();
+  }
+
   window.scrollTo({top:0, behavior:'smooth'});
 }
 

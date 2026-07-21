@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emergency Sheet — The Feline Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B241E;
+    --ink-soft:#4E584F;
+    --ink-faint:#7C8377;
+    --canvas:#F7F4EC;
+    --canvas-dim:#EFEAD9;
+    --panel:#FFFFFF;
+    --line:#DBD4C0;
+    --line-strong:#C7BEA3;
+    --forest:#1F4534;
+    --forest-deep:#152D22;
+    --brass:#A6842B;
+    --brass-light:#C9A648;
+    --clay:#8A3B2B;
+    --teal:#2C5D5A;
+    --plum:#5B3A5C;
+    --olive:#8A6A2E;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--canvas);
+    color:var(--ink);
+    font-family:'Archivo', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+
+  .top-bar{
+    background:var(--forest-deep);
+    border-bottom:1px solid rgba(201,166,72,0.25);
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:#DCE5DC;
+    text-decoration:none;
+  }
+  .back-link:hover{color:#fff;}
+  .print-button{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--forest-deep);
+    background:var(--brass-light);
+    border:none;
+    border-radius:999px;
+    padding:8px 16px;
+    cursor:pointer;
+  }
+  .print-button:hover{background:#fff;}
+
+  .page-hero{
+    padding:44px 24px 36px;
+    text-align:center;
+    background:var(--forest-deep);
+    color:#F2EFE3;
+    position:relative;
+  }
+  .page-hero::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:3px;
+    background:var(--brass);
+  }
+  .page-hero .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.24em;
+    text-transform:uppercase;
+    color:var(--brass-light);
+    margin-bottom:16px;
+  }
+  .page-hero h1{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(1.8rem, 4.5vw, 2.6rem);
+    margin:0 0 14px;
+  }
+  .page-hero p{
+    max-width:480px;
+    margin:0 auto;
+    color:#C7CCC0;
+    font-size:14.5px;
+    line-height:1.65;
+  }
+
+  .sheet{
+    max-width:720px;
+    margin:36px auto 20px;
+    padding:0 24px;
+  }
+  .sheet-section{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-left:4px solid var(--forest);
+    border-radius:6px;
+    padding:18px 20px;
+    margin-bottom:16px;
+  }
+  .sheet-section.urgent{border-left-color:var(--clay);}
+  .sheet-section h2{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-style:italic;
+    font-size:1.15rem;
+    margin:0 0 12px;
+    color:var(--forest);
+  }
+  .sheet-section.urgent h2{color:var(--clay);}
+  .sheet-section ul{margin:0; padding-left:20px;}
+  .sheet-section li{font-size:13.5px; line-height:1.55; color:var(--ink-soft); margin-bottom:6px;}
+  .sheet-section li:last-child{margin-bottom:0;}
+  .sheet-section p{font-size:13.5px; line-height:1.6; color:var(--ink-soft); margin:0 0 10px;}
+  .sheet-section p:last-child{margin-bottom:0;}
+
+  .clinic-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .clinic{
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:12px 14px;
+    background:var(--canvas);
+  }
+  .clinic-name{font-weight:600; font-size:13.5px; color:var(--ink); display:block; margin-bottom:2px;}
+  .clinic-detail{font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--ink-soft); display:block;}
+
+  .stub-box{
+    border:1px dashed var(--line-strong);
+    border-radius:6px;
+    padding:12px 14px;
+    background:var(--canvas-dim);
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.55;
+    font-style:italic;
+  }
+
+  .related-note{
+    max-width:720px;
+    margin:0 auto;
+    padding:0 24px;
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.6;
+    text-align:center;
+  }
+  .related-note a{color:var(--forest); text-decoration:underline; text-underline-offset:2px;}
+
+  footer{
+    text-align:center;
+    color:var(--ink-faint);
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    padding:40px 20px 50px;
+    letter-spacing:0.03em;
+  }
+
+  @media (max-width:560px){
+    .page-hero{padding:36px 18px 30px;}
+    .clinic-grid{grid-template-columns:1fr;}
+  }
+
+  @media print{
+    .top-bar, .print-button, .related-note{display:none;}
+    body{background:#fff; color:#000;}
+    .page-hero{background:#fff !important; color:#000 !important; padding:0 0 16px;}
+    .page-hero::after{background:#000;}
+    .page-hero p{color:#333;}
+    .sheet{margin-top:16px;}
+    .sheet-section{break-inside:avoid; box-shadow:none;}
+    @page{size:A4; margin:14mm;}
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a class="back-link" href="cat-breed-catalog.html">&larr; Back to The Feline Index</a>
+  <button type="button" class="print-button" onclick="window.print()">Print this page ↗</button>
+</div>
+
+<div class="page-hero">
+  <div class="eyebrow">Emergencies</div>
+  <h1>Emergency Reference Sheet</h1>
+  <p>One page to print or save: 24-hour vets, warning signs, poisoning first-aid, and what's actually dangerous. Everything here is already in the full guide — this is just the compressed version for a bad moment.</p>
+</div>
+
+<div class="sheet">
+
+  <div class="sheet-section urgent">
+    <h2>24-Hour Emergency Vets (Singapore)</h2>
+    <div class="clinic-grid">
+      <div class="clinic">
+        <span class="clinic-name">Advanced VetCare (Bedok)</span>
+        <span class="clinic-detail">26 Jln Pari Burong · +65 6636 1788</span>
+      </div>
+      <div class="clinic">
+        <span class="clinic-name">Westside Vet Emergency & Referral</span>
+        <span class="clinic-detail">86 Serangoon Garden Wy · +65 6931 0095</span>
+      </div>
+      <div class="clinic">
+        <span class="clinic-name">VES Hospital @ Whitley</span>
+        <span class="clinic-detail">232 Whitley Rd · +65 6266 0232</span>
+      </div>
+      <div class="clinic">
+        <span class="clinic-name">Beecroft Animal Specialist & Emergency</span>
+        <span class="clinic-detail">991E Alexandra Rd, #01-27 · +65 6996 1812</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet-section urgent">
+    <h2>Signs You Need a Vet Now</h2>
+    <ul>
+      <li>Difficulty breathing, open-mouth breathing, or panting (never normal in a cat)</li>
+      <li>Straining to urinate with little or no output, or crying in the litter box</li>
+      <li>A seizure lasting more than 2–3 minutes, or more than one in a day</li>
+      <li>Collapse, unresponsiveness, or inability to stand or walk normally</li>
+      <li>Uncontrolled bleeding, or pale, white, or blue-tinged gums</li>
+      <li>A hard, swollen, or painful abdomen</li>
+      <li>Known or suspected ingestion of something toxic</li>
+      <li>Any trauma — hit by a car, a fall from height, or an animal attack — even if the cat seems fine afterward</li>
+    </ul>
+  </div>
+
+  <div class="sheet-section">
+    <h2>If You Suspect Poisoning</h2>
+    <ul>
+      <li>Do NOT induce vomiting unless a vet or poison control specifically tells you to</li>
+      <li>Bring the packaging, plant, or a sample of what was eaten — it changes what the vet can do</li>
+      <li>If the substance touched the skin or fur, rinse with water for about 15 minutes before you leave</li>
+      <li>Call your regular vet first if reachable; otherwise go straight to a 24hr clinic</li>
+    </ul>
+  </div>
+
+  <div class="sheet-section">
+    <h2>Dangerous Foods</h2>
+    <ul>
+      <li>Onion & garlic (cooked, raw, or powdered)</li>
+      <li>Chocolate, especially dark</li>
+      <li>Grapes & raisins</li>
+      <li>Xylitol (a sugar substitute in sugar-free gum and baked goods)</li>
+      <li>Raw bread dough</li>
+      <li>Milk and dairy — not usually fatal, but most adult cats are lactose intolerant</li>
+    </ul>
+  </div>
+
+  <div class="sheet-section">
+    <h2>Toxic Plants</h2>
+    <ul>
+      <li>Lilies — the most dangerous; even pollen on fur, licked off, can cause kidney failure</li>
+      <li>Sago palm — every part is toxic, can cause liver failure</li>
+      <li>Aloe vera, poinsettia, dracaena, cyclamen, asparagus fern, jade, snake plant</li>
+    </ul>
+  </div>
+
+  <div class="sheet-section">
+    <h2>CPR</h2>
+    <div class="stub-box">This guide doesn't yet cover feline CPR technique, which needs to come from a vet-reviewed source rather than be written from memory — compression rate and depth for a cat differ meaningfully from human or dog CPR, and getting it wrong here would do more harm than leaving it blank. If your cat is unresponsive and not breathing, call one of the numbers above immediately — some clinics can talk you through it live.</div>
+  </div>
+
+</div>
+
+<p class="related-note">This is a compressed reference — the full guide has the complete reasoning, first-aid steps in order, and more emergency topics. <a href="cat-breed-catalog.html">Back to The Feline Index</a>.</p>
+
+<footer>
+  General reference only — not veterinary advice. In a real emergency, call a vet before reading further.
+</footer>
+
+</body>
+</html>
