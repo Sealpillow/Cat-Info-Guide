@@ -28,7 +28,7 @@
   }
 
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth; -webkit-text-size-adjust:100%; text-size-adjust:100%;}
 
   body{
     margin:0;
@@ -49,8 +49,9 @@
     justify-content:center;
     gap:8px;
     padding:14px 16px;
-    background:var(--forest-deep);
+    background:var(--forest);
     border-bottom:1px solid rgba(201,166,72,0.25);
+    box-shadow:0 4px 14px rgba(21,45,34,0.3);
   }
   .quickjump a{
     font-family:'JetBrains Mono', monospace;
@@ -278,6 +279,80 @@
     grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
     gap:16px;
   }
+
+  /* ---------- INTERACTIVE FILTERS ----------
+     Brass active fill (vs. .drawer-tab's forest) so "which drawer" (category) and
+     "which traits" (filter) read as visually distinct layers. */
+  .filter-panel{display:flex; flex-wrap:wrap; align-items:center; gap:14px 20px; margin:0 0 16px; padding:14px 16px; background:var(--canvas); border:1px solid var(--line); border-radius:8px;}
+  .filter-group{display:flex; align-items:center; flex-wrap:wrap; gap:6px;}
+  .filter-group-label{font-family:'JetBrains Mono', monospace; font-size:9.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-right:2px;}
+  .filter-chip{
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; background:var(--panel); color:var(--ink-soft);
+    border:1px solid var(--line); border-radius:999px; padding:5px 12px; cursor:pointer;
+    transition:border-color .18s ease, color .18s ease, background .18s ease;
+  }
+  .filter-chip:hover{border-color:var(--brass);}
+  .filter-chip.active{background:var(--brass); color:#fff; border-color:var(--brass);}
+  .filter-clear{margin-left:auto; font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--clay); background:none; border:none; cursor:pointer; text-decoration:underline; text-underline-offset:2px;}
+
+  /* ---------- VIEW TOGGLE (Cards / Compare Table) ---------- */
+  .view-toggle-row{display:flex; justify-content:flex-end; margin:-6px 0 16px;}
+  .view-toggle{display:inline-flex; border:1px solid var(--line); border-radius:999px; padding:3px; gap:2px; background:var(--canvas);}
+  .view-toggle-btn{
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.04em;
+    border:none; background:transparent; color:var(--ink-soft);
+    padding:6px 14px; border-radius:999px; cursor:pointer;
+    transition:background 0.18s ease, color 0.18s ease;
+  }
+  .view-toggle-btn.active{background:var(--forest); color:#F2EFE3;}
+  .view-toggle-btn:hover:not(.active){color:var(--ink);}
+
+  /* ---------- COMPARISON TABLE ---------- */
+  .compare-table-wrap{
+    overflow-x:auto; border:1px solid var(--line); border-top:3px solid var(--brass);
+    border-radius:4px 4px 12px 12px; -webkit-overflow-scrolling:touch;
+    cursor:grab;
+  }
+  .compare-table-wrap:active{cursor:grabbing;}
+  .compare-table-wrap.dragging{cursor:grabbing; user-select:none;}
+  .compare-table{border-collapse:separate; border-spacing:0; width:100%; min-width:920px; font-family:'Archivo', sans-serif; font-size:12.5px;}
+  .compare-table thead th{
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; letter-spacing:0.05em; text-transform:uppercase;
+    background:var(--forest); color:#F2EFE3; text-align:left; padding:10px 12px; white-space:nowrap;
+    position:sticky; top:0; z-index:2;
+  }
+  .compare-table thead th.sortable{cursor:pointer; user-select:none;}
+  .compare-table thead th.sortable:hover{background:var(--forest-deep);}
+  .sort-arrow{display:inline-block; margin-left:2px; opacity:0.45; font-size:9px;}
+  .sort-arrow.active{opacity:1; color:var(--brass-light);}
+  .compare-table tbody td{padding:10px 12px; border-bottom:1px solid var(--line); white-space:nowrap;}
+  .compare-table tbody tr:nth-child(even){background:var(--canvas);}
+  .compare-table tbody tr:nth-child(odd){background:var(--panel);}
+  .compare-table tbody tr:hover{background:var(--canvas-dim); cursor:pointer;}
+  .compare-table th:first-child, .compare-table td:first-child{position:sticky; left:0; background:inherit; z-index:1;}
+  .compare-table thead th:first-child{z-index:3; background:var(--forest-deep);}
+  .compare-table tbody td:first-child{font-family:'Fraunces', serif; font-style:italic; color:var(--ink); font-weight:500;}
+  .cmp-yes{color:var(--forest); font-weight:700;}
+  .cmp-stars{color:var(--brass); letter-spacing:1px;}
+  .cmp-dim{color:var(--ink-faint);}
+  .cmp-unpin{background:none; border:none; color:var(--clay); cursor:pointer; font-size:13px;}
+
+  /* ---------- COMPARE BAR / COMPARE MODE ---------- */
+  .compare-bar{
+    position:fixed; left:50%; bottom:24px; transform:translateX(-50%);
+    display:flex; align-items:center; gap:14px;
+    background:var(--forest-deep); color:#F2EFE3; border-radius:999px; padding:10px 10px 10px 20px;
+    box-shadow:0 14px 30px rgba(21,45,34,0.35); z-index:40;
+    font-family:'JetBrains Mono', monospace; font-size:12px;
+  }
+  #compareBarOpenBtn{
+    background:var(--brass); color:var(--forest-deep); border:none; border-radius:999px;
+    padding:8px 16px; font-family:inherit; font-size:11.5px; font-weight:700; cursor:pointer;
+  }
+  #compareBarClearBtn{background:none; border:none; color:#F2EFE3; opacity:.7; cursor:pointer; font-size:14px;}
+  #compareBarClearBtn:hover{opacity:1;}
+  .compare-modal-box{max-width:1100px;}
+
   .card-grid.grouped{
     display:block;
   }
@@ -329,6 +404,15 @@
     overflow:hidden;
     position:relative;
   }
+  .pin-btn{
+    display:block; width:100%; margin:10px 0 0;
+    font-family:'JetBrains Mono', monospace; font-size:9.5px; letter-spacing:0.04em; text-transform:uppercase; text-align:center;
+    color:var(--ink-soft); background:var(--panel); border:1px solid var(--line);
+    border-radius:999px; padding:6px 10px; cursor:pointer;
+    transition:background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  }
+  .pin-btn:hover{border-color:var(--brass); color:var(--ink);}
+  .pin-btn.active{background:var(--brass); border-color:var(--brass); color:#fff;}
   .card-image svg{
     width:44%;
     height:44%;
@@ -416,6 +500,7 @@
     border:1px solid var(--line-strong);
     border-radius:999px;
     padding:3px 10px;
+    text-align: center;
   }
 
   /* ---------- SEVERITY BADGE ----------
@@ -504,6 +589,8 @@
     .card-grid{grid-template-columns:1fr 1fr;}
     .quickjump{gap:6px;}
     .quickjump a{padding:6px 12px; font-size:10.5px;}
+    .compare-table{font-size:11.5px;}
+    .compare-table thead th, .compare-table tbody td{padding:8px 9px;}
   }
   @media (max-width:400px){
     .card-grid{grid-template-columns:1fr;}
@@ -554,6 +641,12 @@
     transition:background 0.15s ease;
   }
   .readiness-callout-btn:hover{background:var(--forest-deep);}
+  @media (max-width:560px){
+    .readiness-callout-btn{
+      display:block; width:100%; box-sizing:border-box;
+      white-space:normal; text-align:center;
+    }
+  }
 
   /* ---------- CARE CARD DRILL-HINT ---------- */
   .card{cursor:pointer;}
@@ -712,13 +805,14 @@
   .gallery-dot.active{background:#fff;}
   .modal-facts{
     display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(130px, 1fr));
+    grid-template-columns:repeat(auto-fill, minmax(min(130px, 100%), 1fr));
     gap:8px;
     margin:0 0 18px;
     padding:14px;
     background:var(--canvas);
     border:1px solid var(--line);
     border-radius:8px;
+    overflow-wrap:break-word;
   }
   .fact-chip{
     display:flex;
@@ -738,11 +832,76 @@
     font-weight:500;
     line-height:1.35;
   }
+
+  /* ---------- BREED INDEX ROADMAP: shared detail-panel + rating/badge components ----------
+     .detail-panel reuses .modal-facts' box treatment (canvas fill, line border, 8px radius)
+     so Personality/Health/Cost read as the same "structured metadata" language. */
+  .detail-panel{
+    margin:0 0 18px; padding:14px;
+    background:var(--canvas); border:1px solid var(--line); border-radius:8px;
+    overflow-wrap:break-word;
+  }
+  .detail-heading{
+    font-family:'JetBrains Mono', monospace; font-size:9.5px; letter-spacing:0.08em;
+    text-transform:uppercase; color:var(--brass); margin:0 0 8px;
+  }
+  .detail-heading:not(:first-child){margin-top:14px;}
+  .detail-panel ul{margin:8px 0 0; padding-left:18px; font-size:12.5px; color:var(--ink-soft);}
+  .detail-panel li{margin-bottom:4px; line-height:1.5;}
+  .detail-panel li:last-child{margin-bottom:0;}
+
+  .rating-row{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:3px 0; font-size:12.5px;}
+  .rating-row .rating-label{color:var(--ink-soft); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0;}
+  .star-row, .dollar-row{display:inline-flex; gap:1px; flex-shrink:0;}
+  .star{font-size:13px; color:var(--line-strong);}
+  .star.filled{color:var(--brass);}
+  .dollar-sign{font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--line-strong);}
+  .dollar-sign.filled{color:var(--forest);}
+
+  .lifestyle-badges{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 18px;}
+  .lifestyle-badge{
+    display:inline-flex; align-items:center; gap:4px;
+    font-family:'JetBrains Mono', monospace; font-size:9.5px; letter-spacing:0.05em; text-transform:uppercase;
+    color:var(--forest); background:var(--canvas-dim); border:1px solid var(--line);
+    border-radius:999px; padding:4px 10px 4px 8px;
+  }
+
+  /* ---------- RELATED BREEDS ---------- */
+  .related-breeds{border-top:1px solid var(--line); padding-top:18px; margin-top:6px;}
+  .related-breeds-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .related-chip{
+    display:inline-block; font-family:'JetBrains Mono', monospace; font-size:9.5px; letter-spacing:0.05em; text-transform:uppercase;
+    color:var(--forest); background:var(--panel); border:1px solid var(--line-strong);
+    border-radius:999px; padding:5px 12px; cursor:pointer;
+    transition:background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  }
+  .related-chip:hover, .related-chip:focus-visible{background:var(--forest); color:#F2EFE3; border-color:var(--forest); outline:none;}
+
+  /* Mirrors .severity-badge's color-per-level pattern (clay/brass/forest) but with its
+     own class/labels so a breed's static genetic-risk descriptor is never mistaken for
+     the Care Guide's "go to the vet now" urgency badge. */
+  .risk-badge{
+    display:inline-flex; align-items:center; gap:5px;
+    font-family:'JetBrains Mono', monospace; font-size:9.5px; letter-spacing:0.05em; text-transform:uppercase;
+    border-radius:999px; padding:3px 10px; border:1px solid; background:none; margin-bottom:10px;
+  }
+  .risk-badge[data-level="high"]{border-color:var(--clay); color:var(--clay);}
+  .risk-badge[data-level="moderate"]{border-color:var(--brass); color:var(--brass);}
+  .risk-badge[data-level="low"]{border-color:var(--forest); color:var(--forest);}
+
+  .health-note{font-size:12px; color:var(--ink-faint); line-height:1.5; margin:8px 0 0;}
+  .source-note{font-size:11px; color:var(--ink-faint); line-height:1.6; margin:10px 0 0; padding-top:8px; border-top:1px dashed var(--line);}
+  .source-note .source-label{font-family:'JetBrains Mono', monospace; text-transform:uppercase; letter-spacing:0.05em; font-size:9.5px; margin-right:5px;}
+  .source-note a{color:var(--ink-faint); text-decoration:underline; text-decoration-style:dotted; text-underline-offset:2px;}
+  .source-note a:hover{color:var(--forest);}
+  .compare-legend{margin:10px 0 0; max-width:70ch;}
+
   #modalNote{
     font-size:14px;
     line-height:1.7;
     color:var(--ink-soft);
     margin:0 0 4px;
+    overflow-wrap:break-word;
   }
   #modalNote p{
     margin:0 0 14px;
@@ -820,39 +979,43 @@
     margin:-2px 0 16px;
   }
 
-  /* ---------- TIMELINE ---------- */
+  /* ---------- TIMELINE ----------
+     age/dot/text are laid out as normal-flow flex children (not absolutely positioned)
+     so a long age string that wraps to several lines still grows the row's real height —
+     absolute positioning previously let a tall wrapped age label bleed into the next item. */
   .timeline{
     position:relative;
     margin:18px 0 4px;
-    padding-left:70px;
   }
   .timeline::before{
     content:"";
     position:absolute;
-    left:44px; top:4px; bottom:4px;
+    left:47.5px; top:4px; bottom:4px;
     width:2px;
     background:var(--line-strong);
   }
-  .timeline-item{position:relative; margin-bottom:18px;}
+  .timeline-item{display:flex; align-items:flex-start; gap:10px; margin-bottom:18px;}
   .timeline-item:last-child{margin-bottom:0;}
   .timeline-age{
-    position:absolute;
-    left:-70px; top:1px;
-    width:56px;
+    flex:0 0 34px;
     text-align:right;
+    padding-top:3px;
     font-family:'JetBrains Mono', monospace;
     font-size:10px;
     letter-spacing:0.05em;
     color:var(--brass);
   }
   .timeline-dot{
-    position:absolute;
-    left:-30px; top:3px;
+    flex:0 0 9px;
     width:9px; height:9px;
+    margin-top:6px;
     border-radius:50%;
     background:var(--forest);
+    position:relative; z-index:1;
   }
   .timeline-item p{
+    flex:1;
+    min-width:0;
     margin:0;
     font-size:13.5px;
     color:var(--ink-soft);
@@ -1092,7 +1255,58 @@
         <h3 id="drawerTitle">Natural Breeds</h3>
         <p id="drawerDesc">Shaped by climate and geography before anyone bred them on purpose.</p>
       </div>
+      <div class="filter-panel" id="filterPanel">
+        <div class="filter-group"><span class="filter-group-label">Coat</span>
+          <div class="filter-chip-row" data-group="coat">
+            <button type="button" class="filter-chip" data-value="Long" aria-pressed="false">Long</button>
+            <button type="button" class="filter-chip" data-value="Short" aria-pressed="false">Short</button>
+            <button type="button" class="filter-chip" data-value="Hairless" aria-pressed="false">Hairless</button>
+          </div>
+        </div>
+        <div class="filter-group"><span class="filter-group-label">Energy</span>
+          <div class="filter-chip-row" data-group="energy">
+            <button type="button" class="filter-chip" data-value="Low" aria-pressed="false">Low</button>
+            <button type="button" class="filter-chip" data-value="Medium" aria-pressed="false">Medium</button>
+            <button type="button" class="filter-chip" data-value="High" aria-pressed="false">High</button>
+          </div>
+        </div>
+        <div class="filter-group"><span class="filter-group-label">Size</span>
+          <div class="filter-chip-row" data-group="size">
+            <button type="button" class="filter-chip" data-value="Small" aria-pressed="false">Small</button>
+            <button type="button" class="filter-chip" data-value="Medium" aria-pressed="false">Medium</button>
+            <button type="button" class="filter-chip" data-value="Large" aria-pressed="false">Large</button>
+          </div>
+        </div>
+        <div class="filter-group"><span class="filter-group-label">Lifestyle</span>
+          <div class="filter-chip-row" data-group="lifestyle">
+            <button type="button" class="filter-chip" data-value="apartmentFriendly" aria-pressed="false">Apartment</button>
+            <button type="button" class="filter-chip" data-value="familyFriendly" aria-pressed="false">Family</button>
+            <button type="button" class="filter-chip" data-value="firstTimeOwner" aria-pressed="false">Beginner</button>
+            <button type="button" class="filter-chip" data-value="experiencedOwners" aria-pressed="false">Experienced</button>
+          </div>
+        </div>
+        <div class="filter-group"><span class="filter-group-label">Characteristics</span>
+          <div class="filter-chip-row" data-group="characteristics">
+            <button type="button" class="filter-chip" data-value="Vocal" aria-pressed="false">Vocal</button>
+            <button type="button" class="filter-chip" data-value="Quiet" aria-pressed="false">Quiet</button>
+            <button type="button" class="filter-chip" data-value="Affectionate" aria-pressed="false">Affectionate</button>
+            <button type="button" class="filter-chip" data-value="Independent" aria-pressed="false">Independent</button>
+            <button type="button" class="filter-chip" data-value="Low Shedding" aria-pressed="false">Low Shedding</button>
+          </div>
+        </div>
+        <button type="button" class="filter-clear" id="filterClearBtn" style="display:none;">Clear filters ✕</button>
+      </div>
+      <div class="view-toggle-row">
+        <div class="view-toggle" id="viewToggle">
+          <button type="button" class="view-toggle-btn active" data-view="grid" aria-pressed="true">Cards</button>
+          <button type="button" class="view-toggle-btn" data-view="table" aria-pressed="false">Compare Table</button>
+        </div>
+      </div>
       <div class="card-grid" id="cardGrid"></div>
+      <div class="compare-table-wrap" id="compareTableWrap" style="display:none;">
+        <table class="compare-table" id="compareTable"></table>
+      </div>
+      <p class="health-note compare-legend" id="compareLegend" style="display:none;">Hover a column header for what it measures. In Apartment / Child-Friendly / Dog-Friendly / First-Time Owner, ✓ means research specifically confirmed it — a dash means it wasn't evidenced either way, not that the breed is unsuitable.</p>
     </div>
   </div>
   </div>
@@ -1103,6 +1317,21 @@
     <p class="last-reviewed">Last reviewed: July 2026</p>
   </footer>
 
+  <div class="compare-bar" id="compareBar" style="display:none;">
+    <span id="compareBarLabel">Compare (0)</span>
+    <button type="button" id="compareBarOpenBtn">Compare ↗</button>
+    <button type="button" id="compareBarClearBtn" aria-label="Clear pinned breeds">✕</button>
+  </div>
+
+  <div class="modal-overlay" id="compareModalOverlay">
+    <div class="modal-box compare-modal-box" role="dialog" aria-modal="true">
+      <button class="modal-close" id="compareModalClose" aria-label="Close">✕</button>
+      <h4>Side-by-Side Comparison</h4>
+      <div class="compare-table-wrap" id="compareModalTableWrap"><table class="compare-table" id="compareModalTable"></table></div>
+      <p class="health-note compare-legend">Hover a column header for what it measures. In Apartment / Child-Friendly / Dog-Friendly / First-Time Owner, ✓ means research specifically confirmed it — a dash means it wasn't evidenced either way, not that the breed is unsuitable.</p>
+    </div>
+  </div>
+
   <div class="modal-overlay" id="careModalOverlay">
     <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
@@ -1111,7 +1340,15 @@
       <h4 id="modalTitle"></h4>
       <div class="modal-gallery" id="modalGallery" style="display:none;"></div>
       <div class="modal-facts" id="modalFacts" style="display:none;"></div>
+      <div class="lifestyle-badges" id="modalBadges" style="display:none;"></div>
+      <div class="detail-panel" id="modalRatings" style="display:none;"></div>
       <div id="modalNote"></div>
+      <div class="detail-panel" id="modalHealth" style="display:none;"></div>
+      <div class="detail-panel" id="modalCost" style="display:none;"></div>
+      <div class="related-breeds" id="modalRelated" style="display:none;">
+        <div class="detail-heading">You May Also Like</div>
+        <div class="related-breeds-row" id="modalRelatedRow"></div>
+      </div>
       <div class="modal-links" id="modalLinks" style="display:none;">
         <div id="modalLinksGroups"></div>
       </div>
@@ -1184,29 +1421,67 @@ const categories = [
     desc:"Shaped by climate and geography before anyone bred them on purpose.",
     breeds:[
       {name:"Maine Coon", tag:"Gentle giant", note:"Tufted ears and a shaggy coat built for New England winters; one of the largest breeds.",
-       origin:"United States (Maine), 19th c.", weight:"4–10kg", lifespan:"12–15 yrs",
-       coat:"Long, shaggy, water-resistant", energy:"Medium", bestFor:"Families, cold climates",
+       origin:"United States (Maine), 19th c.", weight:"4–10kg", lifespan:"9–15 yrs",
+       coat:"Long, shaggy, water-resistant", energy:"Medium-High", bestFor:"Families, cold climates",
        images:[{url:"images/breed/maine-coon-1.jpg", alt:"Maine Coon", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/maine%20coon/"},
                {url:"images/breed/maine-coon-2.jpg", alt:"Maine Coon", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/maine%20coon/"},
                {url:"images/breed/maine-coon-3.jpg", alt:"Maine Coon", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/maine%20coon/"}],
        detail:"One of the oldest natural breeds in North America, likely descended from long-haired cats brought by European sailors and settlers, crossing with local shorthairs in New England. A popular but false folk tale claims part-raccoon ancestry — genetically impossible, but the bushy ringed tail didn't help dispel it. Maine became the first US state to have an official state cat when it named the Maine Coon in 1985.\n\nOne of the largest domestic breeds, with males regularly exceeding 8kg. Despite the size, the temperament is famously easygoing and sociable — often called 'gentle giants' — and many chirp or trill rather than meow. The dense, water-resistant coat and tufted paws evolved for genuine New England winters, not just show-ring looks.",
-       link:{label:"TICA: Maine Coon ↗", url:"https://tica.org/breed/maine-coon/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Maine Coon ↗", url:"https://tica.org/breed/maine-coon/", meta:"Official TICA breed profile"},
+              {label:"Purina: Maine Coon ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/maine-coon", meta:"Purina UK breed profile"}],
+       personality:{affection:5, activity:3, intelligence:4, vocalness:4, independence:2, playfulness:4},
+       sources:{personality:[{label:"Hill's Pet", url:"https://www.hillspet.com/cat-care/cat-breeds/maine-coon"}, {label:"Catster", url:"https://www.catster.com/cat-breeds/maine-coon/"}],
+         health:[{label:"UC Davis VGL", url:"https://vgl.ucdavis.edu/test/maine-coon-hcm"}, {label:"NC State Vet Hospital", url:"https://hospital.cvm.ncsu.edu/services/small-animals/genetics/maine-coon-cat-hypertrophic-cardiomyopathy-hcm/"}, {label:"PetMD", url:"https://www.petmd.com/cat/breeds/maine-coon"}]},
+       lifestyleBadges:["familyFriendly","goodWithChildren","goodWithDogs","firstTimeOwner"],
+       groomingDifficulty:4, shedding:4,
+       health:{concerns:["Hypertrophic Cardiomyopathy (HCM)","Hip Dysplasia","Pyruvate Kinase Deficiency","Spinal Muscular Atrophy"], geneticRisk:"Moderate",
+         screeningNote:"Genetic testing for the MYBPC3 A31P marker plus periodic echocardiogram screening are commonly recommended before breeding."},
+       relatedBreeds:["Norwegian Forest","Siberian","American Shorthair"],
+       cost:{purchase:3, monthlyCare:3, grooming:4, medical:3},
+       timeline:[{age:"1895", text:"A brown tabby named Cosey wins Best in Show at the first North American cat show, held at Madison Square Garden."},
+         {age:"1973", text:"The Maine Coon Cat Club forms after CFA denies the breed provisional status three times."},
+         {age:"1976", text:"CFA grants the breed full championship status."},
+         {age:"1985", text:"Maine names the Maine Coon its official state cat."}]},
       {name:"Siberian", tag:"Forest cat", note:"Triple-layered coat from the Russian taiga; often marketed as low-allergen.",
-       origin:"Russia, ancient natural breed", weight:"3.6–9kg", lifespan:"11–18 yrs",
+       origin:"Russia, ancient natural breed", weight:"3.5–9kg", lifespan:"11–18 yrs",
        coat:"Long, triple-layered, water-resistant", energy:"Medium-High", bestFor:"Active families",
        images:[{url:"images/breed/siberian-1.jpg", alt:"Siberian", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/siberian%20cat/"},
                {url:"images/breed/siberian-2.jpg", alt:"Siberian", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/siberian%20cat/"},
                {url:"images/breed/siberian-3.jpg", alt:"Siberian", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/siberian%20cat/"}],
        detail:"A landrace breed that developed naturally across Russia over centuries before being formally standardized and exported internationally in the 1990s. The name comes from its association with the harsh Siberian climate, though the breed is found across Russia more broadly.\n\nThe triple-layered coat is built for genuinely cold winters, yet the cat itself is notably agile and athletic for its size, capable of impressive jumps. Siberians are often marketed as producing less of the Fel d 1 protein that triggers cat allergies — some studies support lower average levels, but this varies by individual and isn't a guarantee for allergy sufferers.",
-       link:{label:"TICA: Siberian ↗", url:"https://tica.org/breed/siberian/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Siberian ↗", url:"https://tica.org/breed/siberian/", meta:"Official TICA breed profile"},
+              {label:"Purina: Siberian ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/siberian-forest", meta:"Purina UK breed profile (listed as \"Siberian Forest\")"}],
+       personality:{affection:4, activity:4, intelligence:3, vocalness:3, independence:3, playfulness:5},
+       sources:{personality:[{label:"Siberian Cat World", url:"https://www.siberiancatworld.com/siberian-cat-personality/"}, {label:"BetterPet", url:"https://www.betterpet.com/learn/your-siberian-cat-personality-guide-what-you-need-to-know"}],
+         health:[{label:"UC Davis VGL", url:"https://vgl.ucdavis.edu/test/pkd1-cat"}, {label:"Catster", url:"https://www.catster.com/cat-health-care/siberian-cat-health-problems/"}, {label:"Siberian Research", url:"http://siberianresearch.com/breeding-decisions/"}]},
+       lifestyleBadges:["familyFriendly","activeHousehold","allergyConsideration","firstTimeOwner","goodWithChildren","goodWithDogs"],
+       groomingDifficulty:4, shedding:3,
+       health:{concerns:["Polycystic Kidney Disease (PKD)","Hypertrophic Cardiomyopathy (HCM)","Pyruvate Kinase Deficiency"], geneticRisk:"Moderate",
+         screeningNote:"A PKD1 DNA test plus routine echocardiogram screening are recommended for breeding cats."},
+       relatedBreeds:["Norwegian Forest","Maine Coon","Turkish Van"],
+       cost:{purchase:4, monthlyCare:3, grooming:3, medical:3}},
       {name:"Norwegian Forest", tag:"Climber", note:"Water-resistant double coat evolved for Scandinavian barns and forests.",
-       origin:"Norway, ancient natural breed", weight:"3.6–9kg", lifespan:"14–16 yrs",
-       coat:"Long, dense, water-resistant double coat", energy:"Medium", bestFor:"Climbers, cold climates",
+       origin:"Norway, ancient natural breed", weight:"3.6–10kg", lifespan:"12–16 yrs",
+       coat:"Long, dense, water-resistant double coat", energy:"Medium-High", bestFor:"Climbers, cold climates",
        images:[{url:"images/breed/norwegian-forest-1.jpg", alt:"Norwegian Forest", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/norwegian%20forest%20cat/"},
                {url:"images/breed/norwegian-forest-2.jpg", alt:"Norwegian Forest", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/norwegian%20forest%20cat/"},
                {url:"images/breed/norwegian-forest-3.jpg", alt:"Norwegian Forest", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/norwegian%20forest%20cat/"}],
        detail:"Referenced in Norse mythology and folklore as the 'skogkatt' (forest cat), this is a natural landrace shaped by Scandinavian winters over centuries rather than a deliberately engineered breed. Formal breeding programs and international recognition began in the 1930s–70s, after a period where the breed nearly disappeared through crossbreeding with shorthairs.\n\nBuilt for climbing — strong claws and hind legs let it descend trees head-first, unlike most cats. The double coat sheds its dense undercoat seasonally in large clumps. Temperament is calm and independent, but genuinely affectionate once bonded, and generally tolerant of the cold in a way few other breeds are.",
-       link:{label:"TICA: Norwegian Forest Cat ↗", url:"https://tica.org/breed/norwegian-forest/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Norwegian Forest Cat ↗", url:"https://tica.org/breed/norwegian-forest/", meta:"Official TICA breed profile"},
+              {label:"Purina: Norwegian Forest ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/norwegian-forest", meta:"Purina UK breed profile"}],
+       personality:{affection:3, activity:3, intelligence:4, vocalness:3, independence:4, playfulness:3},
+       sources:{personality:[{label:"Spot Pet Insurance", url:"https://spotpet.com/blog/cat-tips/what-is-a-norwegian-forest-cats-personality"}],
+         health:[{label:"Hepper", url:"https://articles.hepper.com/norwegian-forest-cat-health-problems/"}, {label:"PetMD", url:"https://www.petmd.com/cat/breeds/norwegian-forest-cat"}]},
+       lifestyleBadges:["goodWithDogs","firstTimeOwner","goodWithChildren"],
+       groomingDifficulty:4, shedding:4,
+       health:{concerns:["Hypertrophic Cardiomyopathy (HCM)","Glycogen Storage Disease IV (GSD IV)","Hip Dysplasia","Pyruvate Kinase Deficiency"], geneticRisk:"Moderate",
+         screeningNote:"GBE1 genetic testing for GSD IV, plus cardiac and hip screening, are recommended for breeding lines."},
+       relatedBreeds:["Maine Coon","Siberian","Turkish Van"],
+       cost:{purchase:3, monthlyCare:3, grooming:4, medical:3},
+       timeline:[{age:"Medieval period", text:"Referenced in Norse folklore as the 'skogkatt' (forest cat)."},
+         {age:"WWII era", text:"The breed nearly disappears through crossbreeding and wartime disruption."},
+         {age:"1975", text:"The Norwegian Forest Cat Club establishes the first formal breed standard."},
+         {age:"1977", text:"FIFe grants full international recognition at its Paris General Assembly."}]},
       {name:"Turkish Van", tag:"The swimmer", note:"Chalk-white body with an auburn tail; famously unbothered by water.",
        origin:"Lake Van region, Turkey, ancient breed", weight:"3.5–9kg", lifespan:"12–17 yrs",
        coat:"Semi-long, water-resistant, no undercoat", energy:"High", bestFor:"Active, playful households",
@@ -1214,7 +1489,17 @@ const categories = [
                {url:"images/breed/turkish-van-2.jpg", alt:"Turkish Van", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/turkish%20van/"},
                {url:"images/breed/turkish-van-3.jpg", alt:"Turkish Van", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/turkish%20van/"}],
        detail:"Named for the Lake Van region of eastern Turkey, where the breed developed naturally over a very long history, largely isolated from other cat populations. The distinctive 'Van pattern' — a chalk-white body with color confined to the head and tail — became so associated with the breed that it's sometimes used as shorthand for the pattern itself, even in other breeds.\n\nFamous as 'the swimming cat' — the semi-long coat lacks a dense undercoat and has a texture closer to cashmere, drying quickly and repelling water well enough that many individuals genuinely enjoy paddling. Athletic, intelligent, and often quite vocal, this isn't a lap cat so much as an active companion.",
-       link:{label:"TICA: Turkish Van ↗", url:"https://tica.org/breed/turkish-van/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Turkish Van ↗", url:"https://tica.org/breed/turkish-van/", meta:"Official TICA breed profile"},
+              {label:"Purina: Turkish Van ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/turkish-van", meta:"Purina UK breed profile"}],
+       personality:{affection:3, activity:5, intelligence:4, vocalness:3, independence:3, playfulness:5},
+       sources:{personality:[{label:"Hill's Pet", url:"https://www.hillspet.com/cat-care/cat-breeds/turkish-van"}, {label:"Wopet", url:"https://wopet.com/turkish-van-cat-personality-traits/"}],
+         health:[{label:"PetMD", url:"https://www.petmd.com/cat/breeds/turkish-van"}, {label:"CFA", url:"https://cfa.org/breed/turkish-van/"}]},
+       lifestyleBadges:["firstTimeOwner","activeHousehold"],
+       groomingDifficulty:3, shedding:2,
+       health:{concerns:["Hypertrophic Cardiomyopathy (HCM)","Sacrocaudal Dysgenesis (tail/spine deformity)"], geneticRisk:"Low",
+         screeningNote:"Generally considered a robust, long-lived breed; routine cardiac screening is still recommended for breeding cats."},
+       relatedBreeds:["Turkish Angora","Egyptian Mau"],
+       cost:{purchase:3, monthlyCare:2, grooming:2, medical:2}},
       {name:"Turkish Angora", tag:"Original silk", note:"Ankara's native long-hair, slender build, frequently odd-eyed.",
        origin:"Ankara, Turkey, ancient breed", weight:"2.5–5kg", lifespan:"12–18 yrs",
        coat:"Long, fine, silky single coat", energy:"High", bestFor:"Attentive, engaged owners",
@@ -1222,15 +1507,36 @@ const categories = [
                {url:"images/breed/turkish-angora-2.jpg", alt:"Turkish Angora", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/turkish%20angora/"},
                {url:"images/breed/turkish-angora-3.jpg", alt:"Turkish Angora", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/turkish%20angora/"}],
        detail:"One of the oldest identifiable natural cat breeds, developed around Ankara and prized for centuries — often in solid white with odd or blue eyes. The population dwindled through crossbreeding until the Ankara Zoo began a dedicated conservation breeding program in the mid-20th century specifically to preserve the original white, odd-eyed line.\n\nSlender and athletic compared to the heavier-boned Van, with a fine single coat (no dense undercoat) that's lower-maintenance than it looks. Highly intelligent and demanding of attention, sometimes described as more dog-like in loyalty. As with several other white, blue-eyed cat lines, the pigment gene involved carries an elevated risk of congenital deafness in some individuals.",
-       link:{label:"TICA: Turkish Angora ↗", url:"https://tica.org/breed/turkish-angora/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Turkish Angora ↗", url:"https://tica.org/breed/turkish-angora/", meta:"Official TICA breed profile"},
+              {label:"Purina NZ: Turkish Angora ↗", url:"https://www.purina.co.nz/cats/cat-breeds/turkish-angora", meta:"Purina New Zealand breed profile"}],
+       personality:{affection:4, activity:4, intelligence:5, vocalness:3, independence:2, playfulness:5},
+       sources:{personality:[{label:"Litter-Robot", url:"https://www.litter-robot.com/blog/turkish-angora-personality/"}],
+         health:[{label:"PetMD", url:"https://www.petmd.com/cat/breeds/turkish-angora"}, {label:"cats.com", url:"https://cats.com/cat-breeds/turkish-angora"}, {label:"Basepaws", url:"https://basepaws.com/cat-breeds/turkish-angora"}]},
+       lifestyleBadges:["experiencedOwners","familyFriendly","goodWithDogs"],
+       groomingDifficulty:2, shedding:2,
+       health:{concerns:["Congenital Deafness (white/blue-eyed cats)","Hereditary Ataxia (kittens)","Hypertrophic Cardiomyopathy (HCM)"], geneticRisk:"Moderate",
+         screeningNote:"BAER hearing tests are recommended for white and blue-eyed kittens; cardiac screening is advised for breeding males."},
+       relatedBreeds:["Turkish Van","Egyptian Mau"],
+       cost:{purchase:3, monthlyCare:2, grooming:2, medical:3},
+       timeline:[{age:"15th century", text:"Present in Turkey, prized for its white coat and odd or blue eyes (per CFA breed history)."},
+         {age:"Early-mid 20th c.", text:"The population dwindles until the Ankara Zoo starts a dedicated program to preserve the white, odd-eyed line."},
+         {age:"1954", text:"First recorded US import, after American servicemen encounter the breed at the Ankara Zoo."},
+         {age:"1972", text:"CFA grants full championship recognition to the white Turkish Angora (other colors follow in 1978)."}]},
       {name:"Egyptian Mau", tag:"Fastest cat", note:"Naturally spotted coat; the quickest domestic breed on record.",
-       origin:"Egypt (ancient); modern line via Italy/US, 1950s", weight:"2.5–5kg", lifespan:"12–15 yrs",
+       origin:"Egypt (ancient); modern line via Italy/US, 1950s", weight:"2.5–6kg", lifespan:"12–15 yrs",
        coat:"Short, fine, naturally spotted", energy:"High", bestFor:"Active owners, breed enthusiasts",
-       images:[{url:"images/breed/egyptian-mau-1.jpg", alt:"Egyptian Mau", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/egyptian%20mau/"},
-               {url:"images/breed/egyptian-mau-2.jpg", alt:"Egyptian Mau", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/egyptian%20mau/"},
-               {url:"images/breed/egyptian-mau-3.jpg", alt:"Egyptian Mau", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/egyptian%20mau/"}],
        detail:"Spotted cats appear in ancient Egyptian art, and the breed's name comes directly from the Egyptian Arabic word for cat. The modern breed traces to a small number of cats exported from Cairo to Italy and then the US in the 1950s by exiled Russian princess Nathalie Troubetzkoy — nearly the entire modern gene pool descends from that handful of founding cats.\n\nThe spotted pattern here is naturally occurring, not selectively bred in the way it is in hybrid breeds like the Bengal. Widely cited as the fastest domestic cat breed, with a distinctive 'worry wrinkle' across the forehead and loose skin flap on the belly that aids its stride. Loyal and bonded to family, but frequently shy or reserved around strangers.",
-       link:{label:"TICA: Egyptian Mau ↗", url:"https://tica.org/breed/egyptian-mau/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Egyptian Mau ↗", url:"https://tica.org/breed/egyptian-mau/", meta:"Official TICA breed profile"},
+              {label:"Purina: Egyptian Mau ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/egyptian-mau", meta:"Purina UK breed profile"}],
+       personality:{affection:4, activity:5, intelligence:5, vocalness:3, independence:2, playfulness:4},
+       sources:{personality:[{label:"WebMD Pets", url:"https://www.webmd.com/pets/cats/what-to-know-about-an-egyptian-mau"}, {label:"Cat Authors", url:"https://catauthors.com/news/egyptian-mau-personality-0/"}],
+         health:[{label:"Catster", url:"https://www.catster.com/cat-health-care/egyptian-mau-health-problems/"}, {label:"UC Davis VGL", url:"https://vgl.ucdavis.edu/test/pk-deficiency-cat"}]},
+       lifestyleBadges:["experiencedOwners","activeHousehold","indoorPreferred"],
+       groomingDifficulty:1, shedding:2,
+       health:{concerns:["Pyruvate Kinase (PK) Deficiency","Hypertrophic Cardiomyopathy (HCM)","Bladder Stones (struvite/calcium oxalate)"], geneticRisk:"Moderate",
+         screeningNote:"DNA testing for the PK-deficiency mutation is recommended for breeding cats, even though affected Maus often show no clinical anemia."},
+       relatedBreeds:["Turkish Van","Turkish Angora"],
+       cost:{purchase:4, monthlyCare:2, grooming:1, medical:3}},
       {name:"American Shorthair", tag:"Working mouser", note:"Descended from ships' cats brought to the colonies for pest control.",
        origin:"United States, colonial-era working cats", weight:"3–7kg", lifespan:"15–20 yrs",
        coat:"Short, dense", energy:"Medium", bestFor:"Families, first-time owners",
@@ -1238,7 +1544,17 @@ const categories = [
                {url:"images/breed/american-shorthair-2.jpg", alt:"American Shorthair", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/american%20shorthair/"},
                {url:"images/breed/american-shorthair-3.jpg", alt:"American Shorthair", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/american%20shorthair/"}],
        detail:"Descended from European domestic cats brought over by early settlers, valued for keeping ship holds and grain stores free of rodents — the popular claim that some arrived on the Mayflower itself is folklore rather than documented fact, though the general colonial-era origin is well established. These cats were shown under the name 'Domestic Shorthair' from around 1900, and weren't renamed and recognized as the American Shorthair until the early 1960s.\n\nBuilt for function rather than extremes: a sturdy, medium build, dense weather-resistant coat, and a famously even, low-maintenance temperament. One of the longer-lived common breeds, and a frequent 'blank slate' starting point used in the development of several other American breeds.",
-       link:{label:"TICA: American Shorthair ↗", url:"https://tica.org/breed/american-shorthair/", meta:"Official TICA breed profile"}}
+       links:[{label:"TICA: American Shorthair ↗", url:"https://tica.org/breed/american-shorthair/", meta:"Official TICA breed profile"},
+              {label:"Purina NZ: American Shorthair ↗", url:"https://www.purina.co.nz/cats/cat-breeds/american-shorthair", meta:"Purina New Zealand breed profile"}],
+       personality:{affection:4, activity:3, intelligence:3, vocalness:2, independence:4, playfulness:3},
+       sources:{personality:[{label:"Hill's Pet", url:"https://www.hillspet.com/cat-care/cat-breeds/american-shorthair"}, {label:"cats.com", url:"https://cats.com/cat-breeds/american-shorthair"}],
+         health:[{label:"Tierarzt Karlsruhe-Durlach", url:"https://tierarzt-karlsruhe-durlach.de/en/diseases-of-the-american-shorthair/"}, {label:"Hill's Pet", url:"https://www.hillspet.com/cat-care/cat-breeds/american-shorthair"}]},
+       lifestyleBadges:["firstTimeOwner","familyFriendly","goodWithChildren","goodWithDogs","apartmentFriendly","indoorPreferred"],
+       groomingDifficulty:1, shedding:2,
+       health:{concerns:["Hypertrophic Cardiomyopathy (HCM)","Polycystic Kidney Disease (PKD)","Obesity"], geneticRisk:"Moderate",
+         screeningNote:"Cardiac screening and weight management are the main preventive measures; PKD DNA testing is available for breeding lines."},
+       relatedBreeds:["British Shorthair","Maine Coon"],
+       cost:{purchase:2, monthlyCare:2, grooming:1, medical:2}}
     ]
   },
   {
@@ -1246,20 +1562,54 @@ const categories = [
     desc:"Coatless by mutation, not by grooming — bred deliberately from a single genetic accident.",
     breeds:[
       {name:"Sphynx", tag:"Warm to the touch", note:"Coatless from a 1966 Canadian mutation; skin feels like warm suede.",
-       origin:"Canada (Ontario), 1966 mutation", weight:"2.7–5.5kg", lifespan:"7–15 yrs",
+       origin:"Canada (Ontario), 1966 mutation", weight:"2.5–5.5kg", lifespan:"7–15 yrs",
        coat:"Hairless, fine peach-fuzz", energy:"High", bestFor:"Attentive, social owners",
+       images:[{url:"images/breed/sphynx-1.jpg", alt:"Sphynx", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/sphynx%20cat/"},
+               {url:"images/breed/sphynx-2.jpg", alt:"Sphynx", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/sphynx%20cat/"},
+               {url:"images/breed/sphynx-3.jpg", alt:"Sphynx", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/sphynx%20cat/"}],
        detail:"Traces to a single hairless kitten, Prune, born to an ordinary domestic cat in Toronto in 1966; the recessive gene was then developed through a dedicated breeding program (with some later outcrossing to Devon Rex lines to widen the gene pool). Despite the name, it has no connection to ancient Egypt beyond aesthetics.\n\nWithout fur to absorb skin oils, Sphynxes need regular bathing to avoid buildup, and sun or cold exposure affects them more directly than a coated cat. In exchange, owners get one of the most overtly affectionate and attention-seeking breeds around — frequently described as 'velcro cats' for how closely they follow their people.",
-       link:{label:"TICA: Sphynx ↗", url:"https://tica.org/breed/sphynx/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Sphynx ↗", url:"https://tica.org/breed/sphynx/", meta:"Official TICA breed profile"},
+              {label:"Purina: Sphynx ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/sphynx", meta:"Purina UK breed profile"}],
+       personality:{affection:5, activity:4, intelligence:4, vocalness:5, independence:1, playfulness:5},
+       sources:{personality:[{label:"Litter-Robot", url:"https://www.litter-robot.com/blog/sphynx-cat-personality/"}, {label:"Breedspective", url:"https://www.breedspective.com/sphynx-cat-personality-energy-and-social-traits/"}],
+         health:[{label:"NC State Vet Hospital", url:"https://hospital.cvm.ncsu.edu/services/small-animals/genetics/sphynx-hypertrophic-cardiomyopathy-hcm/"}, {label:"PMC study", url:"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11428990/"}, {label:"Furry Critter Network", url:"https://www.furrycritter.com/pages/articles/cats/sphynx_health_problems.htm"}]},
+       lifestyleBadges:["experiencedOwners","apartmentFriendly","indoorPreferred"],
+       groomingDifficulty:3, shedding:1,
+       health:{concerns:["Hypertrophic Cardiomyopathy (HCM)","Urticaria Pigmentosa (skin)","Hereditary Myopathy (in some bloodlines)"], geneticRisk:"High",
+         screeningNote:"Sphynx have one of the highest HCM rates of any breed; annual echocardiogram screening is strongly recommended. The ALMS1 marker can inform risk, but a negative result doesn't rule HCM out given incomplete penetrance."},
+       relatedBreeds:["Donskoy","Peterbald"],
+       cost:{purchase:4, monthlyCare:3, grooming:3, medical:4}},
       {name:"Donskoy", tag:"Russian hairless", note:"Looser, wrinklier skin than the Sphynx; a separate, unrelated mutation.",
-       origin:"Russia (Rostov-on-Don), 1987", weight:"3.5–6.5kg", lifespan:"12–15 yrs",
-       coat:"Hairless, or one of 4 partial-coat types", energy:"High", bestFor:"Social households",
-       detail:"Traces to a single rescued kitten, Varvara, found being mistreated in Rostov-on-Don in 1987; when she later lost her fur and had kittens that did the same, breeder Irina Nemikina used the line to found the breed. Unlike the Sphynx's recessive gene, the Donskoy's hairlessness gene is dominant, so it's inherited differently and the two are genetically distinct despite the similar look.\n\nA single litter can include four different coat outcomes — fully bald, 'flocked' (a thin coat that may vanish over time), 'velour' (a wavy coat lost within the first year), or a near-normal brush coat. Highly social and dog-like in devotion, and genuinely unhappy left alone for long stretches.",
-       link:{label:"TICA: Donskoy ↗", url:"https://tica.org/breed/donskoy/", meta:"Official TICA breed profile"}},
+       origin:"Russia (Rostov-on-Don), 1987", weight:"2.7–6.8kg", lifespan:"12–15 yrs",
+       coat:"Hairless, or one of 3 partial-coat types", energy:"Medium-High", bestFor:"Social households",
+       images:[{url:"images/breed/donskoy-1.jpg", alt:"Donskoy", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/donskoy%20cat/"}],
+       detail:"Traces to a single rescued kitten, Varvara, found being mistreated in Rostov-on-Don in the 1980s by Professor Elena Kovaleva; when Varvara later lost her fur and had kittens that did the same, breeder Irina Nemikina determined the trait was a dominant (not recessive) gene and developed the line into a breed. Unlike the Sphynx's recessive gene, the Donskoy's hairlessness gene is dominant, so it's inherited differently and the two are genetically distinct despite the similar look.\n\nA single litter can include four different coat outcomes — fully bald, 'flocked' (a thin coat that may vanish over time), 'velour' (a wavy coat lost within the first year), or a near-normal brush coat. Highly social and dog-like in devotion, and genuinely unhappy left alone for long stretches.",
+       links:[{label:"TICA: Donskoy ↗", url:"https://tica.org/breed/donskoy/", meta:"Official TICA breed profile"},
+              {label:"Litter-Robot: Donskoy ↗", url:"https://www.litter-robot.com/blog/donskoy-cat/", meta:"Litter-Robot breed profile"}],
+       personality:{affection:5, activity:4, intelligence:3, vocalness:3, independence:1, playfulness:4},
+       sources:{personality:[{label:"cats.com", url:"https://cats.com/cat-breeds/donskoy"}],
+         health:[{label:"Pet Hero", url:"https://pethero.co.za/blog/cat-breeds/donskoy/"}]},
+       lifestyleBadges:["familyFriendly","goodWithChildren","goodWithDogs","experiencedOwners"],
+       groomingDifficulty:4, shedding:2,
+       health:{concerns:["Feline Ectodermal Dysplasia (dental/sweat-gland effects)","Skin Sensitivity (sunburn, oiliness)"], geneticRisk:"Moderate",
+         screeningNote:"Responsible breeders avoid pairing two hairless-gene carriers to reduce ectodermal dysplasia risk; regular dental checks are advised."},
+       relatedBreeds:["Sphynx","Peterbald"],
+       cost:{purchase:3, monthlyCare:3, grooming:3, medical:3}},
       {name:"Peterbald", tag:"Elegant line", note:"Whippet-like silhouette bred from Donskoy stock in St. Petersburg.",
-       origin:"Russia (St. Petersburg), 1994", weight:"2.3–5kg", lifespan:"12–15 yrs",
-       coat:"Variable — hairless to full brush coat", energy:"High", bestFor:"Social, athletic households",
+       origin:"Russia (St. Petersburg), 1994", weight:"2.3–6.4kg", lifespan:"10–15 yrs",
+       coat:"Variable — five types, from hairless to a normal short coat", energy:"High", bestFor:"Social, athletic households",
        detail:"Created in St. Petersburg in 1994 by breeder Olga Mironova, crossing a Donskoy male with an Oriental Shorthair female — deliberately combining the Donskoy's dominant hair-loss gene with the Oriental's elegant, slender build. The breed reaches full size unusually slowly, often not maturing until age 3–4.\n\nCoat type is genuinely unpredictable even within one litter, ranging from fully bald to a normal-looking brush coat, and some individuals change coat over their lifetime. Temperament leans heavily on the vocal, people-oriented Oriental side of the pedigree — highly social, talkative, and not suited to being left alone often.",
-       link:{label:"TICA: Peterbald ↗", url:"https://tica.org/breed/peterbald/", meta:"Official TICA breed profile"}}
+       links:[{label:"TICA: Peterbald ↗", url:"https://tica.org/breed/peterbald/", meta:"Official TICA breed profile"},
+              {label:"Litter-Robot: Peterbald ↗", url:"https://www.litter-robot.com/blog/peterbald-cat/", meta:"Litter-Robot breed profile"}],
+       personality:{affection:5, activity:4, intelligence:3, vocalness:4, independence:1, playfulness:4},
+       sources:{personality:[{label:"Pet Insurance HealthZone", url:"https://www.petinsurance.com/healthzone/pet-breeds/cat-breeds/peterbald/"}],
+         health:[{label:"Wisdom Panel", url:"https://www.wisdompanel.com/en-us/cat-breeds/peterbald"}, {label:"The Vet Desk", url:"https://thevetdesk.com/pet-breeds/cats/peterbald-cat/"}]},
+       lifestyleBadges:["goodWithChildren","goodWithDogs","familyFriendly","apartmentFriendly","indoorPreferred"],
+       groomingDifficulty:2, shedding:2,
+       health:{concerns:["Progressive Retinal Atrophy","Feline Ectodermal Dysplasia","Skin Sensitivity (sunburn risk)","Squamous Cell Carcinoma","Periodontal Disease"], geneticRisk:"Moderate",
+         screeningNote:"PRA genetic testing and avoiding two hairless-gene carriers in one pairing (to reduce ectodermal dysplasia risk) are recommended for breeding cats."},
+       relatedBreeds:["Donskoy","Sphynx"],
+       cost:{purchase:4, monthlyCare:3, grooming:2, medical:3}}
     ]
   },
   {
@@ -1267,25 +1617,72 @@ const categories = [
     desc:"A few generations removed from an actual wildcat ancestor.",
     breeds:[
       {name:"Bengal", tag:"Asian leopard cat", note:"Marbled or spotted coat from crossing with a small wild Asian cat.",
-       origin:"United States; 1963 first cross, modern breed from early 1980s", weight:"2.7–6.8kg", lifespan:"12–20 yrs",
+       origin:"United States; 1963 first cross, modern breed from early 1980s", weight:"2.7–7.7kg", lifespan:"10–20 yrs",
        coat:"Short, dense, marbled or spotted", energy:"High", bestFor:"Active, experienced owners",
+       images:[{url:"images/breed/bengal-1.jpg", alt:"Bengal", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/bengal%20cat/"},
+               {url:"images/breed/bengal-2.jpg", alt:"Bengal", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/bengal%20cat/"},
+               {url:"images/breed/bengal-3.jpg", alt:"Bengal", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/bengal%20cat/"}],
        detail:"Jean Mill made the first leopard cat × domestic cross in California in 1963, though the modern breeding program that actually established the breed began with her own cats in the early 1980s. Later generations are bred back toward a stable, people-friendly temperament, several steps removed from the wild ancestor. Cats close to the wild parent (early filial generations, often labeled F1–F3) can be significantly less predictable, which is why reputable breeders sell later-generation cats as pets.\n\nThe coat's glittered, marbled, or rosetted spotting is the main draw, echoing its wild ancestor far more than any other domestic breed. Highly athletic, frequently vocal, and often genuinely fond of water — but also prone to destructive behavior if under-stimulated, so it needs serious daily enrichment.",
-       link:{label:"TICA: Bengal ↗", url:"https://tica.org/breed/bengal/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Bengal ↗", url:"https://tica.org/breed/bengal/", meta:"Official TICA breed profile"},
+              {label:"Purina: Bengal ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/bengal", meta:"Purina UK breed profile"}],
+       personality:{affection:4, activity:5, intelligence:5, vocalness:3, independence:2, playfulness:5},
+       sources:{personality:[{label:"Ask A Vet", url:"https://askavet.com/blogs/news/comprehensive-vet-guide-2025-bengal-cats-wild-looked-smart-and-vet-approved"}],
+         health:[{label:"Petful", url:"https://www.petful.com/cat-breeds/bengal-cat-health-issues/"}, {label:"PetMD", url:"https://www.petmd.com/cat/breeds/bengal"}]},
+       lifestyleBadges:["experiencedOwners","activeHousehold","indoorPreferred","goodWithDogs"],
+       groomingDifficulty:1, shedding:2,
+       health:{concerns:["Hypertrophic Cardiomyopathy (HCM)","Progressive Retinal Atrophy (PRA-b)","Pyruvate Kinase (PK) Deficiency","Patellar Luxation","Hip Dysplasia","Peripheral Neuropathy"], geneticRisk:"Moderate",
+         screeningNote:"DNA tests for PRA-b and PK deficiency, plus periodic cardiac screening for HCM, are considered standard practice before breeding."},
+       relatedBreeds:["Savannah","Chausie","Toyger"],
+       cost:{purchase:5, monthlyCare:3, grooming:1, medical:3}},
       {name:"Savannah", tag:"Serval-descended", note:"Tall ears and a habit of clearing fences most cats wouldn't attempt.",
-       origin:"United States, first litter 1986", weight:"5.9–11kg (F1 largest)", lifespan:"12–15+ yrs",
+       origin:"United States, first litter 1986", weight:"3.5–11kg (F1 largest)", lifespan:"12–20 yrs",
        coat:"Short, spotted", energy:"Very High", bestFor:"Experienced owners with space",
+       images:[{url:"images/breed/savannah-1.jpg", alt:"Savannah", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/savannah%20cat/"}],
        detail:"The first Savannah was born in 1986 from a serval crossed with a domestic cat; the breed was developed further through the 1990s and gained TICA recognition in 2001. As with the Bengal, cats are labeled by filial generation (F1 = roughly half serval ancestry), with each generation diluting the wild traits and generally reducing size — some jurisdictions legally restrict ownership of early generations specifically because of this.\n\nKnown for genuinely dog-like behavior: many Savannahs can be leash-trained, learn fetch, and are famous for jump height that can clear well over two meters from a standing start. This is a serious commitment breed — high energy, high intelligence, and a real need for space and stimulation.",
-       link:{label:"TICA: Savannah ↗", url:"https://tica.org/breed/savannah/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Savannah ↗", url:"https://tica.org/breed/savannah/", meta:"Official TICA breed profile"},
+              {label:"Purina: Savannah ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/savannah", meta:"Purina UK breed profile"}],
+       personality:{affection:5, activity:5, intelligence:5, vocalness:3, independence:2, playfulness:5},
+       sources:{personality:[{label:"Chewy", url:"https://www.chewy.com/education/cat-breeds/savannah-cat"}],
+         health:[{label:"PetMD", url:"https://www.petmd.com/cat/breeds/savannah"}, {label:"Purina", url:"https://www.purina.com/cats/cat-breeds/savannah"}]},
+       lifestyleBadges:["experiencedOwners","activeHousehold","indoorPreferred"],
+       groomingDifficulty:3, shedding:2,
+       health:{concerns:["Hypertrophic Cardiomyopathy (HCM)","Pyruvate Kinase (PK) Deficiency","Progressive Retinal Atrophy (PRA)"], geneticRisk:"Moderate",
+         screeningNote:"PK-deficiency DNA testing is standard for breeding cats; no genetic test yet exists for HCM in Savannahs, so periodic cardiac screening is the only current safeguard."},
+       relatedBreeds:["Bengal","Chausie"],
+       cost:{purchase:5, monthlyCare:4, grooming:1, medical:3}},
       {name:"Chausie", tag:"Jungle cat line", note:"Long, lean build tracing back to the jungle cat of Asia and Africa.",
-       origin:"United States, developed 1990s", weight:"4.5–7kg", lifespan:"12–18+ yrs",
+       origin:"United States, developed 1990s", weight:"4.5–11kg", lifespan:"10–18+ yrs",
        coat:"Short, ticked or solid", energy:"High", bestFor:"Active, experienced owners",
        detail:"Named after Felis chaus, the jungle cat, from which it's descended via crosses with domestic cats developed mainly through the 1990s. Like other wild hybrids, generational distance from the jungle cat ancestor matters for temperament predictability, and the breed uses a similar filial-generation labeling system.\n\nBuilt long and lean with notably long legs for a domestic cat, reflecting its wild ancestry. Athletic and intelligent, it needs the kind of daily physical and mental engagement more demanding than most purely domestic breeds — a poor fit for a low-activity household.",
-       link:{label:"TICA: Chausie ↗", url:"https://tica.org/breed/chausie/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Chausie ↗", url:"https://tica.org/breed/chausie/", meta:"Official TICA breed profile"},
+              {label:"Litter-Robot: Chausie ↗", url:"https://www.litter-robot.com/blog/chausie-cat/", meta:"Litter-Robot breed profile"}],
+       personality:{affection:4, activity:5, intelligence:5, vocalness:4, independence:2, playfulness:5},
+       sources:{personality:[{label:"Catster", url:"https://www.catster.com/cat-breeds/chausie-cat/"}],
+         health:[{label:"WeRescue", url:"https://www.werescue.pet/breeds/chausie/"}]},
+       lifestyleBadges:["experiencedOwners","activeHousehold","goodWithDogs","familyFriendly","goodWithChildren"],
+       groomingDifficulty:1, shedding:2,
+       health:{concerns:["Hypertrophic Cardiomyopathy (HCM)","Periodontal Disease","Dietary Intestinal Sensitivity (short GI tract, gluten-sensitive)"], geneticRisk:"Moderate",
+         screeningNote:"Periodic cardiac screening is recommended; a low-grain, high-protein diet suited to the breed's shorter intestinal tract helps prevent digestive issues, and weight management matters given its large size and joint strain risk."},
+       relatedBreeds:["Bengal","Savannah"],
+       cost:{purchase:4, monthlyCare:3, grooming:1, medical:3}},
       {name:"Toyger", tag:"Pocket tiger", note:"Bred stripe-by-stripe over decades to echo a tiger's markings.",
-       origin:"United States, developed 1980s–90s", weight:"3.2–6.8kg", lifespan:"13+ yrs",
+       origin:"United States, developed 1980s–90s", weight:"3.2–6.8kg", lifespan:"9–13 yrs",
        coat:"Short, tiger-striped pattern", energy:"Medium-High", bestFor:"Families wanting an exotic look",
+       images:[{url:"images/breed/toyger-1.jpg", alt:"Toyger", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/toyger%20cat/"},
+               {url:"images/breed/toyger-2.jpg", alt:"Toyger", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/toyger%20cat/"},
+               {url:"images/breed/toyger-3.jpg", alt:"Toyger", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/toyger%20cat/"}],
        detail:"Developed by breeder Judy Sugden starting in the 1980s, selectively breeding ordinary domestic shorthairs purely for a striped coat pattern resembling a tiger's — explicitly conceived, in part, to raise public interest in tiger conservation. Unlike the Bengal, Savannah, or Chausie, there is no wild cat in the Toyger's ancestry at all; it's a fully domestic breed styled to look wild.\n\nBecause there's no wild parentage, temperament is much closer to an ordinary domestic shorthair — generally affectionate, adaptable, and good with families — while still delivering the striking striped look that draws people to hybrid breeds.",
-       link:{label:"TICA: Toyger ↗", url:"https://tica.org/breed/toyger/", meta:"Official TICA breed profile"}}
+       links:[{label:"TICA: Toyger ↗", url:"https://tica.org/breed/toyger/", meta:"Official TICA breed profile"},
+              {label:"Purina: Toyger ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/toyger", meta:"Purina UK breed profile"}],
+       personality:{affection:5, activity:4, intelligence:4, vocalness:4, independence:2, playfulness:4},
+       sources:{personality:[{label:"WebMD Pets", url:"https://www.webmd.com/pets/cats/what-to-know-about-toyger"}],
+         health:[{label:"Wisdom Panel", url:"https://www.wisdompanel.com/en-us/cat-breeds/toyger"}, {label:"Great Pet Care", url:"https://www.greatpetcare.com/cat-breeds/toyger/"}]},
+       lifestyleBadges:["familyFriendly","goodWithChildren","experiencedOwners"],
+       groomingDifficulty:1, shedding:2,
+       health:{concerns:["Hypertrophic Cardiomyopathy (HCM)","Leg Conformation Issues (cow hocking, uncommon)"], geneticRisk:"Low",
+         screeningNote:"Responsible breeders test both parents for HCM before breeding, even though the breed overall is considered healthy with no strongly linked genetic conditions."},
+       relatedBreeds:["Bengal"],
+       cost:{purchase:4, monthlyCare:2, grooming:1, medical:2}}
     ]
   },
   {
@@ -1293,25 +1690,68 @@ const categories = [
     desc:"One small cartilage or bone difference, standardized into a breed.",
     breeds:[
       {name:"Scottish Fold", tag:"Folded ears", note:"A cartilage mutation folds the ears forward for an owl-like face.",
-       origin:"Scotland, 1961 mutation", weight:"3.2–4.5kg", lifespan:"11–14 yrs",
-       coat:"Short or long (Highland Fold)", energy:"Medium", bestFor:"Calm households",
+       origin:"Scotland, 1961 mutation", weight:"2.5–6kg", lifespan:"11–14 yrs",
+       coat:"Short or long (Highland Fold)", energy:"Medium", bestFor:"Calm households, first-time owners",
+       images:[{url:"images/breed/scottish-fold-1.jpg", alt:"Scottish Fold", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/scottish%20fold%20cat/"},
+               {url:"images/breed/scottish-fold-2.jpg", alt:"Scottish Fold", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/scottish%20fold%20cat/"},
+               {url:"images/breed/scottish-fold-3.jpg", alt:"Scottish Fold", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/scottish%20fold%20cat/"}],
        detail:"Traces to a single farm cat named Susie, found in Scotland in 1961, whose folded ears were caused by a spontaneous cartilage mutation. The same gene that folds the ears also affects cartilage elsewhere in the body, which can cause a painful joint and skeletal condition (osteochondrodysplasia) — this is a genuine welfare concern, and it's why the UK's GCCF and some other bodies refuse to register the breed at all.\n\nResponsible breeders only pair a fold-eared cat with a straight-eared one, never two folds together, to reduce (though not eliminate) the risk. Temperament is calm and adaptable, and the folded-ear, round-faced look is instantly recognizable — but this is a breed worth researching the ethics of before committing to.",
-       link:{label:"TICA: Scottish Fold ↗", url:"https://tica.org/breed/scottish-fold/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Scottish Fold ↗", url:"https://tica.org/breed/scottish-fold/", meta:"Official TICA breed profile"},
+              {label:"Purina: Scottish Fold ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/scottish-fold", meta:"Purina UK breed profile"}],
+       personality:{affection:5, activity:3, intelligence:3, vocalness:2, independence:2, playfulness:3},
+       sources:{personality:[{label:"Availpet", url:"https://availpet.com/scottish-fold/"}],
+         health:[{label:"UFAW", url:"https://www.ufaw.org.uk/cats/scottish-fold-osteochondrodysplasia"}, {label:"Catster", url:"https://www.catster.com/cat-health-care/osteochondrodysplasia-scottish-fold-cats/"}]},
+       lifestyleBadges:["familyFriendly","goodWithChildren","firstTimeOwner"],
+       groomingDifficulty:2, shedding:2,
+       health:{concerns:["Osteochondrodysplasia (affects all fold-eared cats to some degree)","Progressive Arthritis","Chronic Joint Pain","Brachycephalic Airway Obstruction Syndrome","Facial-Fold Skin Infections/Eye Ulcers","Polycystic Kidney Disease"], geneticRisk:"High",
+         screeningNote:"Only pairing a fold-eared cat with a straight-eared partner (never two folds) reduces severity; limb/tail X-rays can help assess a cat's condition, but no breeding approach eliminates the risk entirely."},
+       relatedBreeds:["American Curl","British Shorthair"],
+       cost:{purchase:4, monthlyCare:3, grooming:2, medical:4}},
       {name:"American Curl", tag:"Curled ears", note:"Ears curl backward within the first week of a kitten's life.",
-       origin:"United States (California), 1981 mutation", weight:"3–5kg", lifespan:"10–20 yrs",
+       origin:"United States (California), 1981 mutation", weight:"2–5kg", lifespan:"10–20 yrs",
        coat:"Short or long", energy:"Medium", bestFor:"Families",
        detail:"Traces to a single stray kitten, Shulamith, found in California in 1981, whose ears curled backward within her first weeks of life. Unlike the Scottish Fold, this mutation affects only the ear cartilage — it is not linked to the joint and skeletal problems that make the Fold controversial, which is one of the main things that distinguishes the two curled/folded breeds.\n\nKittens are born with straight ears that begin curling within 2–10 days and set into their final shape by around four months, with the degree of curl varying cat to cat. Playful and often described as retaining kitten-like energy and curiosity well into adulthood.",
-       link:{label:"TICA: American Curl ↗", url:"https://tica.org/breed/american-curl/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: American Curl ↗", url:"https://tica.org/breed/american-curl/", meta:"Official TICA breed profile"},
+              {label:"Purina NZ: American Curl ↗", url:"https://www.purina.co.nz/cats/cat-breeds/american-curl", meta:"Purina New Zealand breed profile"}],
+       personality:{affection:5, activity:3, intelligence:3, vocalness:2, independence:2, playfulness:5},
+       sources:{personality:[{label:"ASPCA Pet Health Insurance", url:"https://www.aspcapetinsurance.com/resources/american-curls/"}],
+         health:[{label:"WebMD Pets", url:"https://www.webmd.com/pets/cats/what-to-know-about-american-curls"}, {label:"ASPCA Pet Health Insurance", url:"https://www.aspcapetinsurance.com/resources/american-curls/"}]},
+       lifestyleBadges:["familyFriendly","goodWithChildren","goodWithDogs","indoorPreferred"],
+       groomingDifficulty:2, shedding:1,
+       health:{concerns:["Ear Infections (narrow ear canals/wax buildup)"], geneticRisk:"Low",
+         screeningNote:"Regular ear cleaning helps prevent infections in narrow-eared lines; unlike the Scottish Fold, the curl mutation itself carries no known skeletal risk."},
+       relatedBreeds:["Scottish Fold","Manx"],
+       cost:{purchase:3, monthlyCare:2, grooming:2, medical:2}},
       {name:"Kurilian Bobtail", tag:"Natural bobtail", note:"A short, pom-pom tail that occurs naturally in the Kuril Islands.",
        origin:"Kuril Islands, Russia", weight:"3.2–7.3kg", lifespan:"15–20 yrs",
-       coat:"Short or semi-long, weatherproof", energy:"Medium-High", bestFor:"Families, water-tolerant fun",
+       coat:"Short or semi-long, weatherproof", energy:"High", bestFor:"Families, water-tolerant fun",
        detail:"A natural breed documented in Russia's Kuril Islands, Sakhalin Island, and the Kamchatka Peninsula for at least 200 years, likely related to (but distinct from) the Japanese Bobtail. It remained largely unknown outside Russia and Japan until recently — fewer than 100 are estimated to exist in the US even today.\n\nEach cat's pom-pom-shaped bobtail is unique, falling into 'whisk,' 'spiral,' or 'snag' types. Known as skilled, enthusiastic fishers and genuinely strong swimmers. Reputed for excellent overall health and one of the longest average lifespans of any breed, alongside an easygoing, dog-like temperament that adapts well to families with other pets.",
-       link:{label:"TICA: Kurilian Bobtail ↗", url:"https://tica.org/breed/kurilian-bobtail/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Kurilian Bobtail ↗", url:"https://tica.org/breed/kurilian-bobtail/", meta:"Official TICA breed profile"},
+              {label:"Vetstreet: Kurilian Bobtail ↗", url:"https://www.vetstreet.com/cats/kurilian-bobtail", meta:"Vetstreet breed profile"}],
+       personality:{affection:5, activity:4, intelligence:5, vocalness:3, independence:3, playfulness:4},
+       sources:{personality:[{label:"cats.com", url:"https://cats.com/cat-breeds/kurilian-bobtail"}],
+         health:[{label:"Lux Cat Living", url:"https://luxcatliving.com/cat-breeds/kurilian-bobtail/"}]},
+       lifestyleBadges:["familyFriendly","goodWithDogs","goodWithChildren"],
+       groomingDifficulty:3, shedding:2,
+       health:{concerns:["Obesity"], geneticRisk:"Low",
+         screeningNote:"The breed's natural, genetically diverse origin (rather than intensive selective breeding) is credited for its unusually clean health record; occasional issues are reported only in heavily inbred lines. Weight management is emphasized as the main preventive care consideration."},
+       relatedBreeds:["Norwegian Forest","Siberian"],
+       cost:{purchase:4, monthlyCare:3, grooming:3, medical:2}},
       {name:"Manx", tag:"Tailless", note:"Born with no tail at all, native to the Isle of Man.",
-       origin:"Isle of Man, ancient mutation", weight:"3.6–5.4kg", lifespan:"16+ yrs",
-       coat:"Short (Cymric variant is long-haired)", energy:"Medium", bestFor:"Families",
+       origin:"Isle of Man, ancient mutation", weight:"3.6–5.4kg", lifespan:"8–15 yrs",
+       coat:"Short (Cymric variant is long-haired)", energy:"Medium", bestFor:"Families, secure outdoor space",
        detail:"A natural mutation isolated on the Isle of Man for centuries, producing tail lengths ranging from a completely absent tail ('rumpy') to a short stump ('stumpy') or a nearly normal tail ('longy'). Folklore explanations (the tail caught in Noah's Ark door being the most repeated) are charming but not remotely how the trait actually arose.\n\nThe taillessness gene carries a real health risk: when a cat inherits two copies (from two tailless parents), it can cause serious spinal cord defects, sometimes fatal in utero. Responsible breeding always pairs a tailless cat with a tailed one to avoid this. Strong, rabbit-like hind legs give the Manx a distinctive hopping gait and make it a capable hunter.",
-       link:{label:"TICA: Manx ↗", url:"https://tica.org/breed/manx/", meta:"Official TICA breed profile"}}
+       links:[{label:"TICA: Manx ↗", url:"https://tica.org/breed/manx/", meta:"Official TICA breed profile"},
+              {label:"Purina: Manx ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/manx", meta:"Purina UK breed profile"}],
+       personality:{affection:4, activity:3, intelligence:3, vocalness:3, independence:2, playfulness:4},
+       sources:{personality:[{label:"Catster", url:"https://www.catster.com/cat-breeds/manx-cat/"}],
+         health:[{label:"PetMD", url:"https://www.petmd.com/cat/conditions/genetic/manx-syndrome-cats"}, {label:"Vet Help Direct", url:"https://vethelpdirect.com/vetblog/2024/08/03/are-manx-cats-genetically-healthy/"}]},
+       lifestyleBadges:["familyFriendly","goodWithChildren","firstTimeOwner"],
+       groomingDifficulty:1, shedding:2,
+       health:{concerns:["Manx Syndrome / Spina Bifida (sacrococcygeal dysgenesis)","Congenital Deafness (in white Manx)","Early-Onset Arthritis","Bowel Blockages (narrowed anal passages)"], geneticRisk:"High",
+         screeningNote:"Even single-copy (viable) tailless kittens carry a meaningful risk of spina-bifida-type spinal defects — estimated around 1 in 5 — so responsible breeders always pair a tailless cat with a fully tailed one and screen kittens early for mobility or continence issues."},
+       relatedBreeds:["American Curl","Kurilian Bobtail"],
+       cost:{purchase:3, monthlyCare:2, grooming:1, medical:4}}
     ]
   },
   {
@@ -1319,30 +1759,93 @@ const categories = [
     desc:"The show-ring aristocrats — bred for coat as much as conformation.",
     breeds:[
       {name:"Persian", tag:"Flat-faced", note:"A coat that needs daily grooming and a face bred flatter over generations.",
-       origin:"Iran (Persia), ancient; modern type via Britain, 19th c.", weight:"3–5.5kg", lifespan:"8–11 yrs",
+       origin:"Iran (Persia), ancient; modern type via Britain, 19th c.", weight:"3–5.5kg", lifespan:"8–12 yrs",
        coat:"Very long, dense — daily grooming", energy:"Low", bestFor:"Calm households, committed groomers",
+       images:[{url:"images/breed/persian-1.jpg", alt:"Persian", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/persian%20cat/"},
+               {url:"images/breed/persian-2.jpg", alt:"Persian", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/persian%20cat/"},
+               {url:"images/breed/persian-3.jpg", alt:"Persian", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/persian%20cat/"}],
        detail:"Among the oldest recognized breeds, imported into Europe from the Persia region as early as the 17th century and refined into today's show standard mainly in Britain through the 19th and 20th centuries. The modern 'peke-faced' extreme-flat type is a much more recent development than the breed itself, and a more moderate-faced 'traditional' or 'doll-face' Persian still exists as a less exaggerated alternative.\n\nThe extreme flat face carries real health trade-offs — breathing difficulty, tear-duct overflow, and dental crowding are all common in the modern show type. The coat mats seriously without daily brushing. In return, the temperament is famously placid and undemanding, suiting a quiet lap-cat lifestyle.",
-       link:{label:"TICA: Persian ↗", url:"https://tica.org/breed/persian/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Persian ↗", url:"https://tica.org/breed/persian/", meta:"Official TICA breed profile"},
+              {label:"Purina: Persian ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/persian", meta:"Purina UK breed profile"}],
+       personality:{affection:4, activity:1, intelligence:3, vocalness:2, independence:3, playfulness:2},
+       sources:{personality:[{label:"Pets Best", url:"https://www.petsbest.com/blog/cat-breed-guide-persian"}],
+         health:[{label:"cats.com", url:"https://cats.com/cat-breeds/persian"}, {label:"PetMD", url:"https://www.petmd.com/cat/breeds/persian"}]},
+       lifestyleBadges:["apartmentFriendly","indoorPreferred","experiencedOwners"],
+       groomingDifficulty:5, shedding:4,
+       health:{concerns:["Polycystic Kidney Disease (PKD)","Brachycephalic Syndrome (breathing difficulty)","Dental Malocclusion","Hypertrophic Cardiomyopathy (HCM)","Alpha-Mannosidosis (rare, inherited)"], geneticRisk:"High",
+         screeningNote:"PKD DNA testing is standard; traditional/doll-face lines with a more moderate facial structure carry meaningfully fewer brachycephalic complications than extreme 'peke-faced' show lines."},
+       relatedBreeds:["Himalayan","Ragdoll"],
+       cost:{purchase:3, monthlyCare:3, grooming:5, medical:4}},
       {name:"Himalayan", tag:"Persian × Siamese", note:"Persian body type with Siamese point coloring and blue eyes.",
-       origin:"United States/Britain; program began 1931", weight:"3–5.5kg", lifespan:"8–11 yrs",
-       coat:"Long, Persian-type", energy:"Low-Medium", bestFor:"Calm households",
-       detail:"Virginia Cobb and Dr. Clyde Keeler began the founding breeding program in 1931, crossing Persians with Siamese to combine the Persian's long coat and body type with the Siamese's color-point pattern and blue eyes; the first kitten was named Newton's Debutante. Work continued in Canada in the 1950s, and US associations recognized the breed as the Himalayan in 1957. Some registries (CFA among them) treat it as its own breed; others (like the CFA's rival body FIFe, and many UK associations) classify it simply as a color division of the Persian rather than a separate breed — so its official status genuinely depends on which organization you ask.\n\nIn every other respect it behaves like a Persian: the same daily grooming demands, the same calm and gentle temperament, and often the same flat-faced conformation trade-offs depending on breeding line.",
-       link:{label:"TICA: Himalayan ↗", url:"https://tica.org/breed/himalayan/", meta:"Official TICA breed profile"}},
+       origin:"United States/Britain; genetic proof-of-concept 1930s, breed program from 1950", weight:"3–6.5kg", lifespan:"8–11 yrs",
+       coat:"Long, Persian-type", energy:"Medium", bestFor:"Calm households",
+       images:[{url:"images/breed/himalayan-1.jpg", alt:"Himalayan", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/himalayan%20cat/"},
+               {url:"images/breed/himalayan-2.jpg", alt:"Himalayan", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/himalayan%20cat/"},
+               {url:"images/breed/himalayan-3.jpg", alt:"Himalayan", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/himalayan%20cat/"}],
+       detail:"Virginia Cobb and Dr. Clyde Keeler ran early genetic proof-of-concept crosses in the 1930s, crossing Persians with Siamese to show that the Siamese's color-point pattern and blue eyes could be bred onto a Persian's long coat and body type; the first such kitten was named Newton's Debutante. American breeder Marguerita Goforth then took up the project in 1950, developing it into a stable breeding line. Work continued in Canada in the 1950s, and US associations recognized the breed as the Himalayan in 1957. Some registries (CFA among them) treat it as its own breed; others (like the CFA's rival body FIFe, and many UK associations) classify it simply as a color division of the Persian rather than a separate breed — so its official status genuinely depends on which organization you ask.\n\nIn every other respect it behaves like a Persian: the same daily grooming demands, the same calm and gentle temperament, and often the same flat-faced conformation trade-offs depending on breeding line.",
+       links:[{label:"TICA: Himalayan ↗", url:"https://tica.org/breed/himalayan/", meta:"Official TICA breed profile"},
+              {label:"Purina NZ: Himalayan ↗", url:"https://www.purina.co.nz/cats/cat-breeds/himalayan", meta:"Purina New Zealand breed profile"}],
+       personality:{affection:5, activity:3, intelligence:3, vocalness:2, independence:2, playfulness:3},
+       sources:{personality:[{label:"Untamed", url:"https://untamed.com/blogs/cat-breeds/himalayan-persian-cat"}],
+         health:[{label:"PetMD", url:"https://www.petmd.com/cat/breeds/himalayan"}, {label:"Rover", url:"https://www.rover.com/blog/himalayan-cat/"}]},
+       lifestyleBadges:["familyFriendly","goodWithDogs","goodWithChildren","indoorPreferred"],
+       groomingDifficulty:5, shedding:4,
+       health:{concerns:["Polycystic Kidney Disease (PKD)","Brachycephalic-Related Issues (dental, eye)","Feline Hyperesthesia Syndrome"], geneticRisk:"High",
+         screeningNote:"PKD1 DNA testing is standard given the shared Persian ancestry; regular dental and eye checks are recommended given the breed's flat-faced conformation."},
+       relatedBreeds:["Persian","Birman"],
+       cost:{purchase:3, monthlyCare:3, grooming:5, medical:4}},
       {name:"Ragdoll", tag:"Goes limp", note:"Bred specifically for a placid temperament and a floppy 'flop' when held.",
        origin:"United States (California), 1960s", weight:"4.5–9kg", lifespan:"12–17 yrs",
        coat:"Semi-long, silky, low-mat", energy:"Low-Medium", bestFor:"Families, calm households",
+       images:[{url:"images/breed/ragdoll-1.jpg", alt:"Ragdoll", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/ragdoll%20cat/"},
+               {url:"images/breed/ragdoll-2.jpg", alt:"Ragdoll", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/ragdoll%20cat/"},
+               {url:"images/breed/ragdoll-3.jpg", alt:"Ragdoll", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/ragdoll%20cat/"}],
        detail:"Developed in California in the 1960s by breeder Ann Baker, who gave the breed its name for its tendency to go limp and relaxed when picked up. Baker also made a number of unusual and since-debunked marketing claims about the breed — including that it felt no pain and was resistant to injury — claims no serious breeder or vet organization supports today; the actual temperament is simply unusually placid, not medically different.\n\nOne of the larger domestic breeds, with a silky semi-long coat that mats less than a Persian's thanks to a lighter undercoat. Widely described as a 'puppy cat' for its tendency to follow owners from room to room and its generally easygoing, affectionate nature.",
-       link:{label:"TICA: Ragdoll ↗", url:"https://tica.org/breed/ragdoll/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Ragdoll ↗", url:"https://tica.org/breed/ragdoll/", meta:"Official TICA breed profile"},
+              {label:"Purina: Ragdoll ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/ragdoll", meta:"Purina UK breed profile"}],
+       personality:{affection:5, activity:2, intelligence:3, vocalness:3, independence:1, playfulness:3},
+       sources:{personality:[{label:"WebMD Pets", url:"https://www.webmd.com/pets/cats/what-to-know-about-a-ragdoll-cat"}, {label:"PetPlace", url:"https://www.petplace.com/article/cats/pet-behavior-training/cat-behavior-training/ragdoll-cat-personality-traits"}],
+         health:[{label:"Pastel Ragdolls", url:"https://www.pastelragdolls.com/blog/hcm-in-ragdoll-cats-what-every-owner-should-know-about-hypertrophic-cardiomyopathy"}, {label:"Dr. Judy Morgan", url:"https://drjudymorgan.com/blogs/blog/common-genetic-diseases-of-ragdoll-cats"}]},
+       lifestyleBadges:["familyFriendly","goodWithChildren","firstTimeOwner","indoorPreferred","goodWithDogs"],
+       groomingDifficulty:3, shedding:3,
+       health:{concerns:["Hypertrophic Cardiomyopathy (HCM)","Polycystic Kidney Disease (PKD)"], geneticRisk:"Moderate",
+         screeningNote:"Genetic testing for the HCM mutation is standard; homozygous-positive cats can develop severe disease as early as 6 months, while heterozygous cats typically have a later, milder course."},
+       relatedBreeds:["Birman","Persian"],
+       cost:{purchase:4, monthlyCare:3, grooming:3, medical:3}},
       {name:"Birman", tag:"Sacred cat of Burma", note:"Deep blue eyes and white 'gloved' paws on every foot.",
-       origin:"Legendary origin in Myanmar; developed in France, early 20th c.", weight:"~5.4kg (both sexes)", lifespan:"9–15+ yrs",
-       coat:"Semi-long, silky, single coat", energy:"Medium", bestFor:"Families, gentle temperaments",
+       origin:"Legendary origin in Myanmar; developed in France, early 20th c.", weight:"2.7–5.4kg", lifespan:"9–16 yrs",
+       coat:"Semi-long, silky, single coat", energy:"Medium-High", bestFor:"Families, gentle temperaments",
+       images:[{url:"images/breed/birman-1.jpg", alt:"Birman", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/birman%20cat/"},
+               {url:"images/breed/birman-2.jpg", alt:"Birman", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/birman%20cat/"},
+               {url:"images/breed/birman-3.jpg", alt:"Birman", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/birman%20cat/"}],
        detail:"Wrapped in a temple-guardian legend tying it to sacred cats of Myanmar (Burma), though the documented breed history really begins in France in the early 20th century. The breed came close to disappearing in Europe after the Second World War, and today's population was rebuilt from just a couple of surviving cats.\n\nThe signature look is white 'gloved' paws on all four feet against a color-point coat, with vivid sapphire-blue eyes. The single coat (no heavy undercoat) resists matting better than a Persian's, and the temperament is gentle and affectionate without being especially demanding.",
-       link:{label:"TICA: Birman ↗", url:"https://tica.org/breed/birman/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Birman ↗", url:"https://tica.org/breed/birman/", meta:"Official TICA breed profile"},
+              {label:"Purina: Birman ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/birman", meta:"Purina UK breed profile"}],
+       personality:{affection:5, activity:3, intelligence:3, vocalness:2, independence:2, playfulness:4},
+       sources:{personality:[{label:"BowWow Insurance", url:"https://bowwowinsurance.com.au/cats/cat-breeds/birman/"}],
+         health:[{label:"PetMD", url:"https://www.petmd.com/cat/breeds/birman"}, {label:"ASPCA Pet Health Insurance", url:"https://www.aspcapetinsurance.com/resources/birman/"}]},
+       lifestyleBadges:["familyFriendly","firstTimeOwner","goodWithDogs","indoorPreferred","goodWithChildren"],
+       groomingDifficulty:3, shedding:3,
+       health:{concerns:["Hypertrophic Cardiomyopathy (HCM)","Polycystic Kidney Disease (PKD)","Hypomyelination (Birman-specific, fatal in kittens)"], geneticRisk:"Moderate",
+         screeningNote:"PKD DNA testing and cardiac screening are standard; responsible breeders also screen for the hypomyelination mutation given its severity in affected kittens."},
+       relatedBreeds:["Ragdoll","Himalayan"],
+       cost:{purchase:3, monthlyCare:3, grooming:3, medical:3}},
       {name:"Somali", tag:"Fox-tailed", note:"Essentially a long-haired Abyssinian, with a bushy, fox-like tail.",
-       origin:"United States/Canada, recognized as a breed 1970s", weight:"2.7–4.5kg", lifespan:"10–19+ yrs",
+       origin:"United States/Canada, recognized as a breed 1970s", weight:"2.7–4.5kg", lifespan:"10–16 yrs",
        coat:"Semi-long, ticked, fox-like tail", energy:"High", bestFor:"Active, engaged owners",
+       images:[{url:"images/breed/somali-1.jpg", alt:"Somali", credit:"Photo via Unsplash", creditUrl:"https://unsplash.com/s/photos/somali-cat"}],
        detail:"Emerged from long-haired kittens occasionally born to otherwise short-haired Abyssinian litters, carrying a recessive long-hair gene — for years these kittens were simply not shown, until breeders recognized them as worth developing in their own right and gained formal recognition as a separate breed through the 1970s and 80s.\n\nEssentially a long-haired Abyssinian in every meaningful sense: the same ticked (agouti) coat, where each hair carries several bands of color, now on a fuller fox-like coat and brush tail. Highly active, curious, and a capable climber — this is not a low-maintenance lap cat, though the single coat needs less grooming than most other long-haired breeds.",
-       link:{label:"TICA: Somali ↗", url:"https://tica.org/breed/somali/", meta:"Official TICA breed profile"}}
+       links:[{label:"TICA: Somali ↗", url:"https://tica.org/breed/somali/", meta:"Official TICA breed profile"},
+              {label:"Purina: Somali ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/somali", meta:"Purina UK breed profile"}],
+       personality:{affection:4, activity:5, intelligence:5, vocalness:4, independence:3, playfulness:5},
+       sources:{personality:[{label:"Wopet", url:"https://wopet.com/cats/somali-cat/"}],
+         health:[{label:"Catsmeowweb", url:"https://www.catsmeowweb.com/archives/23591"}, {label:"PetMD", url:"https://www.petmd.com/cat/breeds/somali"}]},
+       lifestyleBadges:["experiencedOwners","activeHousehold","goodWithDogs"],
+       groomingDifficulty:2, shedding:3,
+       health:{concerns:["Progressive Retinal Atrophy (PRA)","Pyruvate Kinase (PK) Deficiency","Renal Amyloidosis","Hypertrophic Cardiomyopathy (HCM)"], geneticRisk:"Moderate",
+         screeningNote:"DNA testing is available for PRA and PK deficiency; periodic cardiac screening for HCM is recommended given the breed's shared ancestry with the Abyssinian."},
+       relatedBreeds:["Abyssinian"],
+       cost:{purchase:3, monthlyCare:2, grooming:2, medical:3}}
     ]
   },
   {
@@ -1350,45 +1853,146 @@ const categories = [
     desc:"The oldest formally recognized lines, sleek by design.",
     breeds:[
       {name:"British Shorthair", tag:"Round & dense", note:"The model for illustrations of the Cheshire Cat; plush, dense coat.",
-       origin:"Britain, ancient roots; standardized late 19th c.", weight:"3.6–7.3kg", lifespan:"12–20 yrs",
+       origin:"Britain, ancient roots; standardized late 19th c.", weight:"3–7.7kg", lifespan:"12–20 yrs",
        coat:"Short, dense, plush", energy:"Low-Medium", bestFor:"Calm households, families",
+       images:[{url:"images/breed/british-shorthair-1.jpg", alt:"British Shorthair", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/british%20shorthair%20cat/"},
+               {url:"images/breed/british-shorthair-2.jpg", alt:"British Shorthair", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/british%20shorthair%20cat/"},
+               {url:"images/breed/british-shorthair-3.jpg", alt:"British Shorthair", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/british%20shorthair%20cat/"}],
        detail:"Descended from cats that arrived in Britain with Roman traders roughly two thousand years ago, though the breed as formally standardized dates to Victorian-era cat fancy in the late 19th century — among the very first breeds to be exhibited and standardized at all. The dense blue-grey coloring, once called 'British Blue,' is the most iconic variant, though the breed comes in many colors.\n\nOften credited as the visual model for Tenniel's illustrations of the Cheshire Cat. The build is famously 'cobby' — round face, round body, sturdy legs — paired with an undemanding, easygoing temperament that tolerates a fairly independent lifestyle well.",
-       link:{label:"TICA: British Shorthair ↗", url:"https://tica.org/breed/british-shorthair/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: British Shorthair ↗", url:"https://tica.org/breed/british-shorthair/", meta:"Official TICA breed profile"},
+              {label:"Purina: British Shorthair ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/british-shorthair", meta:"Purina UK breed profile"}],
+       personality:{affection:4, activity:2, intelligence:3, vocalness:3, independence:4, playfulness:2},
+       sources:{personality:[{label:"Petz.uk", url:"https://www.petz.uk/british-shorthair-guide/"}],
+         health:[{label:"British Shorthair Cat", url:"https://www.britishshorthaircat.co.uk/british-shorthair-health/"}, {label:"VetLens", url:"https://www.vetlens.com/breeds/cats/british-shorthair"}]},
+       lifestyleBadges:["indoorPreferred","firstTimeOwner","apartmentFriendly","goodWithDogs","familyFriendly","goodWithChildren"],
+       groomingDifficulty:3, shedding:3,
+       health:{concerns:["Hypertrophic Cardiomyopathy (HCM)","Polycystic Kidney Disease (PKD)","Obesity","British Shorthair Autoimmune Lymphoproliferative Syndrome"], geneticRisk:"High",
+         screeningNote:"A PKD-clear (N/N) DNA certificate for both parents is recommended given the breed's historical Persian crossbreeding; periodic cardiac screening from age 2 is also advised."},
+       relatedBreeds:["Scottish Fold","Russian Blue"],
+       cost:{purchase:3, monthlyCare:2, grooming:2, medical:3}},
       {name:"Russian Blue", tag:"Silver-tipped", note:"A double coat with silvery guard hairs and striking emerald eyes.",
-       origin:"Russia (Archangel), natural breed", weight:"3–5.5kg", lifespan:"10–20 yrs",
+       origin:"Russia (Archangel), natural breed", weight:"3–7kg", lifespan:"10–20 yrs",
        coat:"Short, dense double coat, silvery-blue", energy:"Medium", bestFor:"Quiet households",
-       detail:"Believed to originate around the northern Russian port of Arkhangelsk (hence an old alternate name, the 'Archangel Blue'), and brought to Britain by sailors in the 1860s, from where formal breeding and showing developed.\n\nThe dense double coat has silver-tipped guard hairs that give it a distinctive shimmer, set off by vivid emerald-green eyes. Reserved and cautious around strangers, but deeply loyal and often quite trainable once bonded to its household — combined with low shedding, this is a breed that rewards patience rather than instant affection.",
-       link:{label:"TICA: Russian Blue ↗", url:"https://tica.org/breed/russian-blue/", meta:"Official TICA breed profile"}},
+       images:[{url:"images/breed/russian-blue-1.jpg", alt:"Russian Blue", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/russian%20blue%20cat/"},
+               {url:"images/breed/russian-blue-2.jpg", alt:"Russian Blue", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/russian%20blue%20cat/"},
+               {url:"images/breed/russian-blue-3.jpg", alt:"Russian Blue", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/russian%20blue%20cat/"}],
+       detail:"Believed to originate around the northern Russian port of Arkhangelsk (hence an old alternate name, the 'Archangel Blue'), and brought to Britain by sailors in the 1860s, from where formal breeding and showing developed.\n\nThe dense double coat has silver-tipped guard hairs that give it a distinctive shimmer, set off by vivid emerald-green eyes. Reserved and cautious around strangers, but deeply loyal and often quite trainable once bonded to its household — this is a breed that rewards patience rather than instant affection.",
+       links:[{label:"TICA: Russian Blue ↗", url:"https://tica.org/breed/russian-blue/", meta:"Official TICA breed profile"},
+              {label:"Purina: Russian Blue ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/russian-blue", meta:"Purina UK breed profile"}],
+       personality:{affection:4, activity:3, intelligence:4, vocalness:1, independence:3, playfulness:3},
+       sources:{personality:[{label:"WebMD Pets", url:"https://www.webmd.com/pets/cats/what-to-know-about-russian-blue-cat"}, {label:"ASPCA Pet Health Insurance", url:"https://www.aspcapetinsurance.com/resources/russian-blue-cat-facts/"}],
+         health:[{label:"HolistaPet", url:"https://www.holistapet.com/blogs/cat-breeds/russian-blue-feline"}]},
+       lifestyleBadges:["firstTimeOwner","goodWithDogs"],
+       groomingDifficulty:2, shedding:3,
+       health:{concerns:["Hypertrophic Cardiomyopathy (HCM)","Bladder Stones (Urolithiasis)","Hyperthyroidism (age 8+)"], geneticRisk:"Low",
+         screeningNote:"No breed-specific genetic conditions are documented; routine weight management and senior thyroid checks (from age 8) are the main preventive measures."},
+       relatedBreeds:["British Shorthair","Abyssinian"],
+       cost:{purchase:3, monthlyCare:2, grooming:1, medical:2}},
       {name:"Abyssinian", tag:"Ticked coat", note:"Each hair banded with color, giving a tiny-cougar look.",
-       origin:"Uncertain — likely Indian Ocean coastal region; developed in Britain, 19th c.", weight:"2.7–5.4kg", lifespan:"14–17+ yrs",
+       origin:"Uncertain — likely Indian Ocean coastal region; developed in Britain, 19th c.", weight:"2.7–5.4kg", lifespan:"9–17 yrs",
        coat:"Short, ticked (agouti)", energy:"High", bestFor:"Active, engaged owners",
+       images:[{url:"images/breed/abyssinian-1.jpg", alt:"Abyssinian", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/abyssinian%20cat/"},
+               {url:"images/breed/abyssinian-2.jpg", alt:"Abyssinian", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/abyssinian%20cat/"},
+               {url:"images/breed/abyssinian-3.jpg", alt:"Abyssinian", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/abyssinian%20cat/"}],
        detail:"The name suggests Ethiopian (Abyssinian) origins, but genetic studies point instead to ancestors from coastal regions around the Indian Ocean and South Asia; the breed itself was developed and standardized in Britain in the 19th century regardless of where its ancestors actually came from.\n\nThe ticked coat, where each hair has several bands of alternating color, gives a subtle resemblance to a wild cougar in miniature. Extremely active, athletic, and curious — often more interested in exploring than being held — which makes it a poor match for anyone wanting a purely cuddly lap cat.",
-       link:{label:"TICA: Abyssinian ↗", url:"https://tica.org/breed/abyssinian/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Abyssinian ↗", url:"https://tica.org/breed/abyssinian/", meta:"Official TICA breed profile"},
+              {label:"Purina: Abyssinian ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/abyssinian", meta:"Purina UK breed profile"}],
+       personality:{affection:4, activity:5, intelligence:5, vocalness:3, independence:2, playfulness:5},
+       sources:{personality:[{label:"Great Pet Care", url:"https://www.greatpetcare.com/cat-breeds/abyssinian-cat/"}],
+         health:[{label:"UFAW", url:"https://www.ufaw.org.uk/cats/abyssinian---pyruvate-kinase-deficiency-"}, {label:"EveryCat Health Foundation", url:"https://everycat.org/cat-health/pyruvate-kinase-deficiency-in-abyssinian-somali-cats/"}]},
+       lifestyleBadges:["experiencedOwners","activeHousehold","indoorPreferred","goodWithDogs"],
+       groomingDifficulty:2, shedding:2,
+       health:{concerns:["Pyruvate Kinase (PK) Deficiency","Progressive Retinal Atrophy (photoreceptor dysplasia)","Amyloidosis"], geneticRisk:"Moderate",
+         screeningNote:"DNA testing for both PK deficiency and photoreceptor-dysplasia PRA is considered essential before breeding, given the breed's elevated carrier frequency for PK deficiency specifically."},
+       relatedBreeds:["Somali","Egyptian Mau"],
+       cost:{purchase:3, monthlyCare:2, grooming:1, medical:3}},
       {name:"Burmese", tag:"Brick in silk", note:"Compact and surprisingly heavy for its size; famously affectionate.",
        origin:"Myanmar (legendary); developed in the US, 1930s", weight:"3.5–5.5kg", lifespan:"10–17 yrs",
-       coat:"Short, fine, satin-like", energy:"Medium-High", bestFor:"Social, affectionate households",
+       coat:"Short, fine, satin-like", energy:"High", bestFor:"Social, affectionate households",
+       images:[{url:"images/breed/burmese-1.jpg", alt:"Burmese", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/burmese%20cat/"},
+               {url:"images/breed/burmese-2.jpg", alt:"Burmese", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/burmese%20cat/"},
+               {url:"images/breed/burmese-3.jpg", alt:"Burmese", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/burmese%20cat/"}],
        detail:"Nearly every modern Burmese traces back to a single cat, Wong Mau, a brown female imported from Burma (Myanmar) to the United States in 1930 by Dr. Joseph Thompson, who then crossed her with Siamese to develop the breed. \n\nOften described as 'a brick wrapped in silk' — a compact, surprisingly heavy, muscular body under a sleek, fine coat. Extremely people-oriented, sometimes described as dog-like in how closely it follows and engages with its household, with a softer, less piercing voice than its Siamese relatives.",
-       link:{label:"TICA: Burmese ↗", url:"https://tica.org/breed/burmese/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Burmese ↗", url:"https://tica.org/breed/burmese/", meta:"Official TICA breed profile"},
+              {label:"Purina: Burmese ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/burmese", meta:"Purina UK breed profile"}],
+       personality:{affection:5, activity:4, intelligence:4, vocalness:3, independence:1, playfulness:4},
+       sources:{personality:[{label:"Litter-Robot", url:"https://www.litter-robot.com/blog/burmese-cat-personality/"}],
+         health:[{label:"Burmese Whiskers", url:"https://burmesewhiskers.com/7-burmese-cat-health-issues/"}, {label:"UC Davis VGL", url:"https://vgl.ucdavis.edu/test/burmese-hypokalemia"}]},
+       lifestyleBadges:["familyFriendly","goodWithChildren","firstTimeOwner","goodWithDogs"],
+       groomingDifficulty:1, shedding:2,
+       health:{concerns:["Diabetes Mellitus (up to 10% of the breed)","Burmese Hypokalemia (treatable)","Craniofacial Abnormalities","Endocardial Fibroelastosis (rare)","Orofacial Pain Syndrome","Pectus Excavatum","Gangliosidosis"], geneticRisk:"High",
+         screeningNote:"Burmese hypokalemia has a DNA test (UC Davis VGL) and is manageable with lifelong potassium supplementation; given the breed's historically narrow gene pool, routine blood-glucose monitoring for diabetes and cardiac screening are also recommended."},
+       relatedBreeds:["Siamese","Oriental Shorthair"],
+       cost:{purchase:3, monthlyCare:3, grooming:1, medical:4}},
       {name:"Siamese", tag:"Point-colored", note:"One of the oldest recognized breeds; vocal and strongly opinionated.",
-       origin:"Thailand (Siam), ancient breed", weight:"2.5–5.5kg", lifespan:"12–20 yrs",
+       origin:"Thailand (Siam), ancient breed", weight:"2.5–6.5kg", lifespan:"8–20 yrs",
        coat:"Short, fine, color-point", energy:"High", bestFor:"Attentive owners",
+       images:[{url:"images/breed/siamese-1.jpg", alt:"Siamese", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/siamese%20cat/"},
+               {url:"images/breed/siamese-2.jpg", alt:"Siamese", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/siamese%20cat/"},
+               {url:"images/breed/siamese-3.jpg", alt:"Siamese", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/siamese%20cat/"}],
        detail:"One of the oldest documented cat breeds, appearing in Thailand's Tamra Maew ('Cat Book Poems') manuscript centuries ago, and among the first Asian breeds exhibited in the West — shown at London's Crystal Palace show in 1871. The distinctive color-point pattern comes from a temperature-sensitive form of partial albinism: pigment develops more strongly on the cooler extremities (face, ears, paws, tail).\n\nModern show-type Siamese have trended toward an increasingly extreme wedge-shaped head, prompting some breeders to maintain a separate, rounder-headed 'traditional' or 'applehead' line closer to the original look. Famously vocal and opinionated — genuinely one of the chattiest common breeds — and strongly attached to its people, disliking long stretches alone.",
-       link:{label:"TICA: Siamese ↗", url:"https://tica.org/breed/siamese/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Siamese ↗", url:"https://tica.org/breed/siamese/", meta:"Official TICA breed profile"},
+              {label:"Purina: Siamese ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/siamese", meta:"Purina UK breed profile"}],
+       personality:{affection:5, activity:4, intelligence:4, vocalness:5, independence:1, playfulness:4},
+       sources:{personality:[{label:"CuteCatsHQ", url:"https://cutecatshq.com/blog/siamese-cat-breed-guide"}],
+         health:[{label:"VetLens", url:"https://www.vetlens.com/breeds/cats/siamese"}, {label:"Catster", url:"https://www.catster.com/cat-health-care/siamese-cat-health-problems/"}]},
+       lifestyleBadges:["experiencedOwners","goodWithDogs"],
+       groomingDifficulty:1, shedding:2,
+       health:{concerns:["Progressive Retinal Atrophy (PRA)","Amyloidosis (liver/kidney)","Glaucoma","Feline Asthma","Mucopolysaccharidosis","Niemann-Pick Disease","GM2 Gangliosidosis","Intestinal Adenocarcinoma","Mediastinal Lymphoma"], geneticRisk:"Moderate",
+         screeningNote:"No cure exists for amyloidosis, so supportive veterinary care focuses on early detection; DNA testing is available for PRA, mucopolysaccharidosis, and gangliosidosis in some lines."},
+       relatedBreeds:["Oriental Shorthair","Burmese"],
+       cost:{purchase:2, monthlyCare:2, grooming:1, medical:3}},
       {name:"Oriental Shorthair", tag:"300+ colors", note:"Siamese body type, bred out into hundreds of color combinations.",
-       origin:"Britain/United States, developed 1950s–70s", weight:"2.3–5.4kg", lifespan:"10+ yrs (often 20+)",
+       origin:"Britain/United States, developed 1950s–70s", weight:"2.3–5.4kg", lifespan:"10–15 yrs",
        coat:"Short, fine, same body as Siamese", energy:"High", bestFor:"Attentive owners",
+       images:[{url:"images/breed/oriental-shorthair-1.jpg", alt:"Oriental Shorthair", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/oriental%20shorthair%20cat/"},
+               {url:"images/breed/oriental-shorthair-2.jpg", alt:"Oriental Shorthair", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/oriental%20shorthair%20cat/"}],
        detail:"Developed from Siamese breeding lines through the 1950s–70s specifically to preserve the Siamese body type in solid colors and patterns other than the classic point pattern, after some breeders wanted the look without the coloring restriction.\n\nRecognized in over 300 color and pattern combinations, more than almost any other breed. Temperament closely mirrors the Siamese — vocal, socially demanding, intelligent, and often easy to leash- or trick-train — since the two share most of their recent ancestry.",
-       link:{label:"TICA: Oriental Shorthair ↗", url:"https://tica.org/breed/oriental-shorthair/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Oriental Shorthair ↗", url:"https://tica.org/breed/oriental-shorthair/", meta:"Official TICA breed profile"},
+              {label:"Purina: Oriental Shorthair ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/oriental-short-hair", meta:"Purina UK breed profile"}],
+       personality:{affection:5, activity:4, intelligence:5, vocalness:5, independence:1, playfulness:4},
+       sources:{personality:[{label:"Litter-Robot", url:"https://www.litter-robot.com/blog/oriental-shorthair/"}],
+         health:[{label:"Catster", url:"https://www.catster.com/cat-health-care/oriental-shorthair-cat-health-problems/"}, {label:"Bioguardlabs", url:"https://www.bioguardlabs.com/breed-related-disease-oriental-shorthair/"}]},
+       lifestyleBadges:["experiencedOwners","goodWithDogs"],
+       groomingDifficulty:1, shedding:3,
+       health:{concerns:["Progressive Retinal Atrophy","Hypertrophic Cardiomyopathy (HCM)","Other Inherited Heart Conditions (dilated cardiomyopathy, endocardial fibroelastosis, aortic stenosis)","Hepatic Amyloidosis","Flat-Chested Kitten Syndrome"], geneticRisk:"Moderate",
+         screeningNote:"Cardiac screening covering multiple potential inherited heart conditions (not just HCM) is recommended; given their lean build and fast metabolism, extra care with anesthesia dosing is often advised for procedures."},
+       relatedBreeds:["Siamese","Burmese"],
+       cost:{purchase:3, monthlyCare:2, grooming:1, medical:3}},
       {name:"Cornish Rex", tag:"Wavy coat", note:"Only the soft undercoat remains, giving a tight, marcel-wave texture.",
-       origin:"Britain (Cornwall), 1950 mutation", weight:"2.3–4.5kg", lifespan:"9–13+ yrs",
+       origin:"Britain (Cornwall), 1950 mutation", weight:"2.3–4.5kg", lifespan:"9–15 yrs",
        coat:"Very short, wavy — no guard hairs", energy:"High", bestFor:"Active households",
+       images:[{url:"images/breed/cornish-rex-1.jpg", alt:"Cornish Rex", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/cornish%20rex%20cat/"}],
        detail:"Traces to a single kitten, Kallibunker, born on a Cornwall farm in 1950 with an unusual curly coat; the mutation was then developed into a stable breed through selective breeding, sometimes with limited outcrossing to keep the gene pool viable.\n\nUnusually, the coat has only the soft, downy undercoat layer — the coarser guard hairs and awn hairs typical of most cats are absent — which gives it a texture like tight, marcel-waved velvet. It runs warmer to the touch than a normal cat and can feel cold in cool rooms as a result. Extremely energetic, often staying playful and kitten-like well into adulthood.",
-       link:{label:"TICA: Cornish Rex ↗", url:"https://tica.org/breed/cornish-rex/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Cornish Rex ↗", url:"https://tica.org/breed/cornish-rex/", meta:"Official TICA breed profile"},
+              {label:"Purina: Cornish Rex ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/cornish-rex", meta:"Purina UK breed profile"}],
+       personality:{affection:4, activity:5, intelligence:4, vocalness:3, independence:2, playfulness:5},
+       sources:{personality:[{label:"Spot Pet Insurance", url:"https://spotpet.com/breeds/cat-breeds/cornish-rex"}],
+         health:[{label:"Spot Pet Insurance", url:"https://spotpet.com/breeds/cat-breeds/cornish-rex"}, {label:"Bioguardlabs", url:"https://www.bioguardlabs.com/breed-related-disease-cornish-rex/"}]},
+       lifestyleBadges:["activeHousehold","experiencedOwners","goodWithDogs"],
+       groomingDifficulty:2, shedding:1,
+       health:{concerns:["Patellar Luxation","Hypertrophic Cardiomyopathy (HCM)","Hypotrichosis (thinning/balding patches)","Polycystic Kidney Disease (lower risk than most susceptible breeds)","Progressive Retinal Atrophy"], geneticRisk:"Moderate",
+         screeningNote:"Patellar luxation and cardiac screening are the main preventive checks recommended; the breed is otherwise considered fundamentally healthy with no single defining genetic disease."},
+       relatedBreeds:["Devon Rex","Sphynx"],
+       cost:{purchase:3, monthlyCare:2, grooming:2, medical:3}},
       {name:"Devon Rex", tag:"Pixie face", note:"Large ears, elfin face, and a coat so fine it barely sheds.",
-       origin:"Britain (Devon), 1960 mutation", weight:"2.3–4kg", lifespan:"14–17+ yrs",
+       origin:"Britain (Devon), 1960 mutation", weight:"2.3–4.5kg", lifespan:"9–17 yrs",
        coat:"Very short, wavy, fine", energy:"High", bestFor:"Active, social households",
+       images:[{url:"images/breed/devon-rex-1.jpg", alt:"Devon Rex", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/devon%20rex%20cat/"},
+               {url:"images/breed/devon-rex-2.jpg", alt:"Devon Rex", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/devon%20rex%20cat/"},
+               {url:"images/breed/devon-rex-3.jpg", alt:"Devon Rex", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/devon%20rex%20cat/"}],
        detail:"Discovered in Devon, England in 1960, initially assumed to be the same mutation as the nearby Cornish Rex — genetic testing later showed it's actually a separate, unrelated gene producing a similar wavy coat, despite the geographic and visual overlap.\n\nKnown for a distinctive elfin, 'pixie' face with unusually large ears and eyes. The fine coat sheds very little but can require occasional bathing since it doesn't wick away skin oils as effectively as a full coat would. Personality is famously mischievous and highly social — nicknamed 'alien cats' or 'pixie cats' as much for temperament as looks.",
-       link:{label:"TICA: Devon Rex ↗", url:"https://tica.org/breed/devon-rex/", meta:"Official TICA breed profile"}}
+       links:[{label:"TICA: Devon Rex ↗", url:"https://tica.org/breed/devon-rex/", meta:"Official TICA breed profile"},
+              {label:"Purina: Devon Rex ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/devon-rex", meta:"Purina UK breed profile"}],
+       personality:{affection:5, activity:5, intelligence:4, vocalness:3, independence:1, playfulness:5},
+       sources:{personality:[{label:"Petful", url:"https://www.petful.com/cat-breeds/devon-rex-personality/"}, {label:"Modern Cat", url:"https://moderncat.com/articles/breeds/the-devon-rex-cat-breed-profile-personality-care/"}],
+         health:[{label:"UFAW", url:"https://www.ufaw.org.uk/cats/devon-rex---hereditary-myopathy"}, {label:"Catster", url:"https://www.catster.com/cat-health-care/devon-rex-cat-health-problems/"}]},
+       lifestyleBadges:["activeHousehold","experiencedOwners","indoorPreferred","goodWithDogs"],
+       groomingDifficulty:2, shedding:1,
+       health:{concerns:["Hereditary Myopathy (Devon Rex-specific)","Hip Dysplasia","Hypertrophic Cardiomyopathy (HCM)","Patellar Luxation","Hypotrichosis","Polycystic Kidney Disease"], geneticRisk:"High",
+         screeningNote:"DNA testing for hereditary myopathy is available and can distinguish affected, carrier, and clear cats; cardiac screening and orthopedic checks (hips, patellas) are also recommended given the breed's elevated risk for each."},
+       relatedBreeds:["Cornish Rex","Sphynx"],
+       cost:{purchase:3, monthlyCare:3, grooming:2, medical:4}}
     ]
   },
   {
@@ -1396,49 +2000,272 @@ const categories = [
     desc:"Small registries, small gene pools, or just a very specific look.",
     breeds:[
       {name:"Munchkin", tag:"Short legs", note:"A dwarfism mutation keeps the legs short; still argued over by breed councils.",
-       origin:"United States, formally developed 1990s", weight:"2.3–4.5kg", lifespan:"15–18+ yrs",
+       origin:"United States, formally developed 1990s", weight:"2.3–4.5kg", lifespan:"12–18 yrs",
        coat:"Short or long variants", energy:"Medium-High", bestFor:"Households wanting a small, short-legged cat",
+       images:[{url:"images/breed/munchkin-1.jpg", alt:"Munchkin", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/munchkin%20cat/"},
+               {url:"images/breed/munchkin-2.jpg", alt:"Munchkin", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/munchkin%20cat/"},
+               {url:"images/breed/munchkin-3.jpg", alt:"Munchkin", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/munchkin%20cat/"}],
        detail:"The short-leg trait had reportedly appeared spontaneously in cat populations for decades before being deliberately developed into a breed in the US in the 1990s, gaining (controversial) recognition from TICA in 1995. CFA still does not recognize it, largely over the same category of welfare concerns raised about other 'dwarfism' pet breeds.\n\nThe shortened legs come from a form of dwarfism, but — contrary to what the look suggests — most Munchkins retain full mobility, can still jump and climb, and move with a distinctive low, fast 'ferret-like' gait rather than being restricted. TICA's own breed page describes them as not prone to arthritis and free of the debilitating genes sometimes associated with dwarfism in other animals. Breeders typically pair a short-legged cat with a standard-legged one rather than breeding two short-legged cats together, as an added precaution.",
-       link:{label:"TICA: Munchkin ↗", url:"https://tica.org/breed/munchkin/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Munchkin ↗", url:"https://tica.org/breed/munchkin/", meta:"Official TICA breed profile"},
+              {label:"Purina: Munchkin ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/munchkin", meta:"Purina UK breed profile"}],
+       personality:{affection:4, activity:4, intelligence:4, vocalness:3, independence:2, playfulness:5},
+       sources:{personality:[{label:"Litter-Robot", url:"https://www.litter-robot.com/blog/munchkin-cat-personality/"}],
+         health:[{label:"Pets4Homes", url:"https://www.pets4homes.co.uk/pet-advice/munchkin-cat-health-and-genetics.html"}, {label:"Catster", url:"https://www.catster.com/cat-health-care/munchkin-cat-health-problems/"}]},
+       lifestyleBadges:["experiencedOwners","indoorPreferred","goodWithDogs"],
+       groomingDifficulty:3, shedding:2,
+       health:{concerns:["Lordosis (spinal curvature)","Pectus Excavatum (chest deformity)"], geneticRisk:"Moderate",
+         screeningNote:"Reputable breeders exclusively pair a short-legged cat with a standard-legged one — breeding two short-legged Munchkins risks non-viable homozygous embryos — and screen kittens for visible spinal curvature or chest-wall deformity early."},
+       relatedBreeds:["LaPerm","Lykoi"],
+       cost:{purchase:3, monthlyCare:2, grooming:2, medical:3}},
       {name:"LaPerm", tag:"Curly coat", note:"A spontaneous curl mutation found on an Oregon farm in the 1980s.",
-       origin:"United States (Oregon), 1982 mutation", weight:"2.7–4.5kg", lifespan:"12–15 yrs (some to 20)",
-       coat:"Curly/wavy, short or long", energy:"Medium", bestFor:"Affectionate, allergy-conscious households",
+       origin:"United States (Oregon), 1982 mutation", weight:"2.2–4.5kg", lifespan:"10–15 yrs (some to 20)",
+       coat:"Curly/wavy, short or long", energy:"Medium-High", bestFor:"Affectionate, allergy-conscious households",
        detail:"Traces to a single kitten, born hairless on an Oregon farm in 1982, who then grew in a soft curly coat as she matured — the breed name is a nod to the 'perm' hairstyle the coat resembles. It was developed from that single farm-cat line rather than from an established breed.\n\nThe curl can range from tight ringlets to loose waves, and coat length varies within the breed. The curly coat sheds less visible hair than a straight one, which some owners find helps with allergy symptoms, though it's not a guaranteed hypoallergenic breed. Temperament is affectionate and people-oriented.",
-       link:{label:"TICA: LaPerm ↗", url:"https://tica.org/breed/laperm/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: LaPerm ↗", url:"https://tica.org/breed/laperm/", meta:"Official TICA breed profile"},
+              {label:"Purina: LaPerm ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/la-perms", meta:"Purina UK breed profile"}],
+       personality:{affection:5, activity:4, intelligence:3, vocalness:4, independence:1, playfulness:4},
+       sources:{personality:[{label:"WebMD Pets", url:"https://www.webmd.com/pets/cats/what-to-know-la-perm"}],
+         health:[{label:"HolistaPet", url:"https://www.holistapet.com/blogs/cat-breeds/laperm-cat"}]},
+       lifestyleBadges:["familyFriendly","goodWithChildren","allergyConsideration","firstTimeOwner","goodWithDogs"],
+       groomingDifficulty:3, shedding:2,
+       health:{concerns:["Pyruvate Kinase Deficiency","Hypertrophic Cardiomyopathy (general feline risk, not breed-specific)","Kidney Issues (general feline risk)"], geneticRisk:"Low",
+         screeningNote:"DNA testing is available for pyruvate kinase deficiency; otherwise no breed-specific genetic conditions are documented, credited partly to the breed's large genetic pool."},
+       relatedBreeds:["Munchkin","Lykoi"],
+       cost:{purchase:3, monthlyCare:2, grooming:2, medical:2}},
       {name:"Khao Manee", tag:"All-white", note:"An ancient Thai breed, often odd-eyed, once reserved for royalty.",
        origin:"Thailand, ancient breed", weight:"3.5–4.5kg", lifespan:"10–12 yrs",
-       coat:"Short, pure white", energy:"Medium-High", bestFor:"Warm climates, families",
+       coat:"Short, pure white", energy:"High", bestFor:"Warm climates, families",
+       images:[{url:"images/breed/khao-manee-1.jpg", alt:"Khao Manee", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/khao%20manee%20cat/"},
+               {url:"images/breed/khao-manee-2.jpg", alt:"Khao Manee", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/khao%20manee%20cat/"},
+               {url:"images/breed/khao-manee-3.jpg", alt:"Khao Manee", credit:"Photo via Pexels", creditUrl:"https://www.pexels.com/search/khao%20manee%20cat/"}],
        detail:"Documented in Thailand's Tamra Maew ('Cat Book Poems') manuscript, dated to around 1350 AD, alongside descriptions of more than twenty historical cat breeds. The name means 'white gem,' and in Thai tradition the breed was long considered a good-luck cat, historically kept by royalty. It wasn't brought to the West until 1999.\n\nAlmost always pure white, frequently with striking odd-colored eyes (one blue, one green or gold) — though matching-eyed individuals occur too. As with several other white, blue-eyed cat lines, the underlying gene carries an elevated risk of congenital deafness in some cats. Needs relatively little grooming despite its dramatic look, and the short coat suits Singapore's climate well.",
-       link:{label:"TICA: Khao Manee ↗", url:"https://tica.org/breed/khaomanee/", meta:"Official TICA breed profile"}},
+       links:[{label:"TICA: Khao Manee ↗", url:"https://tica.org/breed/khaomanee/", meta:"Official TICA breed profile"},
+              {label:"Purina: Khao Manee ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/khao-manee", meta:"Purina UK breed profile"}],
+       personality:{affection:4, activity:4, intelligence:4, vocalness:3, independence:2, playfulness:4},
+       sources:{personality:[{label:"Happy Pet Care", url:"https://www.happypet.care/cat-breeds/khao-manee"}],
+         health:[{label:"Feline Fancy", url:"https://felinefancy.co.uk/blogs/cat-breeds-info/khao-manee"}, {label:"ASPCA Pet Health Insurance", url:"https://www.aspcapetinsurance.com/resources/khao-manee-cat-facts/"}]},
+       lifestyleBadges:["experiencedOwners","goodWithDogs"],
+       groomingDifficulty:1, shedding:2,
+       health:{concerns:["Congenital Deafness (white coat/blue-eye linked, though less common in this breed than in similar white breeds)","Hypertrophic Cardiomyopathy (HCM)"], geneticRisk:"Moderate",
+         screeningNote:"BAER hearing tests are recommended, though the deafness-linked gene defect is documented as notably less common in Khao Manee than in similar blue-eyed white breeds like the Foreign White."},
+       relatedBreeds:["Siamese","Burmese"],
+       cost:{purchase:4, monthlyCare:2, grooming:1, medical:2}},
       {name:"Lykoi", tag:"Werewolf cat", note:"A patchy, sparse coat mutation that gives an unmistakably lupine look.",
-       origin:"United States, natural mutation, 2011", weight:"2.7–5.4kg", lifespan:"12–17 yrs",
+       origin:"United States, natural mutation, 2010–2011", weight:"2–5.4kg", lifespan:"12–17 yrs",
        coat:"Sparse, patchy, molts in cycles", energy:"High", bestFor:"Households wanting a striking, low-shedding look",
        detail:"A very recent breed: the founding cats were identified as a natural mutation in ordinary domestic cat litters around 2010–2011 in the southeastern US, and developed into a breed shortly after. The name comes from the Greek word for wolf, referencing the patchy, sparse coat's resemblance to old werewolf imagery.\n\nThe mutation is genetically distinct from the Sphynx's hairlessness gene, and the coat itself isn't fixed — some individuals shift between more and less hair coverage across shedding cycles, occasionally looking nearly bald and at other times more visibly coated. As one of the newest and rarest breeds, the gene pool is still small. Temperament tends to be active and strongly hunting-driven despite the unusual look.",
-       link:{label:"TICA: Lykoi ↗", url:"https://tica.org/breed/lykoi/", meta:"Official TICA breed profile"}}
+       links:[{label:"TICA: Lykoi ↗", url:"https://tica.org/breed/lykoi/", meta:"Official TICA breed profile"},
+              {label:"Purina: Lykoi ↗", url:"https://www.purina.co.uk/find-a-pet/cat-breeds/lykoi", meta:"Purina UK breed profile"}],
+       personality:{affection:3, activity:5, intelligence:4, vocalness:4, independence:4, playfulness:5},
+       sources:{personality:[{label:"The Cattitude Central", url:"https://thecattitudecentral.com/lykoi-cat/"}],
+         health:[{label:"Catster", url:"https://www.catster.com/ask-the-vet/lykoi-wolf-cat-health-problems/"}, {label:"Petful", url:"https://www.petful.com/cat-breeds/lykoi-cat-health/"}]},
+       lifestyleBadges:["experiencedOwners","activeHousehold","indoorPreferred"],
+       groomingDifficulty:2, shedding:2,
+       health:{concerns:["Lymphocytic Mural Folliculitis (coat-related skin condition)","Achondroplastic Dwarfism (from selective breeding; can cause arthritis, limb deformities)","Skin Sensitivity (sunburn/irritation risk)"], geneticRisk:"Moderate",
+         screeningNote:"A 2020 genetics study found no major health concerns beyond the coat-related folliculitis; achondroplastic dwarfism arising during the breed's development is a separate, more recently recognized concern that responsible breeders are working to screen against."},
+       relatedBreeds:["Munchkin","LaPerm"],
+       cost:{purchase:5, monthlyCare:3, grooming:2, medical:3}}
     ]
   }
 ];
+
+// A synthetic "All" tab, prepended so it's the first drawer. Its own `breeds` stays
+// empty on purpose — renderGrid() flattens across the 7 real categories when this
+// tab is active (same code path already used for search results), so every breed
+// keeps its original catKey/catCode (card accent color, file-label prefix) instead
+// of being relabeled "ALL". buildTabs() separately sums the real categories for its
+// displayed count, since this entry's own `breeds.length` is always 0.
+categories.unshift({key:"all", label:"All", code:"ALL", title:"All Breeds",
+  desc:"Every recognized breed in this catalogue, in one place.", breeds:[]});
 
 const rail = document.getElementById('drawerRail');
 const grid = document.getElementById('cardGrid');
 const title = document.getElementById('drawerTitle');
 const desc = document.getElementById('drawerDesc');
 const searchInput = document.getElementById('globalSearchInput');
+const viewToggle = document.getElementById('viewToggle');
+const compareTableWrap = document.getElementById('compareTableWrap');
+const compareTable = document.getElementById('compareTable');
+const compareLegend = document.getElementById('compareLegend');
+const compareModalTableWrap = document.getElementById('compareModalTableWrap');
+const filterPanel = document.getElementById('filterPanel');
+const filterClearBtn = document.getElementById('filterClearBtn');
 
 const catColors = {
   natural:"#3f5443", hairless:"#a15a3a", hybrid:"#8a6b1f",
   mutation:"#3d6b6d", longhair:"#6b4a7a", shorthair:"#3f5443", rare:"#a15a3a"
 };
 
-let activeKey = categories[0].key;
+/* ============ BREED INDEX ROADMAP — SHARED SCAFFOLDING ============
+   Config/helpers for the Comparison Table, Personality/Health/Cost sections,
+   Filters, Related Breeds, and Compare Mode. Nothing below writes into breed
+   data — it only reads whatever fields exist once each breed is authored. */
+const allBreedsFlat = categories.flatMap(c=>c.breeds.map(b=>({...b, catKey:c.key, catCode:c.code})));
+function findBreedByName(name){
+  return allBreedsFlat.find(b=>b.name===name);
+}
+// Position-independent "CODE 001" label — unlike renderGrid()'s fileLabel (based on
+// filtered-array position), this works for a breed opened from outside the current
+// grid/search/filter view (Related Breeds chips, the Compare bar).
+function stableFileLabel(breed){
+  const cat = categories.find(c=>c.breeds.some(b=>b.name===breed.name));
+  const idx = cat.breeds.findIndex(b=>b.name===breed.name);
+  return cat.code + ' ' + String(idx+1).padStart(3,'0');
+}
+
+const LIFESTYLE_BADGES = {
+  firstTimeOwner:       'First-Time Owner',
+  apartmentFriendly:    'Apartment Friendly',
+  familyFriendly:       'Family Friendly',
+  goodWithChildren:     'Good with Children',
+  goodWithDogs:         'Good with Dogs',
+  activeHousehold:      'Active Household',
+  experiencedOwners:    'Experienced Owners',
+  indoorPreferred:      'Indoor Preferred',
+  allergyConsideration: 'Allergy Consideration'
+};
+
+// Derives a star-equivalent from the existing free-text `energy` field rather than
+// authoring a 35th parallel numeric field that could drift out of sync with it.
+const ENERGY_STAR_MAP = {
+  'Low':1, 'Low-Medium':2, 'Medium':3, 'Medium-High':4, 'High':5, 'Very High':5
+};
+
+function renderStars(value, max){
+  max = max || 5;
+  if(value == null) return '';
+  let out = '';
+  for(let i=1;i<=max;i++) out += '<span class="star' + (i<=value ? ' filled' : '') + '">★</span>';
+  return out;
+}
+function renderDollarSigns(value, max){
+  max = max || 4;
+  if(value == null) return '';
+  let out = '';
+  for(let i=1;i<=max;i++) out += '<span class="dollar-sign' + (i<=value ? ' filled' : '') + '">$</span>';
+  return out;
+}
+// Shared {innerHTML; display} toggle — replaces the same pattern repeated for
+// modalFacts/modalLinks/modalGallery throughout openBreedModal()/openCareModal().
+function setSection(el, html, displayMode){
+  el.innerHTML = html || '';
+  el.style.display = html ? (displayMode || 'block') : 'none';
+}
+
+let activeKey = "natural"; // default view unchanged by the "All" tab prepended above
 let searchTerm = "";
+let viewMode = "grid"; // 'grid' | 'table'
+let mainCompareSort = {key:null, dir:'asc'};   // sort state for the Cards/Table toggle view
+let modalCompareSort = {key:null, dir:'asc'};  // sort state for the pinned Compare Mode modal
+
+/* ============ SIDE-BY-SIDE COMPARE MODE ============
+   In-memory only, no persistence — matches the file's existing no-localStorage convention. */
+const pinnedBreeds = new Set();
+function togglePin(name, btnEl){
+  if(pinnedBreeds.has(name)){
+    pinnedBreeds.delete(name);
+    if(btnEl){ btnEl.classList.remove('active'); btnEl.textContent = 'Save to Compare'; }
+  } else {
+    if(pinnedBreeds.size >= 4){ alert('You can compare up to 4 breeds at a time.'); return; }
+    pinnedBreeds.add(name);
+    if(btnEl){ btnEl.classList.add('active'); btnEl.textContent = 'Remove from Compare'; }
+  }
+  updateCompareBar();
+}
+function updateCompareBar(){
+  const n = pinnedBreeds.size;
+  document.getElementById('compareBarLabel').textContent = 'Compare (' + n + ')';
+  document.getElementById('compareBar').style.display =
+    (n >= 2 && breedsSection.classList.contains('visible')) ? 'flex' : 'none';
+}
+function openCompareModal(){
+  const breeds = [...pinnedBreeds].map(findBreedByName).filter(Boolean);
+  document.getElementById('compareModalTable').innerHTML = buildCompareTableHTML(breeds, {showUnpin:true, sortState:modalCompareSort});
+  document.getElementById('compareModalOverlay').classList.add('visible');
+}
+function unpinAndRerender(name){
+  // Card grid re-render (called right after, at this function's only call site)
+  // rebuilds every card's pin button from pinnedBreeds, so no DOM patching needed here.
+  pinnedBreeds.delete(name);
+  updateCompareBar();
+}
+document.getElementById('compareBarOpenBtn').addEventListener('click', openCompareModal);
+document.getElementById('compareBarClearBtn').addEventListener('click', ()=>{
+  pinnedBreeds.clear();
+  renderGrid();
+  updateCompareBar();
+});
+document.getElementById('compareModalTable').addEventListener('click', (e)=>{
+  const th = e.target.closest('th.sortable');
+  if(th){ toggleSort(modalCompareSort, th.dataset.sortKey); openCompareModal(); return; }
+  const unpinBtn = e.target.closest('.cmp-unpin');
+  if(!unpinBtn) return;
+  unpinAndRerender(decodeURIComponent(unpinBtn.dataset.name));
+  openCompareModal();
+  renderGrid();
+});
+document.getElementById('compareModalClose').addEventListener('click', ()=>{
+  document.getElementById('compareModalOverlay').classList.remove('visible');
+});
+document.getElementById('compareModalOverlay').addEventListener('click', (e)=>{
+  if(e.target.id === 'compareModalOverlay') e.currentTarget.classList.remove('visible');
+});
+
+/* ============ INTERACTIVE FILTERS ============
+   Filter groups AND together; multiple values within one group OR together.
+   Filters persist across category-tab switches (only "Clear filters" resets them),
+   since they express trait intent rather than "which drawer". */
+let filterState = {
+  coat: new Set(), energy: new Set(), size: new Set(), lifestyle: new Set(), characteristics: new Set()
+};
+function parseWeightKg(weightStr){
+  const m = (weightStr||'').match(/([\d.]+)\s*[–-]\s*([\d.]+)\s*kg/);
+  if(!m) return null;
+  return (parseFloat(m[1]) + parseFloat(m[2])) / 2;
+}
+function sizeBucket(breed){
+  const kg = parseWeightKg(breed.weight);
+  if(kg == null) return null;
+  if(kg < 3.5) return 'Small';
+  if(kg <= 5.5) return 'Medium';
+  return 'Large';
+}
+const CHARACTERISTIC_THRESHOLDS = {
+  'Vocal':        {trait:'vocalness',    threshold:4, op:'>=', keyword:/vocal|chatty|talkative/i},
+  'Quiet':        {trait:'vocalness',    threshold:2, op:'<=', keyword:/quiet|reserved/i},
+  'Affectionate': {trait:'affection',    threshold:4, op:'>=', keyword:/affectionate|loving|bond/i},
+  'Independent':  {trait:'independence', threshold:4, op:'>=', keyword:/independent|aloof/i},
+  'Low Shedding': {trait:'shedding',     threshold:2, op:'<=', keyword:/low.?shedd|minimal shedding/i}
+};
+function matchesCharacteristic(breed, value){
+  const cfg = CHARACTERISTIC_THRESHOLDS[value];
+  if(!cfg) return false;
+  const score = cfg.trait === 'shedding' ? breed.shedding : (breed.personality && breed.personality[cfg.trait]);
+  if(score != null) return cfg.op === '>=' ? score >= cfg.threshold : score <= cfg.threshold;
+  return cfg.keyword.test((breed.note||'') + ' ' + (breed.detail||''));
+}
+const FILTER_PREDICATES = {
+  coat: (b, v) => (b.coat||'').toLowerCase().includes(v.toLowerCase()),
+  energy: (b, v) => (b.energy||'').toLowerCase().includes(v.toLowerCase()),
+  size: (b, v) => sizeBucket(b) === v,
+  lifestyle: (b, v) => (b.lifestyleBadges||[]).includes(v),
+  characteristics: (b, v) => matchesCharacteristic(b, v)
+};
+function matchesAllFilterGroups(breed){
+  return Object.entries(filterState).every(([group, values])=>
+    values.size === 0 || [...values].some(v => FILTER_PREDICATES[group](breed, v))
+  );
+}
 
 function buildTabs(){
   rail.innerHTML = "";
   categories.forEach(cat=>{
+    const count = cat.key === "all"
+      ? categories.filter(c=>c.key!=="all").reduce((sum,c)=>sum+c.breeds.length, 0)
+      : cat.breeds.length;
     const btn = document.createElement('button');
     btn.className = 'drawer-tab' + (cat.key===activeKey ? ' active' : '');
-    btn.innerHTML = cat.label + '<span class="count">(' + cat.breeds.length + ')</span>';
+    btn.innerHTML = cat.label + '<span class="count">(' + count + ')</span>';
     btn.addEventListener('click', ()=>{
       activeKey = cat.key;
       searchTerm = "";
@@ -1468,20 +2295,161 @@ function updateSearchResultsMsg(term, count){
   }
 }
 
+/* ============ COMPARISON TABLE ============
+   Renders whatever breed pool renderGrid() has already computed (category-scoped or
+   search-flattened) — the table always reflects the same filter state as the card grid. */
+function starCell(n){
+  return n == null ? '<span class="cmp-dim">—</span>' : '<span class="cmp-stars">'+renderStars(n)+'</span>';
+}
+// Only ever a positive confirmation or "not evaluated" — never a false negative.
+// A missing lifestyleBadge means "not specifically confirmed by research," not
+// "confirmed unsuitable," so this must not render the same as an actual ✕ would.
+function triCell(hasBadge){
+  return hasBadge ? '<span class="cmp-yes">✓</span>' : '<span class="cmp-dim">—</span>';
+}
+// Average of the numbers found in a free-text range string ("12–15 yrs" -> 13.5,
+// "16+ yrs" -> 16) — an approximation for sorting only, the exact text is what's shown.
+function parseLifespanYears(lifespanStr){
+  const nums = ((lifespanStr||'').match(/[\d.]+/g) || []).map(Number);
+  return nums.length ? nums.reduce((a,b)=>a+b, 0) / nums.length : null;
+}
+const TRI_STATE_HINT = ' A dash means this wasn\'t specifically evidenced either way in research — not that the breed is unsuitable.';
+const COMPARE_COLUMNS = [
+  {key:'weight', label:'Weight', desc:'Approximate adult weight range.', render:b=>b.weight, value:b=>parseWeightKg(b.weight)},
+  {key:'lifespan', label:'Lifespan', desc:'Approximate typical lifespan range.', render:b=>b.lifespan, value:b=>parseLifespanYears(b.lifespan)},
+  {key:'energy', label:'Energy', desc:'Overall activity level, Low to Very High — more filled stars means a more energetic cat.', render:b=>starCell(ENERGY_STAR_MAP[b.energy]), value:b=>ENERGY_STAR_MAP[b.energy]},
+  {key:'grooming', label:'Grooming', desc:'How much grooming effort the coat needs — more filled stars means more frequent brushing or care.', render:b=>starCell(b.groomingDifficulty), value:b=>b.groomingDifficulty},
+  {key:'shedding', label:'Shedding', desc:'How much loose hair the coat sheds — more filled stars means more shedding.', render:b=>starCell(b.shedding), value:b=>b.shedding},
+  {key:'intelligence', label:'Intelligence', desc:'Problem-solving ability and trainability — more filled stars means quicker to learn (and easier to bore).', render:b=>starCell(b.personality && b.personality.intelligence), value:b=>b.personality && b.personality.intelligence},
+  {key:'vocalness', label:'Vocalness', desc:'How talkative the breed tends to be — more filled stars means more frequent vocalizing.', render:b=>starCell(b.personality && b.personality.vocalness), value:b=>b.personality && b.personality.vocalness},
+  {key:'affection', label:'Affection', desc:'How affectionate and people-oriented the breed tends to be — more filled stars means more affectionate.', render:b=>starCell(b.personality && b.personality.affection), value:b=>b.personality && b.personality.affection},
+  {key:'apartment', label:'Apartment', desc:'Confirmed by research as suited to apartment/small-space living.'+TRI_STATE_HINT, render:b=>triCell((b.lifestyleBadges||[]).includes('apartmentFriendly')), value:b=>(b.lifestyleBadges||[]).includes('apartmentFriendly') ? 1 : 0},
+  {key:'child', label:'Child-Friendly', desc:'Confirmed by research as good with children.'+TRI_STATE_HINT, render:b=>triCell((b.lifestyleBadges||[]).includes('goodWithChildren')), value:b=>(b.lifestyleBadges||[]).includes('goodWithChildren') ? 1 : 0},
+  {key:'dog', label:'Dog-Friendly', desc:'Confirmed by research as good with dogs.'+TRI_STATE_HINT, render:b=>triCell((b.lifestyleBadges||[]).includes('goodWithDogs')), value:b=>(b.lifestyleBadges||[]).includes('goodWithDogs') ? 1 : 0},
+  {key:'beginner', label:'First-Time Owner', desc:'Confirmed by research as suitable for first-time cat owners.'+TRI_STATE_HINT, render:b=>triCell((b.lifestyleBadges||[]).includes('firstTimeOwner')), value:b=>(b.lifestyleBadges||[]).includes('firstTimeOwner') ? 1 : 0}
+];
+// Breeds with a null/unknown value on the active sort column always sort last,
+// in either direction — reversing shouldn't push "unknown" rows to the top.
+function sortBreeds(breeds, sortState){
+  if(!sortState || !sortState.key) return breeds;
+  const col = sortState.key === '__name' ? {value:b=>b.name} : COMPARE_COLUMNS.find(c=>c.key===sortState.key);
+  if(!col) return breeds;
+  const dir = sortState.dir === 'desc' ? -1 : 1;
+  return [...breeds].sort((a,b)=>{
+    const av = col.value(a), bv = col.value(b);
+    if(av == null && bv == null) return 0;
+    if(av == null) return 1;
+    if(bv == null) return -1;
+    return typeof av === 'string' ? av.localeCompare(bv) * dir : (av - bv) * dir;
+  });
+}
+function sortArrow(sortState, key){
+  if(!sortState || sortState.key !== key) return '<span class="sort-arrow">↕</span>';
+  return '<span class="sort-arrow active">' + (sortState.dir === 'desc' ? '↓' : '↑') + '</span>';
+}
+function buildCompareTableHTML(breeds, opts){
+  opts = opts || {};
+  const sortState = opts.sortState || {key:null, dir:'asc'};
+  const sorted = sortBreeds(breeds, sortState);
+  const head = '<thead><tr><th class="sortable" data-sort-key="__name" title="The breed name — click a row to open its full profile.">Breed ' + sortArrow(sortState, '__name') + '</th>' +
+    COMPARE_COLUMNS.map(c=>'<th class="sortable" data-sort-key="'+c.key+'" title="'+c.desc.split('"').join('&quot;')+'">'+c.label+' '+sortArrow(sortState, c.key)+'</th>').join('') +
+    (opts.showUnpin ? '<th></th>' : '') + '</tr></thead>';
+  const body = sorted.map(b=>{
+    const unpin = opts.showUnpin ? '<td><button type="button" class="cmp-unpin" data-name="'+encodeURIComponent(b.name)+'" aria-label="Remove '+b.name+'">✕</button></td>' : '';
+    return '<tr data-name="'+encodeURIComponent(b.name)+'"><td>'+b.name+'</td>' + COMPARE_COLUMNS.map(c=>'<td>'+c.render(b)+'</td>').join('') + unpin + '</tr>';
+  }).join('');
+  return head + '<tbody>' + body + '</tbody>';
+}
+function toggleSort(sortState, key){
+  if(sortState.key === key) sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc';
+  else { sortState.key = key; sortState.dir = 'asc'; }
+}
+compareTable.addEventListener('click', (e)=>{
+  const th = e.target.closest('th.sortable');
+  if(th){ toggleSort(mainCompareSort, th.dataset.sortKey); renderGrid(); return; }
+  const tr = e.target.closest('tr[data-name]');
+  if(!tr) return;
+  const b = findBreedByName(decodeURIComponent(tr.dataset.name));
+  if(b) openBreedModal(b, stableFileLabel(b));
+});
+
+/* ============ DRAG-TO-SCROLL (Compare Tables) ============
+   Both compare tables can run wider than the viewport (13 columns). Click-and-drag
+   anywhere in the wrapper pans it horizontally — a mouse has no native swipe-to-scroll
+   the way touch does, and the scrollbar itself is fiddly to grab precisely. */
+function makeDragToScroll(wrapEl){
+  let isDown = false, startX = 0, startScroll = 0, dragged = false;
+  wrapEl.addEventListener('mousedown', (e)=>{
+    isDown = true; dragged = false;
+    startX = e.pageX;
+    startScroll = wrapEl.scrollLeft;
+    wrapEl.classList.add('dragging');
+  });
+  window.addEventListener('mousemove', (e)=>{
+    if(!isDown) return;
+    e.preventDefault();
+    const delta = e.pageX - startX;
+    if(Math.abs(delta) > 4) dragged = true;
+    wrapEl.scrollLeft = startScroll - delta;
+  });
+  window.addEventListener('mouseup', ()=>{
+    if(!isDown) return;
+    isDown = false;
+    wrapEl.classList.remove('dragging');
+  });
+  // Capture phase, so this runs before the row-click handlers on the <table> inside —
+  // suppresses the click that would otherwise open a modal at the end of a drag.
+  wrapEl.addEventListener('click', (e)=>{ if(dragged) e.stopPropagation(); }, true);
+}
+makeDragToScroll(compareTableWrap);
+makeDragToScroll(compareModalTableWrap);
+viewToggle.addEventListener('click', (e)=>{
+  const btn = e.target.closest('.view-toggle-btn');
+  if(!btn) return;
+  viewMode = btn.dataset.view;
+  viewToggle.querySelectorAll('.view-toggle-btn').forEach(b=>{
+    b.classList.toggle('active', b===btn);
+    b.setAttribute('aria-pressed', b===btn ? 'true' : 'false');
+  });
+  renderGrid();
+});
+
+filterPanel.addEventListener('click', (e)=>{
+  const chip = e.target.closest('.filter-chip');
+  if(chip){
+    const group = chip.closest('.filter-chip-row').dataset.group;
+    const value = chip.dataset.value;
+    filterState[group].has(value) ? filterState[group].delete(value) : filterState[group].add(value);
+    chip.classList.toggle('active');
+    chip.setAttribute('aria-pressed', chip.classList.contains('active') ? 'true' : 'false');
+    filterClearBtn.style.display = Object.values(filterState).some(s=>s.size) ? 'inline-block' : 'none';
+    renderGrid();
+    return;
+  }
+  if(e.target.closest('#filterClearBtn')){
+    Object.values(filterState).forEach(s=>s.clear());
+    filterPanel.querySelectorAll('.filter-chip.active').forEach(c=>{
+      c.classList.remove('active');
+      c.setAttribute('aria-pressed', 'false');
+    });
+    filterClearBtn.style.display = 'none';
+    renderGrid();
+  }
+});
+
 function renderGrid(){
-  grid.innerHTML = "";
   const cat = categories.find(c=>c.key===activeKey);
   title.textContent = cat.title;
   desc.textContent = cat.desc;
 
   const term = searchTerm.trim().toLowerCase();
-  const pool = term
-    ? categories.flatMap(c=>c.breeds.map(b=>({...b, cat:c.label, catKey:c.key, catCode:c.code})))
+  const pool = (term || activeKey === "all")
+    ? categories.filter(c=>c.key!=="all").flatMap(c=>c.breeds.map(b=>({...b, cat:c.label, catKey:c.key, catCode:c.code})))
     : cat.breeds.map(b=>({...b, cat:cat.label, catKey:cat.key, catCode:cat.code}));
 
-  const filtered = term
-    ? pool.filter(b => (b.name+" "+b.tag+" "+b.note+" "+(b.detail||"")).toLowerCase().includes(term))
-    : pool;
+  const filtered = pool
+    .filter(b => !term || (b.name+" "+b.tag+" "+b.note+" "+(b.detail||"")).toLowerCase().includes(term))
+    .filter(matchesAllFilterGroups);
 
   updateSearchResultsMsg(term, filtered.length);
 
@@ -1489,6 +2457,11 @@ function renderGrid(){
     title.textContent = "Search results";
     desc.textContent = filtered.length + " match" + (filtered.length===1?"":"es") + " across every drawer";
   }
+
+  grid.innerHTML = "";
+  compareTableWrap.style.display = 'none';
+  compareLegend.style.display = 'none';
+  grid.style.display = '';
 
   if(filtered.length === 0){
     const empty = document.createElement('div');
@@ -1498,20 +2471,34 @@ function renderGrid(){
     return;
   }
 
+  if(viewMode === 'table'){
+    grid.style.display = 'none';
+    compareTableWrap.style.display = 'block';
+    compareLegend.style.display = 'block';
+    compareTable.innerHTML = buildCompareTableHTML(filtered, {sortState:mainCompareSort});
+    return;
+  }
+
   filtered.forEach((b, i)=>{
     const card = document.createElement('div');
     card.className = 'card';
     card.style.animationDelay = (i*0.03)+'s';
     const color = catColors[b.catKey] || '#3f5443';
     const fileLabel = b.catCode + ' ' + String(i+1).padStart(3,'0');
+    const pinned = pinnedBreeds.has(b.name);
     card.innerHTML =
       '<span class="card-index">' + fileLabel + '</span>' +
       '<div class="card-image">' + breedThumb(b, color) + '</div>' +
       '<h4>' + b.name + '</h4>' +
       '<p>' + b.note + '</p>' +
       '<span class="stamp" style="border-color:' + color + '55; color:' + color + '">' + b.tag + '</span>' +
+      '<button type="button" class="pin-btn' + (pinned ? ' active' : '') + '" data-name="' + encodeURIComponent(b.name) + '">' + (pinned ? 'Remove from Compare' : 'Save to Compare') + '</button>' +
       '<span class="drill-hint">Tap for details ↗</span>';
     card.addEventListener('click', ()=> openBreedModal(b, fileLabel));
+    card.querySelector('.pin-btn').addEventListener('click', (e)=>{
+      e.stopPropagation();
+      togglePin(b.name, e.currentTarget);
+    });
     wireCardCarousel(card, b);
     grid.appendChild(card);
   });
@@ -1669,6 +2656,20 @@ function severityBadge(level){
   return cfg ? '<span class="severity-badge" data-level="'+level+'">'+cfg.emoji+' '+cfg.label+'</span>' : '';
 }
 
+/* ============ GENETIC RISK BADGE ============
+   Deliberately mirrors severityBadge()'s color tiers (clay/brass/forest) for visual
+   consistency, but with breed-appropriate labels and a plain bullet instead of the
+   Care Guide's urgency emoji — a static breed trait shouldn't read as an action prompt. */
+const GENETIC_RISK_CONFIG = {
+  Low:      {label:'Low Genetic Risk'},
+  Moderate: {label:'Moderate Genetic Risk'},
+  High:     {label:'High Genetic Risk'}
+};
+function riskBadge(level){
+  const cfg = GENETIC_RISK_CONFIG[level];
+  return cfg ? '<span class="risk-badge" data-level="'+level.toLowerCase()+'">● '+cfg.label+'</span>' : '';
+}
+
 /* ============ READING TIME ============
    Pure function of the detail text — never hand-authored per card. */
 function readingTimeLabel(text){
@@ -1730,6 +2731,7 @@ const careCategories = [
        links:[internalLink('resources', "Vet clinics in Singapore, if you don't already have one to call")]},
       {name:"My Cat Won't Eat", tag:"Answer a few questions", color:"#8A6A2E",
        note:"Answer a few quick questions below — the right response depends on how long it's been and what else is going on.",
+       images:[{url:"images/care-guide/cat-wont-eat.png", alt:"A lethargic cat lying next to a full bowl of dry food, uninterested in eating"}],
        tree:{
          start:"q1",
          nodes:{
@@ -1799,6 +2801,7 @@ const careCategories = [
        ]},
       {name:"Heatstroke", tag:"Cool first, transport second", color:"#8A6A2E", severity:"emergency",
        note:"Move to a cool space and start gentle cooling immediately — then get to a vet regardless of how quickly they recover.",
+       images:[{url:"images/care-guide/heatstroke.png", alt:"A cat lying on a cool tile floor, panting and looking distressed"}],
        detail:"Cats can't cool themselves the way humans do — they rely mainly on finding shade and grooming, which makes them vulnerable if trapped somewhere hot (a car, an unventilated room, direct sun with no shade).\n\n<b>Early signs:</b> panting, drooling, restlessness, seeking cool surfaces.\n\n<b>Severe signs:</b> collapse, vomiting, staggering, seizures, gums turning dark red, white, or bluish.\n\n<b>First aid, in order:</b>\n\n1. Move the cat to a cool, shaded, or air-conditioned space immediately\n2. Apply cool — not ice-cold — damp towels to the belly, paws, and ears; ice water can cause blood vessels to constrict and is counterproductive\n3. Offer small sips of water only if the cat is alert enough to drink on its own, never force it\n4. Stop active cooling once things seem to improve, to avoid overshooting into hypothermia\n\nEven if your cat seems to recover in the car, organ damage from heatstroke can develop hours later — treat every case as one that needs a same-day vet visit, not just home cooling.",
        linkGroups:[
          {mode:"entities", heading:"24hr Emergency Vets (Singapore)", links: emergencyContactLinks},
@@ -2141,7 +3144,7 @@ function buildCareCard(b, i){
       : '';
     card.innerHTML =
       '<span class="card-index">' + fileLabel + '</span>' +
-      '<div class="card-image">' + catSketch(b.color) + '</div>' +
+      '<div class="card-image">' + breedThumb(b, b.color) + '</div>' +
       '<h4>' + b.name + '</h4>' +
       '<p>' + b.note + '</p>' +
       '<span class="stamp" style="border-color:' + b.color + '55; color:' + b.color + '">' + b.tag + '</span>' +
@@ -2162,7 +3165,7 @@ function buildCareCard(b, i){
     'Tap for details ↗</span>';
   card.innerHTML =
     '<span class="card-index">' + fileLabel + '</span>' +
-    '<div class="card-image">' + catSketch(b.color) + '</div>' +
+    '<div class="card-image">' + breedThumb(b, b.color) + '</div>' +
     '<h4>' + b.name + '</h4>' +
     '<p>' + b.note + '</p>' +
     '<div class="card-tags">' +
@@ -2239,6 +3242,12 @@ function careRenderGrid(){
 /* ============ CARE DETAIL MODAL ============ */
 const careModalOverlay = document.getElementById('careModalOverlay');
 const modalClose = document.getElementById('modalClose');
+let modalTriggerEl = null;
+function focusModal(){
+  modalTriggerEl = document.activeElement;
+  careModalOverlay.classList.add('visible');
+  modalClose.focus();
+}
 const modalIndex = document.getElementById('modalIndex');
 const modalSeverityBadge = document.getElementById('modalSeverityBadge');
 const modalTitle = document.getElementById('modalTitle');
@@ -2246,6 +3255,12 @@ const modalNote = document.getElementById('modalNote');
 const modalFacts = document.getElementById('modalFacts');
 const modalLinks = document.getElementById('modalLinks');
 const modalLinksGroups = document.getElementById('modalLinksGroups');
+const modalBadges    = document.getElementById('modalBadges');
+const modalRatings   = document.getElementById('modalRatings');
+const modalHealth    = document.getElementById('modalHealth');
+const modalCost      = document.getElementById('modalCost');
+const modalRelated    = document.getElementById('modalRelated');
+const modalRelatedRow = document.getElementById('modalRelatedRow');
 
 const LINKS_MODE_CONFIG = {
   entities:   {heading:"Options",              listClass:""},
@@ -2459,9 +3474,18 @@ function openCareModal(item, fileLabel){
     modalSeverityBadge.style.display = 'none';
   }
   modalTitle.textContent = item.name;
-  document.getElementById('modalGallery').style.display = 'none';
+  if(item.images && item.images.length){
+    document.getElementById('modalGallery').style.display = 'block';
+    renderGallery(item);
+  } else {
+    document.getElementById('modalGallery').style.display = 'none';
+  }
   modalFacts.style.display = 'none';
   modalFacts.innerHTML = '';
+  // Breed-only sections (Origin Map, Lifestyle Badges, Personality/Grooming, Health, Cost)
+  // never apply to Care Guide content — keep the shared modal backward-compatible.
+  [modalBadges, modalRatings, modalHealth, modalCost].forEach(el=>{ el.innerHTML=''; el.style.display='none'; });
+  modalRelated.style.display = 'none'; // has static children (heading + row) — hide, don't clear innerHTML
   if(item.tree){
     modalNote.innerHTML = '<div class="dtree" id="dtree"></div>';
     renderDecisionTree(item.tree, document.getElementById('dtree'));
@@ -2487,12 +3511,73 @@ function openCareModal(item, fileLabel){
     modalLinks.style.display = 'none';
   }
 
-  careModalOverlay.classList.add('visible');
+  focusModal();
 }
 
 function factChip(label, value){
   return '<div class="fact-chip"><span class="fact-label">' + label + '</span><span class="fact-value">' + value + '</span></div>';
 }
+
+/* ============ BREED MODAL: RATINGS / BADGES / HEALTH ============ */
+const PERSONALITY_TRAITS = [
+  ['affection','Affection'], ['activity','Activity'], ['intelligence','Intelligence'],
+  ['vocalness','Vocalness'], ['independence','Independence'], ['playfulness','Playfulness']
+];
+function renderPersonalityRatings(personality){
+  if(!personality) return '';
+  const rows = PERSONALITY_TRAITS
+    .filter(([key])=> personality[key] != null)
+    .map(([key,label])=> '<div class="rating-row"><span class="rating-label">'+label+'</span><span class="star-row">'+renderStars(personality[key])+'</span></div>')
+    .join('');
+  return rows ? '<div class="detail-heading">Personality</div>' + rows : '';
+}
+function renderGroomingRating(level){
+  if(level == null) return '';
+  return '<div class="detail-heading">Grooming</div><div class="rating-row"><span class="rating-label">Difficulty</span><span class="star-row">'+renderStars(level)+'</span></div>';
+}
+function renderLifestyleBadges(badges){
+  if(!badges || !badges.length) return '';
+  return badges.map(key => '<span class="lifestyle-badge">✓ ' + (LIFESTYLE_BADGES[key] || key) + '</span>').join('');
+}
+function renderHealthSummary(health){
+  if(!health) return '';
+  const risk = health.geneticRisk ? riskBadge(health.geneticRisk) : '';
+  const list = (health.concerns && health.concerns.length)
+    ? '<ul>' + health.concerns.map(c=>'<li>'+c+'</li>').join('') + '</ul>' : '';
+  const note = health.screeningNote ? '<p class="health-note">'+health.screeningNote+'</p>' : '';
+  return '<div class="detail-heading">Health Watch</div>' + risk + list + note;
+}
+function renderSourceNote(sources){
+  if(!sources || !sources.length) return '';
+  const linkList = sources.map(s=>'<a href="'+s.url+'" target="_blank" rel="noopener">'+s.label+'</a>').join(', ');
+  return '<p class="source-note"><span class="source-label">Sourced from</span>'+linkList+'</p>';
+}
+
+const COST_LABELS = [['purchase','Purchase Price'], ['monthlyCare','Monthly Upkeep'], ['grooming','Grooming'], ['medical','Medical / Vet']];
+function renderCostIndicator(cost){
+  if(!cost) return '';
+  const rows = COST_LABELS
+    .filter(([key])=> cost[key] != null)
+    .map(([key,label])=> '<div class="rating-row"><span class="rating-label">'+label+'</span><span class="dollar-row">'+renderDollarSigns(cost[key])+'</span></div>')
+    .join('');
+  return rows ? '<div class="detail-heading">Ownership Cost</div>' + rows : '';
+}
+
+/* ============ RELATED BREEDS ============ */
+function renderRelatedBreeds(names){
+  if(!names || !names.length) return '';
+  const matches = names.map(findBreedByName).filter(Boolean);
+  return matches.map(rb=> '<button type="button" class="related-chip" data-name="'+encodeURIComponent(rb.name)+'">'+rb.name+'</button>').join('');
+}
+modalRelatedRow.addEventListener('click', (e)=>{
+  const chip = e.target.closest('.related-chip');
+  if(!chip) return;
+  const rb = findBreedByName(decodeURIComponent(chip.dataset.name));
+  if(rb){
+    openBreedModal(rb, stableFileLabel(rb));
+    document.querySelector('.modal-box').scrollTop = 0;
+  }
+});
 
 function openBreedModal(breed, fileLabel){
   modalIndex.textContent = fileLabel;
@@ -2511,21 +3596,45 @@ function openBreedModal(breed, fileLabel){
     factChip('Best for', breed.bestFor);
   modalFacts.style.display = 'grid';
 
-  modalNote.innerHTML = formatDetail(breed.detail || breed.note);
+  const refLinks = breed.links || (breed.link ? [breed.link] : []);
+  const crossCheckSource = refLinks[1]
+    ? [{label: (refLinks[1].meta || refLinks[1].label).replace(' breed profile',''), url: refLinks[1].url}]
+    : [];
+  const breedSources = breed.sources || {};
 
-  if(breed.link){
-    modalLinksGroups.innerHTML = renderLinkGroup('references', 'Further Reading', [breed.link]);
+  const badgesHtml = renderLifestyleBadges(breed.lifestyleBadges);
+  setSection(modalBadges, badgesHtml ? badgesHtml + renderSourceNote(crossCheckSource) : '');
+  const ratingsHtml = renderPersonalityRatings(breed.personality) + renderGroomingRating(breed.groomingDifficulty);
+  setSection(modalRatings, ratingsHtml ? ratingsHtml + renderSourceNote(breedSources.personality) : '');
+
+  modalNote.innerHTML = formatDetail(breed.detail || breed.note);
+  if(breed.timeline){
+    modalNote.innerHTML += '<div class="detail-heading">Timeline of Development</div>' + renderTimeline(breed.timeline);
+  }
+
+  const healthHtml = renderHealthSummary(breed.health);
+  setSection(modalHealth, healthHtml ? healthHtml + renderSourceNote(breedSources.health) : '');
+  setSection(modalCost, renderCostIndicator(breed.cost));
+
+  const relatedHtml = renderRelatedBreeds(breed.relatedBreeds);
+  modalRelatedRow.innerHTML = relatedHtml;
+  modalRelated.style.display = relatedHtml ? 'block' : 'none';
+
+  if(refLinks.length){
+    modalLinksGroups.innerHTML = renderLinkGroup('references', 'Further Reading', refLinks);
     modalLinks.style.display = 'block';
   } else {
     modalLinksGroups.innerHTML = '';
     modalLinks.style.display = 'none';
   }
 
-  careModalOverlay.classList.add('visible');
+  focusModal();
 }
 
 function closeCareModal(){
   careModalOverlay.classList.remove('visible');
+  if(modalTriggerEl && document.body.contains(modalTriggerEl)) modalTriggerEl.focus();
+  modalTriggerEl = null;
 }
 
 function jumpToCareTab(key){
@@ -2545,6 +3654,21 @@ careModalOverlay.addEventListener('click', (e)=>{
 });
 document.addEventListener('keydown', (e)=>{
   if(e.key === 'Escape') closeCareModal();
+});
+careModalOverlay.addEventListener('keydown', (e)=>{
+  if(e.key !== 'Tab' || !careModalOverlay.classList.contains('visible')) return;
+  const focusable = Array.from(careModalOverlay.querySelectorAll(
+    'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  )).filter(el => el.offsetParent !== null);
+  if(!focusable.length) return;
+  const first = focusable[0], last = focusable[focusable.length - 1];
+  if(e.shiftKey && document.activeElement === first){
+    e.preventDefault();
+    last.focus();
+  } else if(!e.shiftKey && document.activeElement === last){
+    e.preventDefault();
+    first.focus();
+  }
 });
 
 /* One shared search box (searchInput and careSearchInput both point to the same
@@ -2589,6 +3713,7 @@ function showSection(which){
     careRenderGrid();
   }
 
+  updateCompareBar();
   window.scrollTo({top:0, behavior:'smooth'});
 }
 

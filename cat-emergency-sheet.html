@@ -140,6 +140,8 @@
   .sheet-section p{font-size:13.5px; line-height:1.6; color:var(--ink-soft); margin:0 0 10px;}
   .sheet-section p:last-child{margin-bottom:0;}
 
+  .sheet-infographic{display:block; width:100%; height:auto; border-radius:4px; border:1px solid var(--line);}
+
   .clinic-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
   .clinic{
     border:1px solid var(--line);
@@ -160,6 +162,46 @@
     line-height:1.55;
     font-style:italic;
   }
+
+  .quick-stats{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 16px;}
+  .quick-stat{
+    flex:1 1 130px;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:8px 12px;
+    background:var(--canvas);
+  }
+  .quick-stat .num{display:block; font-family:'JetBrains Mono', monospace; font-weight:700; font-size:14.5px; color:var(--clay);}
+  .quick-stat .label{display:block; font-size:11px; color:var(--ink-soft); margin-top:1px;}
+
+  .callout{border-radius:6px; padding:10px 14px; font-size:12.5px; line-height:1.55; margin:0 0 14px; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  .callout:last-child{margin-bottom:0;}
+  .callout.warn{background:#FBF1DE; border:1px solid #E7CD8F; color:#5C4413;}
+  .callout.danger{background:#F7E3DD; border:1px solid #E0AC9B; color:#6E2A18;}
+  .callout strong{font-weight:700;}
+
+  .step-list{display:flex; flex-direction:column; gap:14px; margin:0 0 14px;}
+  .step-list:last-child{margin-bottom:0;}
+  .step{display:flex; gap:12px; align-items:flex-start;}
+  .step-icon{
+    flex:none; width:44px; height:44px; border-radius:50%;
+    background:var(--canvas-dim);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .step-icon svg{width:24px; height:24px; color:var(--clay); display:block; fill:none; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round;}
+  .step-icon .step-num{
+    position:absolute; top:-6px; right:-6px;
+    width:18px; height:18px; border-radius:50%;
+    background:var(--clay); color:#fff;
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+    border:2px solid var(--panel);
+  }
+  .step-body{padding-top:4px;}
+  .step-body .step-title{display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin-bottom:2px;}
+  .step-body .step-detail{font-size:13px; line-height:1.55; color:var(--ink-soft);}
 
   .related-note{
     max-width:720px;
@@ -208,7 +250,7 @@
 <div class="page-hero">
   <div class="eyebrow">Emergencies</div>
   <h1>Emergency Reference Sheet</h1>
-  <p>One page to print or save: 24-hour vets, warning signs, poisoning first-aid, and what's actually dangerous. Everything here is already in the full guide — this is just the compressed version for a bad moment.</p>
+  <p>One page to print or save: 24-hour vets, warning signs, choking and CPR steps, poisoning first-aid, and what's actually dangerous. Everything here is already in the full guide — this is just the compressed version for a bad moment.</p>
 </div>
 
 <div class="sheet">
@@ -249,6 +291,15 @@
     </ul>
   </div>
 
+  <div class="sheet-section urgent" id="choking">
+    <img class="sheet-infographic" src="images/care-guide/choke-guide.png" alt="Choking — Heimlich Maneuver infographic: 1) check the mouth for a visible object and sweep it out with one finger, 2) give 3–5 abdominal thrusts holding the cat upright against your chest, 3) recheck the mouth, 4) if thrusts don't work use firm back blows between the shoulder blades, 5) get to a vet immediately either way. Includes guidance for when you're scared or inexperienced: call a vet with speaker on, delegate tasks if someone's near, only act if it's safe, and don't delay transport trying to perfect the technique.">
+  </div>
+
+  <div class="sheet-section urgent" id="cpr">
+    <img class="sheet-infographic" src="images/care-guide/cpr-guide.png" alt="CPR — Cardiopulmonary Resuscitation infographic: compression rate 100–120/min, compression depth ⅓–½ chest width, 30 compressions to 2 breaths. Steps: 1) confirm unresponsiveness, no breathing, no heartbeat, 2) clear the airway, 3) chest compressions lying on its side thumb over the heart, 4) rescue breaths into the nose every 30 compressions, 5) repeat and reassess every 2 minutes. Signs of life to stop CPR: breathing, heartbeat, movement, gum color returning to normal. When to skip CPR: if the cat is already breathing, if unsure of a heartbeat start CPR while someone calls the vet, and if truly alone prioritize getting to the vet over CPR.">
+    <p style="font-size:12px; color:var(--ink-faint); margin:12px 0 0; line-height:1.5;">Cross-checked against PetMD and American Red Cross pet first-aid guidance — not a substitute for a hands-on pet CPR course. If in doubt, call one of the numbers above immediately; some clinics can talk you through it live.</p>
+  </div>
+
   <div class="sheet-section">
     <h2>If You Suspect Poisoning</h2>
     <ul>
@@ -278,11 +329,6 @@
       <li>Sago palm — every part is toxic, can cause liver failure</li>
       <li>Aloe vera, poinsettia, dracaena, cyclamen, asparagus fern, jade, snake plant</li>
     </ul>
-  </div>
-
-  <div class="sheet-section">
-    <h2>CPR</h2>
-    <div class="stub-box">This guide doesn't yet cover feline CPR technique, which needs to come from a vet-reviewed source rather than be written from memory — compression rate and depth for a cat differ meaningfully from human or dog CPR, and getting it wrong here would do more harm than leaving it blank. If your cat is unresponsive and not breathing, call one of the numbers above immediately — some clinics can talk you through it live.</div>
   </div>
 
 </div>
